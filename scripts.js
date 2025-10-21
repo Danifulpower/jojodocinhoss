@@ -1460,6 +1460,15 @@ function allowOnlyNumbers(event) {
     return true;
 }
 
+// Permite ativar itens de categoria com Enter ou Espaço (acessibilidade)
+function handleCategoryKey(event, sectionId) {
+    const key = event.key || event.code;
+    if (key === 'Enter' || key === ' ' || key === 'Spacebar' || key === 'Space') {
+        event.preventDefault();
+        showSection(sectionId);
+    }
+}
+
 // ===== FUNÇÕES DE UTILIDADE =====
 function showToast(message, type = 'success') {
     const toast = document.getElementById('toast');
@@ -1755,4 +1764,3 @@ function abrirOverlay(src, descricao) {
         }
     });
 }
-

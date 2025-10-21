@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #ffeef8 0%, #F7A7A1 100%);
     background-position: top center;
     min-height: 100vh;
@@ -24,6 +24,14 @@ body {
     --text-light: #666666;
     --shadow: rgba(255, 105, 180, 0.2);
     --border-radius: 15px;
+
+    /* Guia visual Jojo Docinhos */
+    --rosa-suave: #E8B7C5;
+    --marrom-chocolate: #6B3E2E;
+    --bege-claro: #F7F3EE;
+    --branco-neutro: #FFFFFF;
+    --rosa-escuro: #D47A90;
+    --card-shadow: 0px 2px 8px rgba(0,0,0,0.08);
 }
 
 /* Container */
@@ -36,9 +44,9 @@ body {
 /* Header */
 .header {
     width: 100%;
-    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--light-pink) 100%);
-    color: white;
-    padding: 0.2rem 0;
+    background: linear-gradient(135deg, #E8B7C5 0%, var(--light-pink) 100%);
+    color: #E8B7C5;
+    padding: 0.4rem 0;
     box-shadow: 0 4px 20px var(--shadow);
     position: sticky;
     top: 0;
@@ -130,9 +138,10 @@ html {
 
 /* Page Titles */
 .page-title {
-    font-size: 3rem;
-    font-weight: bold;
-    color: var(--text-dark);
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--marrom-chocolate);
     text-align: center;
     margin-bottom: 1rem;
 }
@@ -148,9 +157,10 @@ html {
 }
 
 .section-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: var(--text-dark);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--marrom-chocolate);
     text-align: center;
     margin-bottom: 3rem;
 }
@@ -159,8 +169,8 @@ html {
 .card {
     background: white;
     border-radius: var(--border-radius);
-    padding: 2rem;
-    box-shadow: 0 10px 30px rgba(255, 105, 180, 0.1);
+    padding: 1.25rem;
+    box-shadow: var(--card-shadow);
     transition: all 0.3s ease;
     border: 2px solid transparent;
     margin-bottom: 2rem;
@@ -168,8 +178,8 @@ html {
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(255, 105, 180, 0.2);
-    border-color: var(--pastel-pink);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    border-color: rgba(107,62,46,0.06);
 }
 
 /* Buttons */
@@ -377,8 +387,11 @@ html {
     margin: 0;
 }
 
+/* Aparência: padrão primeiro, depois prefixes para compatibilidade */
 .quantity-value {
+    appearance: textfield;
     -moz-appearance: textfield;
+    -webkit-appearance: textfield;
 }
 
 .quantity-value:focus {
@@ -926,14 +939,14 @@ html {
     display: none;
     flex-direction: column;
     justify-content: space-around;
-    width: 30px;
+    width: 20px;
     height: 25px;
     cursor: pointer;
     z-index: 1000;
 }
 
 .hamburger-menu .bar {
-    height: 3px;
+    height: 4px;
     width: 100%;
     background-color: white;
     border-radius: 10px;
@@ -957,14 +970,18 @@ html {
 /* Logo responsivo */
 .logo-container {
     display: flex;
-    justify-content: center;
-    padding: 1rem;
+    justify-content: left;
+    padding: 0rem;
 }
 
 .logo {
-    max-width: 100%;
-    height: auto;
-    transition: all 0.3s ease;
+    width: 160px; /* square crop on mobile */
+    height: 160px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 12px; /* slight rounding to match cards */
+    transition: all 0.25s ease;
 }
 
 /* Imagens */
@@ -1101,20 +1118,20 @@ html {
 /* Responsive */
 @media (max-width: 768px) {
     .container {
-        padding: 0 1rem;
+        padding: 0 2rem;
     }
 
     .header-container {
-        padding: 0.5rem 1rem;
+        padding: 2.5rem 1rem;
         position: relative;
-        min-height: 60px;
+        min-height: 70px;
     }
     
     .hamburger-menu {
         display: flex;
         position: absolute;
-        left: 1rem;
-        top: 50%;
+        right: 1rem; /* movido para a direita */
+        top: 40%;
         transform: translateY(-50%);
     }
     
@@ -1170,10 +1187,14 @@ html {
     .mobile-logo {
         display: block;
         position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 3rem; /* ficar à esquerda, simétrico ao hamburger agora à direita */
         top: 50%;
-        transform: translate(-50%, -50%);
+        transform: translateY(-50%);
+        height: 86px; /* altura do container do logo compactado */
+        width: 86px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .hero-title {
@@ -1262,11 +1283,39 @@ html {
     .section {
         touch-action: pan-y;
     }
+
+    /* Mobile: ajustar logo mobile e reduzir espaçamentos entre sections */
+    .mobile-logo img.mobile-logo-img {
+        width: auto; /* deixa a largura automática para preservar proporção */
+        height: 100%; /* cobre toda a altura do container */
+        object-fit: contain; /* preserva proporção sem esticar */
+        display: block;
+        margin: 0;
+        align-self: flex-start; /* ancorada na lateral esquerda do container */
+    }
+
+    .logo-container .logo {
+        width: 220px;
+        height: 220px;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        margin: 0 auto 0.75rem auto;
+    }
+
+    /* reduzir padding vertical das sections para economizar espaço no mobile */
+    .section {
+        padding: 1rem 0;
+    }
 }
 
 @media (min-width: 769px) {
     .logo {
-        max-width: 500px;
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 16px;
     }
     
     .cart-icon-mobile {
@@ -1285,53 +1334,48 @@ html {
         transition-duration: 0.01ms !important;
     }
     
-    .whatsapp-float {
-        animation: none;
+    .pronta-entrega-float {
+        position: fixed;
+        width: 3.75rem;   /* mantém o tamanho do botão anterior */
+        height: 3.75rem;
+        bottom: 12rem;
+        right: 1.25rem;
+        background: #ffffff; /* fundo branco conforme solicitado */
+        color: transparent;
+        border-radius: 8px; /* quadrado com cantos levemente arredondados */
+        padding: 0; /* sem espaçamento interno, imagem cobre todo o botão */
+        text-align: center;
+        font-size: 0;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+        animation: float 3s ease-in-out infinite;
+        cursor: pointer;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    /* A imagem fica centrada, preserva proporção e não estica: */
+    .pronta-entrega-float .pronta-entrega-icon {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain; /* preserva aspecto, não estica */
+        border-radius: 4px; /* pequena borda para combinar com o botão */
+        display: block;
+        background: transparent;
+    }
+
+    .pronta-entrega-float:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
     }
 }
 
-@media (prefers-color-scheme: light) {
-    :root {
-        --text-dark: #f0f0f0;
-        --text-light: #cccccc;
-    }
-    
-    .card {
-        background: #2a2a2a;
-        color: #f0f0f0;
-    }
-}
-
-button:focus, 
-a:focus, 
-input:focus, 
-select:focus, 
-textarea:focus {
-    outline: 2px solid var(--primary-pink);
-    outline-offset: 2px;
-}
-
-/* WhatsApp Floating Button */
-.whatsapp-float {
-    position: fixed;
-    width: 3.75rem;   /* 60px */
-    height: 3.75rem;  /* 60px */
-    bottom: 1.25rem;  /* 20px */
-    right: 1.25rem;   /* 20px */
-    background-color: #25d366;
-    color: #FFF;
-    border-radius: 50%;
-    text-align: center;
-    font-size: 1.875rem; /* 30px */
-    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    animation: float 3s ease-in-out infinite;
-}
 
 .whatsapp-float:hover {
     background-color: #128C7E;
@@ -1598,32 +1642,45 @@ textarea:focus {
 .alert-btn.cancel:hover {
     background-color: #b3b3b3;
 }
-/* Pronta Entrega Floating Button (somente no mobile) */
+/* Pronta Entrega Floating Button (somente no mobile)
+   Agora a imagem (`.pronta-entrega-icon`) é o próprio botão visual: fundo transparente, sem resquícios do botão laranja anterior */
 .pronta-entrega-float {
     position: fixed;
     width: 3.75rem;
     height: 3.75rem;
-    bottom: 12rem; /* Aumentado para ficar MAIS ACIMA do carrinho */
+    bottom: 12rem;
     right: 1.25rem;
-    background-color: #ff6b35; /* Cor laranja para diferenciar */
-    color: #FFF;
+    background: transparent; /* remover cor de fundo */
+    color: transparent;
     border-radius: 50%;
+    padding: 0;
     text-align: center;
-    font-size: 1.5rem;
-    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
+    font-size: 0; /* evitar ícones de fontawesome por baixo */
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08); /* sombra sutil para destaque */
     z-index: 2000;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     animation: float 3s ease-in-out infinite;
     cursor: pointer;
+    overflow: hidden;
+    border: none;
+}
+
+/* A imagem ocupa todo o botão e já é arredondada */
+.pronta-entrega-float .pronta-entrega-icon {
+    width: 100%; /* mantém a imagem menor que o botão para evitar esticamento visual */
+    height: 100%;
+    object-fit: contain; /* não cortará nem esticará a imagem */
+    border-radius: 50%;
+    display: block;
+    background: transparent;
 }
 
 .pronta-entrega-float:hover {
-    background-color: #e55a2b;
-    transform: scale(1.1);
-    box-shadow: 0 0.375rem 0.75rem rgba(0,0,0,0.3);
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
 /* Ajustar a posição dos botões flutuantes em escada */
@@ -1636,7 +1693,7 @@ textarea:focus {
 }
 
 .whatsapp-float {
-    bottom: w.25rem; /* WhatsApp na BASE */
+    bottom: 1.25rem; /* WhatsApp na BASE */
 }
 
 /* Mostrar apenas no mobile */
@@ -1675,9 +1732,7 @@ textarea:focus {
     transition: opacity 0.3s ease;
 }
 
-.toggle-floating-buttons.collapsed::before {
-   /* content: "Expandir botões";*/
-}
+/* removed empty rule to satisfy linter */
 
 .toggle-floating-buttons:hover::before {
     opacity: 1;
@@ -1700,6 +1755,58 @@ textarea:focus {
     justify-content: center;
     transition: all 0.3s ease;
     cursor: pointer;
+}
+
+/* Wrapper for grouped floating buttons */
+.floating-buttons-wrapper {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 2001; /* above main content */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+/* Container that holds the actual action buttons stacked vertically */
+.floating-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+/* Ensure each floating action keeps existing size/shape but stacked */
+.floating-actions .whatsapp-float,
+.floating-actions .cart-icon-mobile,
+.floating-actions .pronta-entrega-float {
+    width: 3.75rem;
+    height: 3.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Make toggle visually above the stack */
+.floating-buttons-wrapper .toggle-floating-buttons {
+    margin-bottom: 0.25rem;
+    z-index: 2002;
+}
+
+/* Visibility override when not collapsed */
+.floating-actions .whatsapp-float:not(.collapsed),
+.floating-actions .cart-icon-mobile:not(.collapsed),
+.floating-actions .pronta-entrega-float:not(.collapsed) {
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: none !important;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .toggle-floating-buttons:hover {
@@ -1843,6 +1950,43 @@ textarea:focus {
     animation: suckIntoButton 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards;
 }
 
+/* New: pop-out and collapse animations for a quick, fluid "pop from toggle" effect */
+@keyframes popOut {
+    0% { transform: translateY(10px) scale(0.72); opacity: 0; }
+    45% { transform: translateY(-14px) scale(1.18); opacity: 1; }
+    70% { transform: translateY(6px) scale(0.95); opacity: 1; }
+ 100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes collapseIntoToggle {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    30% { transform: translateY(-8px) scale(1.05); opacity: 0.9; }
+    65% { transform: translateY(10px) scale(0.8); opacity: 0.6; }
+ 100% { transform: translateY(18px) scale(0.6); opacity: 0; }
+}
+
+/* Apply quick pop animation when not collapsed (staggered) */
+.whatsapp-float:not(.collapsed) {
+    animation: popOut 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.cart-icon-mobile:not(.collapsed) {
+    animation: popOut 0.30s cubic-bezier(0.22, 1, 0.36, 1) 0.04s forwards;
+}
+.pronta-entrega-float:not(.collapsed) {
+    animation: popOut 0.32s cubic-bezier(0.22, 1, 0.36, 1) 0.07s forwards;
+}
+
+/* Collapse animations (reverse) */
+.whatsapp-float.collapsed {
+    animation: collapseIntoToggle 0.26s cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+}
+.cart-icon-mobile.collapsed {
+    animation: collapseIntoToggle 0.26s cubic-bezier(0.2, 0.9, 0.2, 1) 0.04s forwards;
+}
+.pronta-entrega-float.collapsed {
+    animation: collapseIntoToggle 0.26s cubic-bezier(0.2, 0.9, 0.2, 1) 0.07s forwards;
+}
+
 /* Animação do botão toggle - Contínua */
 @keyframes toggleRotate {
     0% {
@@ -1862,12 +2006,24 @@ textarea:focus {
     }
 }
 
+/* Smooth toggle: override keyframe animations with a gentle transition
+   This makes expand/collapse rotation less janky while preserving the
+   collapsed transform state applied elsewhere. */
+.toggle-floating-buttons {
+    /* prefer a smooth, slightly springy curve without overshoot */
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+                background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
 .toggle-floating-buttons.collapsed {
-    animation: toggleRotate 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    /* cancel keyframe animations if present and apply final transform */
+    animation: none !important;
+    transform: rotate(-90deg) !important;
 }
 
 .toggle-floating-buttons:not(.collapsed) {
-    animation: toggleRotateBack 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation: none !important;
+    transform: rotate(0deg) !important;
 }
 
 /* POSICIONAMENTO 1REM MAIS PARA CIMA */
@@ -1955,6 +2111,85 @@ textarea:focus {
         opacity: 1;
         visibility: visible;
         animation: none;
+    }
+}
+/* =======================
+   Estilos para lista vertical de categorias (prioridade: mobile)
+   ======================= */
+.categories-vertical {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* compacto por padrão */
+}
+
+.category-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* reduzido para mobile */
+    padding: 0.5rem 0.75rem;
+    border-radius: 10px;
+    background: var(--branco-neutro);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    border: 1px solid rgba(107,62,46,0.06);
+}
+
+.category-item:focus,
+.category-item:focus-visible,
+.category-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow);
+    outline: none;
+    background: var(--bege-claro);
+}
+
+.category-item:focus-visible {
+    box-shadow: 0 0 0 3px rgba(212,122,144,0.12);
+}
+
+.category-item .category-icon {
+    font-size: 1.6rem; /* menor para mobile */
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--rosa-suave);
+    color: var(--marrom-chocolate);
+}
+
+.category-item .category-content h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 0.15rem;
+    color: var(--marrom-chocolate);
+}
+
+.category-item .category-content p {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.82rem;
+    color: #7a6b69;
+    margin: 0;
+}
+
+/* Desktop: manter aparência em coluna mas com cards centrados */
+@media (min-width: 769px) {
+    .categories-vertical {
+        gap: 1rem;
+    }
+
+    .category-item {
+        padding: 1rem 1.5rem;
+    }
+
+    .category-item .category-icon {
+        font-size: 2.25rem;
+        width: 64px;
+        height: 64px;
     }
 }
 input[type="checkbox"] {
@@ -2125,7 +2360,7 @@ input[type="checkbox"] {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.0rem;
     width: 100%;
 }
 
@@ -2649,4 +2884,57 @@ input[type="checkbox"] {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+/* WhatsApp Floating Button */
+.whatsapp-float {
+    position: fixed;
+    width: 3.75rem;   /* 60px */
+    height: 3.75rem;  /* 60px */
+    bottom: 1.25rem;  /* 20px */
+    right: 1.25rem;   /* 20px */
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 1.875rem; /* 30px */
+    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    animation: float 3s ease-in-out infinite;
+}
+
+.whatsapp-float:hover {
+    background-color: #128C7E;
+    transform: scale(1.1);
+    box-shadow: 0 0.375rem 0.75rem rgba(0,0,0,0.3);
+}
+.whatsapp-float {
+    position: fixed;
+    width: 3.75rem;   /* 60px */
+    height: 3.75rem;  /* 60px */
+    bottom: 4rem;  /* 20px */
+    right: 1.25rem;   /* 20px */
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 1.875rem; /* 30px */
+    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    animation: float 3s ease-in-out infinite;
+}
+
+.whatsapp-float:hover {
+    background-color: #128C7E;
+    transform: scale(1.1);
+    box-shadow: 0 0.375rem 0.75rem rgba(0,0,0,0.3);
 }

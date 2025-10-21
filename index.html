@@ -28,16 +28,27 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- Line Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css">
+
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">-->
+    <!-- Google Fonts: Poppins (semi-bold), Quicksand (regular), Montserrat (medium) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poppins:wght@600&family=Quicksand:wght@400&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Header -->
 	<header class="header" role="banner">
 		<div class="container header-container">
-			<!-- Logo para mobile -->
-			<div class="mobile-logo" aria-label="Logo Jojo Docinhos">
-				<span>Jojo Docinhos</span>
-			</div>
+            <!-- Logo para mobile (imagem) -->
+            <div class="mobile-logo" aria-label="Logo Jojo Docinhos">
+                <img src="img/logogrande.png" alt="Jojo Docinhos" class="mobile-logo-img" loading="lazy">
+            </div>
 			<!-- Botão do menu hamburguer -->
 			<div id="overlay" class="overlay" onclick="toggleMobileMenu()" aria-hidden="true"></div>
 			<div class="hamburger-menu" onclick="toggleMobileMenu()" role="button" aria-label="Abrir menu de navegação" aria-expanded="false" tabindex="0">
@@ -66,64 +77,96 @@
 			</nav>	
 		</div>
 	</header>
-	<a href="spaceship_game.html" class="float-btn hidden" target="_blank" title="Ir para página de doces" aria-label="Ir para página de doces">
-		<!-- Opção 1: usando Font Awesome -->
-		<i class="fas fa-ice-cream" aria-hidden="true"></i>
-		<!-- Opção 2: usando emoji -->
-		<!-- 🧁 -->
-	</a> 
-	<!-- Botão para recolher/expandir botões flutuantes -->
-	<div class="toggle-floating-buttons" onclick="toggleFloatingButtons()" id="toggleFloatingButtons" role="button" aria-label="Recolher/expandir botões flutuantes" tabindex="0">
-		<i class="fas fa-chevron-up" id="toggleButtonsIcon" aria-hidden="true"></i>
-	</div>
-	<!-- WhatsApp Floating Button -->
-	<a href="https://wa.me/5551993088251" class="whatsapp-float" target="_blank" id="whatsapp-float" aria-label="Falar no WhatsApp" rel="noopener noreferrer">
-		<i class="fab fa-whatsapp" aria-hidden="true"></i>
-	</a>
+    <!-- Grouped floating buttons: toggle + stacked actions (WhatsApp, Cart, Pronta Entrega) -->
+    <div class="floating-buttons-wrapper" aria-hidden="false">
+        <div class="toggle-floating-buttons" onclick="toggleFloatingButtons()" id="toggleFloatingButtons" role="button" aria-label="Recolher/expandir botões flutuantes" tabindex="0">
+            <i class="fas fa-chevron-up" id="toggleButtonsIcon" aria-hidden="true"></i>
+        </div>
 
-	<!-- Cart Floating Button (Mobile Only) -->
-	<div class="cart-icon-mobile" onclick="toggleCart()" id="cart-float-button" role="button" aria-label="Abrir carrinho" tabindex="0">
-		<i class="fas fa-shopping-cart" aria-hidden="true"></i>
-		<span class="cart-count" id="cartCountFloat" aria-label="0 itens no carrinho">0</span>
-	</div>
-	<!-- Pronta entrega Button (Mobile Only) -->
-	<div class="pronta-entrega-float" onclick="showSection('pronta-entrega')" id="pronta-entrega-float" role="button" aria-label="Ver pronta entrega" tabindex="0">
-		<i class="fas fa-motorcycle" aria-hidden="true"></i>
-	</div>
+        <!-- Stacked floating actions -->
+        <div class="floating-actions" aria-label="Ações rápidas">
+            <!-- WhatsApp Floating Button -->
+            <a href="https://wa.me/5551993088251" class="whatsapp-float" target="_blank" id="whatsapp-float" aria-label="Falar no WhatsApp" rel="noopener noreferrer">
+                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+            </a>
+
+            <!-- Cart Floating Button (Mobile Only) -->
+            <div class="cart-icon-mobile" onclick="toggleCart()" id="cart-float-button" role="button" aria-label="Abrir carrinho" tabindex="0">
+                <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                <span class="cart-count" id="cartCountFloat" aria-label="0 itens no carrinho">0</span>
+            </div>
+
+            <!-- Pronta entrega Button (Mobile Only) -->
+            <div class="pronta-entrega-float" onclick="showSection('pronta-entrega')" id="pronta-entrega-float" role="button" aria-label="Ver pronta entrega" tabindex="0">
+                <img src="img/delivery.png" alt="Delivery" class="pronta-entrega-icon" loading="lazy" aria-hidden="true">
+            </div>
+        </div>
+    </div>
     <!-- Home Section -->
 	<section id="home" class="section active">
-		<div class="logo-container">
-			<img class="logo" src="img/logogrande.png" alt="Jojo Docinhos" loading="lazy">
-		</div>			
+        <div class="logo-container">
+            <!-- Imagem centralizada do destaque (substituída conforme pedido) -->
+            <img class="logo" src="img/bolo_demo.png" alt="Bolo Demo - Jojo Docinhos" loading="lazy">
+        </div>
 		<div class="categories">
             <div class="container">
-                <h2 class="section-title">Nossas Especialidades</h2>
-				<div class="grid grid-4">  
-					<div class="card category-card" onclick="showSection('doces')">
-						<div class="category-icon tremer">🧁</div>
-						<h3>Docinhos</h3>
-						<p>Brigadeiros, beijinhos e muito mais</p>
-						<button class="btn btn-primary">Ver Doces</button>
-					</div>
-					<div class="card category-card" onclick="showSection('bolos')">
-						<div class="category-icon tremer">🎂</div>
-						<h3>Bolos</h3>
-						<p>Bolos personalizados para todas as ocasiões</p>
-						<button class="btn btn-primary">Ver Bolos</button>
-					</div>
-					<div class="card category-card pastel-container" onclick="showSection('salgados')">
-						<div class="category-icon pastel">🥟</div>
-						<h3>Salgados</h3>
-						<p>Salgadinhos frescos e saborosos</p>
-						<button class="btn btn-primary">Ver Salgados</button>
-					</div>
-					<div class="card category-card tremer-container" onclick="showSection('especiais')">
-						<div class="category-icon tremer">🎁</div>
-						<h3>Especiais</h3>
-						<p>Tortas, kits e cestas especiais</p>
-						<button class="btn btn-primary">Ver Especiais</button>
-					</div>
-				</div>
+                <h3 class="section-title">Doces artesanais sobe encomenda.</h2>
+                <div class="category-list">
+                    <ul class="categories-vertical" role="list" aria-label="Categorias">
+                        <li class="card category-item" role="button" tabindex="0" onclick="showSection('doces')" onkeydown="handleCategoryKey(event,'doces')" aria-label="Docinhos — Ver doces">
+                            <div class="category-icon tremer" aria-hidden="true"><i class="la la-cookie-bite" aria-hidden="true"></i></div>
+                            <div class="category-content">
+                                <h3>Docinhos</h3>
+                            </div>
+                        </li>
+                        <li class="card category-item" role="button" tabindex="0" onclick="showSection('bolos')" onkeydown="handleCategoryKey(event,'bolos')" aria-label="Bolos — Ver bolos">
+                            <div class="category-icon tremer" aria-hidden="true"><i class="fa-solid fa-cake-candles" aria-hidden="true"></i></div>
+                            <div class="category-content">
+                                <h3>Bolos</h3>
+                            </div>
+                        </li>
+                        <li class="card category-item pastel-container" role="button" tabindex="0" onclick="showSection('salgados')" onkeydown="handleCategoryKey(event,'salgados')" aria-label="Salgados — Ver salgados">
+                            <div class="category-icon pastel" aria-hidden="true"><i class="fa-solid fa-utensils" aria-hidden="true"></i></div>
+                            <div class="category-content">
+                                <h3>Salgados</h3>
+                            </div>
+                        </li>
+                        <li class="card category-item tremer-container" role="button" tabindex="0" onclick="showSection('especiais')" onkeydown="handleCategoryKey(event,'especiais')" aria-label="Especiais — Ver especiais">
+                            <div class="category-icon tremer" aria-hidden="true"><i class="fa-solid fa-gift" aria-hidden="true"></i></div>
+                            <div class="category-content">
+                                <h3>Especiais</h3>
+                            </div>
+                        </li>
+                        <li class="card category-item" role="button" tabindex="0" onclick="showSection('pronta-entrega')" onkeydown="handleCategoryKey(event,'pronta-entrega')" aria-label="Pronta Entrega — Ver produtos disponíveis">
+                            <div class="category-icon" aria-hidden="true">🛵</div>
+                            <div class="category-content">
+                                <h3>Pronta Entrega</h3>
+                                <p>Produtos disponíveis para retirada ou entrega imediata</p>
+                            </div>
+                        </li>
+                        <li class="card category-item" role="button" tabindex="0" onclick="showSection('especiais')" onkeydown="handleCategoryKey(event,'especiais')" aria-label="Kits e Cestas — Ver kits e cestas especiais">
+                            <div class="category-icon" aria-hidden="true">🧺</div>
+                            <div class="category-content">
+                                <h3>Kits e Cestas</h3>
+                                <p>Presentes e kits personalizados</p>
+                            </div>
+                        </li>
+                        <li class="card category-item" role="button" tabindex="0" onclick="showSection('pedido')" onkeydown="handleCategoryKey(event,'pedido')" aria-label="Finalizar Pedido — Ir para finalização do pedido">
+                            <div class="category-icon" aria-hidden="true">🧾</div>
+                            <div class="category-content">
+                                <h3>Finalizar Pedido</h3>
+                                <p>Confira itens e finalize sua encomenda</p>
+                            </div>
+                        </li>
+                        <li class="card category-item" role="button" tabindex="0" onclick="showSection('contato')" onkeydown="handleCategoryKey(event,'contato')" aria-label="Contato — Informações de contato">
+                            <div class="category-icon" aria-hidden="true">📞</div>
+                            <div class="category-content">
+                                <h3>Contato</h3>
+                                <p>Fale conosco via WhatsApp ou Instagram</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="info-section">
@@ -158,7 +201,7 @@
     <!-- Doces Section -->
     <section id="doces" class="section">
         <div class="container">
-            <h1 class="page-title">Doces</h1>
+            <h1 class="page-title"><i class="fa-solid fa-cupcake" aria-hidden="true" style="margin-right:0.5rem; color: #F7A7A1;"></i>Doces</h1>
             <p class="page-subtitle">Nossos doces são feitos com muito carinho e ingredientes selecionados. Todos os doces têm quantidade mínima de 25 unidades.</p>
             <div class="category-section">
                 <h2>Doces Tradicionais</h2>
@@ -186,7 +229,7 @@
     <!-- Bolos Section -->
     <section id="bolos" class="section">
         <div class="container">
-            <h1 class="page-title">Bolos Personalizados</h1>
+            <h1 class="page-title"><i class="fa-solid fa-birthday-cake" aria-hidden="true" style="margin-right:0.5rem; color: #F7A7A1;"></i>Bolos Personalizados</h1>
             <p class="page-subtitle">Escolha o tamanho, tipo e 2 sabores para seu bolo personalizado. Todos os nossos bolos são feitos artesanalmente com ingredientes frescos.</p>
             
             <div class="bolo-configurator">
