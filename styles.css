@@ -113,6 +113,7 @@ body {
     justify-content: center;
     font-size: 0.8rem;
     font-weight: bold;
+    z-index: 1002; /* Garante que o contador fique acima de todos os botões flutuantes */
 }
 
 /* Sections */
@@ -1685,15 +1686,15 @@ html {
 
 /* Ajustar a posição dos botões flutuantes em escada */
 .pronta-entrega-float {
-    bottom: 13rem; /* Pronta entrega */
+    bottom: 15rem; /* Pronta entrega */
 }
 
 .cart-icon-mobile {
-    bottom: 8rem; /* Carrinho no MEIO */
+    bottom: 9.5rem; /* Carrinho no MEIO */
 }
 
 .whatsapp-float {
-    bottom: 1.25rem; /* WhatsApp na BASE */
+    bottom: 4rem; /* WhatsApp na BASE */
 }
 
 /* Mostrar apenas no mobile */
@@ -1714,6 +1715,31 @@ html {
     
     .whatsapp-float {
         bottom: 3.25rem; /* WhatsApp na base */
+    }
+
+    /* Forçar posicionamento fixo em escada para os novos float-action buttons */
+    .floating-actions .float-action {
+        position: fixed;
+        right: 1.25rem;
+        /* Garantir que apareçam acima do conteúdo */
+        z-index: 2000;
+    }
+
+    /* Ordem e offsets (de baixo para cima) */
+    .floating-actions .whatsapp-float { bottom: 3.25rem; }
+    .floating-actions .cart-icon-mobile { bottom: 7.5rem; }
+    .floating-actions .home-float { bottom: 10.5rem; }
+    .floating-actions .doces-float { bottom: 12.75rem; }
+    .floating-actions .bolos-float { bottom: 15rem; }
+    .floating-actions .salgados-float { bottom: 17.25rem; }
+    .floating-actions .especiais-float { bottom: 19.5rem; }
+    .floating-actions .pronta-entrega-float { bottom: 21.75rem; }
+
+    /* Quando recolhidos, empurre para a direita e esconda (mantém as animações existentes via .collapsed) */
+    .floating-actions .float-action.collapsed {
+        transform: translateX(calc(100% + 1rem));
+        opacity: 0;
+        pointer-events: none;
     }
 }
 
@@ -1790,9 +1816,9 @@ html {
 
 /* Styles for all float-action buttons (generic) */
 .floating-actions .float-action {
-    width: 3.75rem;
-    height: 3.75rem;
-    background: var(--primary-pink);
+    width: 3rem;
+    height: 3rem;
+    background: linear-gradient(135deg, #E8B7C5 0%, var(--light-pink) 100%);
     color: #fff;
     border-radius: 50%;
     display: flex;
@@ -2965,56 +2991,156 @@ input[type="checkbox"] {
     from { opacity: 0; }
     to { opacity: 1; }
 }
-/* WhatsApp Floating Button */
-.whatsapp-float {
+
+
+/* Estilos Unificados para Botões Flutuantes (Mobile-Only) */
+
+/* Oculta o wrapper por padrão */
+.floating-buttons-wrapper {
+    display: none;
     position: fixed;
-    width: 3.75rem;   /* 60px */
-    height: 3.75rem;  /* 60px */
-    bottom: 1.25rem;  /* 20px */
-    right: 1.25rem;   /* 20px */
-    background-color: #25d366;
-    color: #FFF;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+/* Estilo para o botão de toggle */
+.toggle-floating-buttons {
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-pink);
+    color: white;
     border-radius: 50%;
-    text-align: center;
-    font-size: 1.875rem; /* 30px */
-    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
-    z-index: 2000;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1001; /* Garante que o toggle fique acima de todos os outros botões */
+}
+
+.toggle-floating-buttons:hover {
+    transform: scale(1.05);
+}
+
+/* Contador de botões visíveis */
+.floating-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff1493;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* Container para os botões de ação */
+.floating-actions {
+    display: flex;
+    flex-direction: column-reverse; /* Empilha de baixo para cima */
+    gap: 10px;
+    margin-bottom: 10px; /* Espaço entre os botões e o toggle */
+    /* Garante que os botões de seção fiquem ocultos até serem ativados por JS */
+    position: absolute; /* Permite que os botões se sobreponham */
+    bottom: 70px; /* Posiciona acima do botão de toggle */
+    right: 0;
+}
+
+/* Classe unificada para todos os botões de ação flutuantes */
+.float-btn-mobile {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
     text-decoration: none;
-    transition: all 0.3s ease;
-    animation: float 3s ease-in-out infinite;
+    color: white;
+    z-index: 1000; /* Garante que os botões de ação fiquem abaixo do toggle, mas acima do conteúdo */
+}
+
+.float-btn-mobile:hover {
+    transform: scale(1.05);
+}
+
+/* Cores específicas para cada botão */
+.home-float, .doces-float, .bolos-float, .salgados-float, .especiais-float {
+    background-color: var(--marrom-chocolate);
+}
+
+/* Oculta os botões de seção por padrão, mas garante que os 3 principais (WhatsApp, Carrinho, Pronta Entrega) estejam visíveis no mobile */
+.float-btn-mobile:not(.whatsapp-float):not(.cart-icon-mobile):not(.pronta-entrega-float) {
+    /* Oculta todos os botões que não são os 3 principais, assumindo que o toggle-floating-buttons será tratado separadamente */
+    display: none;
+}
+
+/* Garante que os 3 principais estejam visíveis no mobile */
+@media (max-width: 768px) {
+    .whatsapp-float, .cart-icon-mobile, .pronta-entrega-float {
+        display: flex !important;
+    }
+    
+    /* Garante que o botão de toggle esteja visível no mobile */
+    .toggle-floating-buttons {
+        display: flex;
+    }
+    
+    /* Ajusta a posição do floating-actions para que os botões fiquem acima do toggle */
+    .floating-actions {
+        bottom: 70px;
+    }
+}
+
+.whatsapp-float {
+    background-color: #25d366;
 }
 
 .whatsapp-float:hover {
     background-color: #128C7E;
-    transform: scale(1.1);
-    box-shadow: 0 0.375rem 0.75rem rgba(0,0,0,0.3);
-}
-.whatsapp-float {
-    position: fixed;
-    width: 3.75rem;   /* 60px */
-    height: 3.75rem;  /* 60px */
-    bottom: 4rem;  /* 20px */
-    right: 1.25rem;   /* 20px */
-    background-color: #25d366;
-    color: #FFF;
-    border-radius: 50%;
-    text-align: center;
-    font-size: 1.875rem; /* 30px */
-    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    animation: float 3s ease-in-out infinite;
 }
 
-.whatsapp-float:hover {
-    background-color: #128C7E;
-    transform: scale(1.1);
-    box-shadow: 0 0.375rem 0.75rem rgba(0,0,0,0.3);
+.cart-icon-mobile {
+    background-color: var(--marrom-chocolate);
+    position: relative; /* Garante que o contador (.cart-count) seja posicionado em relação a este botão */
 }
+
+.cart-icon-mobile:hover {
+    background-color: #553125;
+}
+
+.pronta-entrega-float {
+    background-color: #ff9800;
+}
+
+.pronta-entrega-float:hover {
+    background-color: #e68900;
+}
+
+.pronta-entrega-icon {
+    width: 40px;
+    height: 40px;
+    filter: invert(1);
+}
+
+
+
+/* Media Query para exibir os botões flutuantes APENAS em dispositivos móveis */
+@media (max-width: 768px) {
+    .floating-buttons-wrapper {
+        display: block; /* Mostra o wrapper no mobile */
+    }
+}
+
