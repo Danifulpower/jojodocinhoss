@@ -113,7 +113,6 @@ body {
     justify-content: center;
     font-size: 0.8rem;
     font-weight: bold;
-    z-index: 1002; /* Garante que o contador fique acima de todos os botões flutuantes */
 }
 
 /* Sections */
@@ -1391,9 +1390,9 @@ html {
     height: 3.75rem;
     bottom: 5.5rem; /* Ajustado para ficar acima do WhatsApp */
     right: 1.25rem;
-    background-color:#ff1493;
+    background-color: var(--primary-pink);
     color: #FFF;
-    border-radius: 80%;
+    border-radius: 50%;
     text-align: center;
     font-size: 1.875rem;
     box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
@@ -3019,7 +3018,6 @@ input[type="checkbox"] {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease;
     position: relative;
-    z-index: 1001; /* Garante que o toggle fique acima de todos os outros botões */
 }
 
 .toggle-floating-buttons:hover {
@@ -3049,10 +3047,6 @@ input[type="checkbox"] {
     flex-direction: column-reverse; /* Empilha de baixo para cima */
     gap: 10px;
     margin-bottom: 10px; /* Espaço entre os botões e o toggle */
-    /* Garante que os botões de seção fiquem ocultos até serem ativados por JS */
-    position: absolute; /* Permite que os botões se sobreponham */
-    bottom: 70px; /* Posiciona acima do botão de toggle */
-    right: 0;
 }
 
 /* Classe unificada para todos os botões de ação flutuantes */
@@ -3069,7 +3063,6 @@ input[type="checkbox"] {
     transition: transform 0.3s ease;
     text-decoration: none;
     color: white;
-    z-index: 1000; /* Garante que os botões de ação fiquem abaixo do toggle, mas acima do conteúdo */
 }
 
 .float-btn-mobile:hover {
@@ -3079,29 +3072,6 @@ input[type="checkbox"] {
 /* Cores específicas para cada botão */
 .home-float, .doces-float, .bolos-float, .salgados-float, .especiais-float {
     background-color: var(--marrom-chocolate);
-}
-
-/* Oculta os botões de seção por padrão, mas garante que os 3 principais (WhatsApp, Carrinho, Pronta Entrega) estejam visíveis no mobile */
-.float-btn-mobile:not(.whatsapp-float):not(.cart-icon-mobile):not(.pronta-entrega-float) {
-    /* Oculta todos os botões que não são os 3 principais, assumindo que o toggle-floating-buttons será tratado separadamente */
-    display: none;
-}
-
-/* Garante que os 3 principais estejam visíveis no mobile */
-@media (max-width: 768px) {
-    .whatsapp-float, .cart-icon-mobile, .pronta-entrega-float {
-        display: flex !important;
-    }
-    
-    /* Garante que o botão de toggle esteja visível no mobile */
-    .toggle-floating-buttons {
-        display: flex;
-    }
-    
-    /* Ajusta a posição do floating-actions para que os botões fiquem acima do toggle */
-    .floating-actions {
-        bottom: 70px;
-    }
 }
 
 .whatsapp-float {
@@ -3114,7 +3084,6 @@ input[type="checkbox"] {
 
 .cart-icon-mobile {
     background-color: var(--marrom-chocolate);
-    position: relative; /* Garante que o contador (.cart-count) seja posicionado em relação a este botão */
 }
 
 .cart-icon-mobile:hover {
@@ -3135,7 +3104,10 @@ input[type="checkbox"] {
     filter: invert(1);
 }
 
-
+/* Oculta os botões de seção por padrão */
+.float-section-btn {
+    display: none;
+}
 
 /* Media Query para exibir os botões flutuantes APENAS em dispositivos móveis */
 @media (max-width: 768px) {
