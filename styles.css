@@ -1715,31 +1715,6 @@ html {
     .whatsapp-float {
         bottom: 3.25rem; /* WhatsApp na base */
     }
-
-    /* Forçar posicionamento fixo em escada para os novos float-action buttons */
-    .floating-actions .float-action {
-        position: fixed;
-        right: 1.25rem;
-        /* Garantir que apareçam acima do conteúdo */
-        z-index: 2000;
-    }
-
-    /* Ordem e offsets (de baixo para cima) */
-    .floating-actions .whatsapp-float { bottom: 3.25rem; }
-    .floating-actions .cart-icon-mobile { bottom: 7.5rem; }
-    .floating-actions .home-float { bottom: 10.5rem; }
-    .floating-actions .doces-float { bottom: 12.75rem; }
-    .floating-actions .bolos-float { bottom: 15rem; }
-    .floating-actions .salgados-float { bottom: 17.25rem; }
-    .floating-actions .especiais-float { bottom: 19.5rem; }
-    .floating-actions .pronta-entrega-float { bottom: 21.75rem; }
-
-    /* Quando recolhidos, empurre para a direita e esconda (mantém as animações existentes via .collapsed) */
-    .floating-actions .float-action.collapsed {
-        transform: translateX(calc(100% + 1rem));
-        opacity: 0;
-        pointer-events: none;
-    }
 }
 
 /* Tooltip para o botão toggle */
