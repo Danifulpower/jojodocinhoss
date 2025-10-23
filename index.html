@@ -80,24 +80,52 @@
     <!-- Grouped floating buttons: toggle + stacked actions (WhatsApp, Cart, Pronta Entrega) -->
     <div class="floating-buttons-wrapper" aria-hidden="false">
         <div class="toggle-floating-buttons" onclick="toggleFloatingButtons()" id="toggleFloatingButtons" role="button" aria-label="Recolher/expandir botões flutuantes" tabindex="0">
-            <i class="fas fa-chevron-up" id="toggleButtonsIcon" aria-hidden="true"></i>
-        </div>
+                <i class="fas fa-chevron-up" id="toggleButtonsIcon" aria-hidden="true"></i>
+                <!-- Badge/contador que mostra quantos botões estão visíveis -->
+                <span class="floating-count" id="floatingButtonsCount" aria-hidden="true">0</span>
+            </div>
 
         <!-- Stacked floating actions -->
         <div class="floating-actions" aria-label="Ações rápidas">
+            <!-- Section quick buttons (added) -->
+            <!-- Home -->
+            <div class="float-action float-section-btn home-float" onclick="showSection('home')" role="button" aria-label="Ir para Home" tabindex="0">
+                <i class="fa-solid fa-house" aria-hidden="true"></i>
+            </div>
+
+            <!-- Doces (cookie) -->
+            <div class="float-action float-section-btn doces-float" onclick="showSection('doces')" role="button" aria-label="Ir para Doces" tabindex="0">
+                <i class="la la-cookie-bite" aria-hidden="true"></i>
+            </div>
+
+            <!-- Bolos (cake) -->
+            <div class="float-action float-section-btn bolos-float" onclick="showSection('bolos')" role="button" aria-label="Ir para Bolos" tabindex="0">
+                <i class="fa-solid fa-cake-candles" aria-hidden="true"></i>
+            </div>
+
+            <!-- Salgados (pizza) -->
+            <div class="float-action float-section-btn salgados-float" onclick="showSection('salgados')" role="button" aria-label="Ir para Salgados" tabindex="0">
+                <i class="fa-solid fa-pizza-slice" aria-hidden="true"></i>
+            </div>
+
+            <!-- Especiais (gift) -->
+            <div class="float-action float-section-btn especiais-float" onclick="showSection('especiais')" role="button" aria-label="Ir para Especiais" tabindex="0">
+                <i class="fa-solid fa-gift" aria-hidden="true"></i>
+            </div>
+
             <!-- WhatsApp Floating Button -->
-            <a href="https://wa.me/5551993088251" class="whatsapp-float" target="_blank" id="whatsapp-float" aria-label="Falar no WhatsApp" rel="noopener noreferrer">
+            <a href="https://wa.me/5551993088251" class="float-action whatsapp-float" target="_blank" id="whatsapp-float" aria-label="Falar no WhatsApp" rel="noopener noreferrer">
                 <i class="fab fa-whatsapp" aria-hidden="true"></i>
             </a>
 
             <!-- Cart Floating Button (Mobile Only) -->
-            <div class="cart-icon-mobile" onclick="toggleCart()" id="cart-float-button" role="button" aria-label="Abrir carrinho" tabindex="0">
+            <div class="float-action cart-icon-mobile" onclick="toggleCart()" id="cart-float-button" role="button" aria-label="Abrir carrinho" tabindex="0">
                 <i class="fas fa-shopping-cart" aria-hidden="true"></i>
                 <span class="cart-count" id="cartCountFloat" aria-label="0 itens no carrinho">0</span>
             </div>
 
             <!-- Pronta entrega Button (Mobile Only) -->
-            <div class="pronta-entrega-float" onclick="showSection('pronta-entrega')" id="pronta-entrega-float" role="button" aria-label="Ver pronta entrega" tabindex="0">
+            <div class="float-action pronta-entrega-float" onclick="showSection('pronta-entrega')" id="pronta-entrega-float" role="button" aria-label="Ver pronta entrega" tabindex="0">
                 <img src="img/delivery.png" alt="Delivery" class="pronta-entrega-icon" loading="lazy" aria-hidden="true">
             </div>
         </div>

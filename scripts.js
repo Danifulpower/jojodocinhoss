@@ -1607,9 +1607,8 @@ let floatingButtonsCollapsed = false;
 function toggleFloatingButtons() {
     const toggleButton = document.getElementById('toggleFloatingButtons');
     const toggleIcon = document.getElementById('toggleButtonsIcon');
-    const whatsappBtn = document.getElementById('whatsapp-float');
-    const cartBtn = document.getElementById('cart-float-button');
-    const prontaEntregaBtn = document.getElementById('pronta-entrega-float');
+    const floatActions = Array.from(document.querySelectorAll('.floating-actions .float-action'));
+    const floatingCountEl = document.getElementById('floatingButtonsCount');
     
     floatingButtonsCollapsed = !floatingButtonsCollapsed;
     
@@ -1618,11 +1617,12 @@ function toggleFloatingButtons() {
         toggleButton.classList.add('collapsed');
         toggleIcon.classList.remove('fa-chevron-up');
         toggleIcon.classList.add('fa-chevron-left');
-        
-        whatsappBtn.classList.add('collapsed');
-        cartBtn.classList.add('collapsed');
-        prontaEntregaBtn.classList.add('collapsed');
-        
+
+        floatActions.forEach(el => el.classList.add('collapsed'));
+
+        // Atualiza contador (0 quando recolhido)
+        if (floatingCountEl) floatingCountEl.textContent = '0';
+
         // Salvar estado
         try {
             localStorage.setItem('floatingButtonsCollapsed', 'true');
@@ -1634,11 +1634,13 @@ function toggleFloatingButtons() {
         toggleButton.classList.remove('collapsed');
         toggleIcon.classList.remove('fa-chevron-left');
         toggleIcon.classList.add('fa-chevron-up');
-        
-        whatsappBtn.classList.remove('collapsed');
-        cartBtn.classList.remove('collapsed');
-        prontaEntregaBtn.classList.remove('collapsed');
-        
+
+        floatActions.forEach(el => el.classList.remove('collapsed'));
+
+        // Atualiza contador para o número de botões visíveis
+        const visibleCount = floatActions.length;
+        if (floatingCountEl) floatingCountEl.textContent = String(visibleCount);
+
         // Salvar estado
         try {
             localStorage.setItem('floatingButtonsCollapsed', 'false');
@@ -1656,13 +1658,46 @@ function loadFloatingButtonsState() {
         if (savedState === 'true') {
             // Se estava recolhido, aplicar estado recolhido
             setTimeout(() => {
-                toggleFloatingButtons();
+                // Força estado recolhido sem alternar duas vezes
+                const floatActions = Array.from(document.querySelectorAll('.floating-actions .float-action'));
+                const toggleButton = document.getElementById('toggleFloatingButtons');
+                const toggleIcon = document.getElementById('toggleButtonsIcon');
+                const floatingCountEl = document.getElementById('floatingButtonsCount');
+
+                if (toggleButton) toggleButton.classList.add('collapsed');
+                if (toggleIcon) {
+                    toggleIcon.classList.remove('fa-chevron-up');
+                    toggleIcon.classList.add('fa-chevron-left');
+                }
+
+                floatActions.forEach(el => el.classList.add('collapsed'));
+                if (floatingCountEl) floatingCountEl.textContent = '0';
+                floatingButtonsCollapsed = true;
             }, 1000); // Pequeno delay para a página carregar
         }
     } catch (e) {
         console.error('Erro ao carregar estado dos botões:', e);
     }
 }
+
+// Atualiza o contador de botões flutuantes com base em quantos .float-action existem
+function updateFloatingButtonsCount() {
+    const floatActions = Array.from(document.querySelectorAll('.floating-actions .float-action'));
+    const floatingCountEl = document.getElementById('floatingButtonsCount');
+    if (!floatingCountEl) return;
+
+    if (floatingButtonsCollapsed) {
+        floatingCountEl.textContent = '0';
+    } else {
+        floatingCountEl.textContent = String(floatActions.length);
+    }
+}
+
+// Chamar atualização ao carregar DOM
+document.addEventListener('DOMContentLoaded', function() {
+    updateFloatingButtonsCount();
+    loadFloatingButtonsState();
+});
 
 /*************** overlay img img-div-doces tela cheia **************/
 /// ===== LIGHTBOX / OVERLAY PARA IMAGENS (img-div-doces) =====
