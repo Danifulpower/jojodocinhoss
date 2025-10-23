@@ -184,7 +184,7 @@ html {
 
 /* Buttons */
 .btn {
-    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--light-pink) 100%);
+ background: linear-gradient(135deg, var(--primary-pink) 0%, var(--light-pink) 100%);
     color: white;
     border: none;
     padding: 0.75rem 2rem;
@@ -234,7 +234,8 @@ html {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--light-pink) 100%);
+  background: linear-gradient(135deg, var(--primary-pink) 0%, var(--light-pink) 100%);
+ 
 }
 
 .btn-secondary {
@@ -1365,7 +1366,7 @@ html {
         max-width: 100%;
         max-height: 100%;
         object-fit: contain; /* preserva aspecto, não estica */
-        border-radius: 4px; /* pequena borda para combinar com o botão */
+       /* border-radius: 0px;*/ /* pequena borda para combinar com o botão */
         display: block;
         background: transparent;
     }
@@ -1453,9 +1454,9 @@ html {
   background: var(--primary-pink); /* usa sua cor principal */
   color: white;
   font-size: 2rem; /* tamanho do ícone */
-  width: 3.75rem;
-  height: 3.75rem;
-  border-radius: 50%;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 10%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1624,8 +1625,8 @@ html {
 
 /* Botão Confirmar (Ação principal) */
 .alert-btn.confirm {
-    background: var(--primary-pink);
-    color: var(--white);
+ background: linear-gradient(135deg, var(--primary-pink) 0%, var(--light-pink) 100%);
+    color: white;
 }
 
 .alert-btn.confirm:hover {
