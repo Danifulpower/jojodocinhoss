@@ -1685,15 +1685,15 @@ html {
 
 /* Ajustar a posição dos botões flutuantes em escada */
 .pronta-entrega-float {
-    bottom: 15rem; /* Pronta entrega */
+    bottom: 13rem; /* Pronta entrega */
 }
 
 .cart-icon-mobile {
-    bottom: 9.5rem; /* Carrinho no MEIO */
+    bottom: 8rem; /* Carrinho no MEIO */
 }
 
 .whatsapp-float {
-    bottom: 4rem; /* WhatsApp na BASE */
+    bottom: 1.25rem; /* WhatsApp na BASE */
 }
 
 /* Mostrar apenas no mobile */
@@ -1815,8 +1815,8 @@ html {
 
 /* Styles for all float-action buttons (generic) */
 .floating-actions .float-action {
-    width: 3rem;
-    height: 3rem;
+    width: 3.75rem;
+    height: 3.75rem;
     background: var(--primary-pink);
     color: #fff;
     border-radius: 50%;
