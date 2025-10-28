@@ -1,0 +1,13 @@
+[build]
+  # Diretório onde o Netlify deve procurar as funções
+  functions = "netlify/functions"
+
+[functions]
+  # Configuração para usar o Node.js como runtime
+  node_bundler = "esbuild"
+
+# Exemplo de redirecionamento para testar a função
+[[redirects]]
+  from = "/api/connect"
+  to = "/.netlify/functions/connect"
+  status = 200
