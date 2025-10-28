@@ -1,3 +1,67 @@
+// ===== FUNÇÕES DE ENDEREÇO (MODAL/IFRAME) =====
+
+// Variáveis para o modal de endereço
+const addressModal = document.getElementById('address-modal');
+const enderecoInput = document.getElementById('endereco'); // O campo de endereço na tela de pedidos
+
+// Função para mostrar o modal de endereço
+function showAddressModal() {
+    // Desativa a validação do formulário de pedido temporariamente
+    const pedidoForm = document.getElementById('pedido-form');
+    if (pedidoForm) {
+        pedidoForm.setAttribute('novalidate', 'novalidate');
+    }
+    const modal = document.getElementById('address-modal');
+    if (modal) {
+        modal.style.display = 'block';
+    }
+}
+
+// Função para esconder o modal de endereço
+function hideAddressModal() {
+    // Reativa a validação do formulário de pedido
+    const pedidoForm = document.getElementById('pedido-form');
+    if (pedidoForm) {
+        pedidoForm.removeAttribute('novalidate');
+    }
+    const modal = document.getElementById('address-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Fechar modal ao clicar fora (overlay)
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('address-modal');
+    if (modal && event.target == modal) {
+        hideAddressModal();
+    }
+});
+
+// Listener para receber a mensagem do iframe
+window.addEventListener('message', function(event) {
+    // Verifica a origem (opcional, mas recomendado)
+    // if (event.origin !== "http://seu-dominio.com") return; 
+
+    if (event.data.type === 'endereco_selecionado') {
+        const enderecoCompleto = event.data.endereco;
+        
+        // 1. Preenche o input de endereço na tela de pedidos
+        const input = document.getElementById('endereco');
+        if (input) {
+            input.value = enderecoCompleto;
+            input.dispatchEvent(new Event('input')); // Dispara evento de input para possíveis listeners
+        }
+        
+        // 2. Fecha o modal
+        hideAddressModal();
+
+        // 3. Opcional: Mostra um toast de sucesso
+        showToast('Endereço preenchido com sucesso!', 'success');
+    }
+}, false);
+
+
 // ===== VARIÁVEL GLOBAL DE PRODUTOS (será preenchida pelo Google Sheets) =====
 let produtos = {
     doces: { tradicionais: [], especiais: [], gourmet: [] },
@@ -161,6 +225,7 @@ let boloConfig = {
 // ===== NAVEGAÇÃO =====
 function showSection(sectionId) {
     closeMobileMenu();
+    hideAddressModal(); // Garante que o modal de endereço feche ao trocar de seção
     
     if (sectionId === "pedido" && carrinho.length === 0) {
         sectionId = "home";
@@ -190,9 +255,9 @@ function showSection(sectionId) {
                 loadBolos(); 
                 // Mostra o alerta de bolo após um pequeno delay
                 setTimeout(() => {
-                    if (shouldShowBoloAlert()) {
+                   // if (shouldShowBoloAlert()) {
                         showBoloAlert();
-                    }
+                   // }
                 }, 500);
                 break;
             case "salgados": loadSalgados(); break;
@@ -216,7 +281,7 @@ function loadProntaEntrega() {
 
     container.innerHTML = produtos.prontaEntrega.map((produto, index) => {
         const key = `pronta-entrega-${index}`;
-        const quantidade = quantities[key] || 0;
+        const quantidade = quantities[key] || 0; // Alterado o valor inicial para 0
         const precoTotal = (produto.preco * quantidade).toFixed(2);
         const maxQuantidade = produto.disponivel;
         const OBS =  produto.OBS;
@@ -284,13 +349,17 @@ function updateQuantityProntaEntrega(key, change, max) {
 function updateQuantityInputProntaEntrega(key, value, max, event) {
     if (event.key === 'Enter' || event.type === 'blur') {
         let newQuantity = parseInt(value) || 0;
+        
+        // **NOVA VALIDAÇÃO:** Não permite menor que zero
         if (newQuantity < 0) newQuantity = 0;
+        // Validação de estoque máximo mantida, pois é uma regra de negócio de PE
         if (newQuantity > max) newQuantity = max;
         
         quantities[key] = newQuantity;
         
         const inputElement = document.querySelector(`.quantity-input input[data-key="${key}"]`);
         if (inputElement) {
+            inputElement.value = newQuantity;
             const minusButton = inputElement.parentElement.querySelector('.quantity-btn:first-child');
             const plusButton = inputElement.parentElement.querySelector('.quantity-btn:last-child');
             
@@ -328,8 +397,9 @@ function addProntaEntregaToCart(index) {
     const key = `pronta-entrega-${index}`;
     const quantidade = quantities[key] || 0;
 
+    // **NOVA VALIDAÇÃO:** Alerta se a quantidade for zero ou menor
     if (quantidade <= 0) {
-        showAlert('Selecione pelo menos 1 item.', "Quantidade Inválida");
+        showAlert('A quantidade deve ser maior que zero.', "Quantidade Inválida");
         return;
     }
 
@@ -377,7 +447,7 @@ function addProntaEntregaToCart(index) {
     updateCartCount();
     showAlert(`${quantidade} unidade(s) de ${produto.nome} adicionada(s) ao carrinho!`, "Item Adicionado");
     
-    quantities[key] = 0;
+    quantities[key] = 0; // Resetar para 0
     loadProntaEntrega();
     updateProntaEntregaCard(index);
 }
@@ -433,7 +503,8 @@ function loadDoceCategory(categoria, containerId) {
     
     container.innerHTML = produtos.doces[categoria].map((doce, index) => {
         const key = `${categoria}-${index}`;
-        const quantidade = quantities[key] || doce.minimo;
+        // Alterado o valor inicial para 0
+        const quantidade = quantities[key] || 0; 
         const precoTotal = (doce.preco / 100 * quantidade).toFixed(2);
         
         return `
@@ -444,13 +515,13 @@ function loadDoceCategory(categoria, containerId) {
                 <p class="product-price" data-preco-unitario="${doce.preco / 100}">R$ ${doce.preco.toFixed(2)} / cento</p>
                 
                 <div class="quantity-input">
-                    <button class="quantity-btn" onclick="updateQuantity('${key}', -25, ${doce.minimo})" ${quantidade <= doce.minimo ? 'disabled' : ''}>
+                    <button class="quantity-btn" onclick="updateQuantity('${key}', -25, 0)" ${quantidade <= 0 ? 'disabled' : ''}>
                         <i class="fas fa-minus"></i>
                     </button>
-                    <input type="number" class="quantity-value" value="${quantidade}" min="${doce.minimo}" 
-                           data-key="${key}" onblur="updateQuantityInput('${key}', this.value, ${doce.minimo}, event)"
-                           onkeyup="updateQuantityInput('${key}', this.value, ${doce.minimo}, event)" onkeydown="allowOnlyNumbers(event)">
-                    <button class="quantity-btn" onclick="updateQuantity('${key}', 25, ${doce.minimo})">
+                    <input type="number" class="quantity-value" value="${quantidade}" min="0" 
+                           data-key="${key}" onblur="updateQuantityInput('${key}', this.value, 0, event)"
+                           onkeyup="updateQuantityInput('${key}', this.value, 0, event)" onkeydown="allowOnlyNumbers(event)">
+                    <button class="quantity-btn" onclick="updateQuantity('${key}', 25, 0)">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
@@ -699,7 +770,8 @@ function loadSalgadoCategory() {
     
     container.innerHTML = produtos.salgados.map((salgado, index) => {
         const key = `salgado-${index}`;
-        const quantidade = quantities[key] || 25;
+        // Alterado o valor inicial para 0
+        const quantidade = quantities[key] || 0;
         const saborSelecionado = quantities[`${key}-sabor`] || salgado.sabores[0].nome;
         const saborObj = salgado.sabores.find(s => s.nome === saborSelecionado);
         const precoUnitario = saborObj ? saborObj.preco : salgado.sabores[0].preco;
@@ -722,13 +794,13 @@ function loadSalgadoCategory() {
                 </div>
                 
                 <div class="quantity-input">
-                    <button class="quantity-btn" onclick="updateQuantity('${key}', -25, 25)" ${quantidade <= 25 ? 'disabled' : ''}>
+                    <button class="quantity-btn" onclick="updateQuantity('${key}', -25, 0)" ${quantidade <= 0 ? 'disabled' : ''}>
                         <i class="fas fa-minus"></i>
                     </button>
-                    <input type="number" class="quantity-value" value="${quantidade}" min="25" 
-                           data-key="${key}" onblur="updateQuantityInput('${key}', this.value, 25, event)"
-                           onkeyup="updateQuantityInput('${key}', this.value, 25, event)" onkeydown="allowOnlyNumbers(event)">
-                    <button class="quantity-btn" onclick="updateQuantity('${key}', 25, 25)">
+                    <input type="number" class="quantity-value" value="${quantidade}" min="0" 
+                           data-key="${key}" onblur="updateQuantityInput('${key}', this.value, 0, event)"
+                           onkeyup="updateQuantityInput('${key}', this.value, 0, event)" onkeydown="allowOnlyNumbers(event)">
+                    <button class="quantity-btn" onclick="updateQuantity('${key}', 25, 0)">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
@@ -752,7 +824,8 @@ function loadTortaSalgadaCategory() {
     
     container.innerHTML = produtos.tortasSalgadas.map((torta, index) => {
         const key = `torta-salgada-${index}`;
-        const quantidade = quantities[key] || 1;
+        // Alterado o valor inicial para 0
+        const quantidade = quantities[key] || 0;
         const precoTotal = (torta.preco * quantidade).toFixed(2);
 
         return `
@@ -764,13 +837,13 @@ function loadTortaSalgadaCategory() {
                 <div class="quantity-controls">
                     <span>Quantidade:</span>
                     <div class="quantity-input">
-                        <button class="quantity-btn" onclick="updateQuantity('${key}', -1, 1)" ${quantidade <= 1 ? 'disabled' : ''}>
+                        <button class="quantity-btn" onclick="updateQuantity('${key}', -1, 0)" ${quantidade <= 0 ? 'disabled' : ''}>
                             <i class="fas fa-minus"></i>
                         </button>
-                        <input type="number" class="quantity-value" value="${quantidade}" min="1" 
-                               data-key="${key}" onblur="updateQuantityInput('${key}', this.value, 1, event)"
-                               onkeyup="updateQuantityInput('${key}', this.value, 1, event)" onkeydown="allowOnlyNumbers(event)">
-                        <button class="quantity-btn" onclick="updateQuantity('${key}', 1, 1)">
+                        <input type="number" class="quantity-value" value="${quantidade}" min="0" 
+                               data-key="${key}" onblur="updateQuantityInput('${key}', this.value, 0, event)"
+                               onkeyup="updateQuantityInput('${key}', this.value, 0, event)" onkeydown="allowOnlyNumbers(event)">
+                        <button class="quantity-btn" onclick="updateQuantity('${key}', 1, 0)">
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
@@ -805,7 +878,8 @@ function updateSalgadoSabor(key, sabor) {
         priceElement.textContent = `R$ ${precoUnitario.toFixed(2)} / cento`;
     }
     
-    updateTotal(key, 25);
+    // Alterado min de 25 para 0
+    updateTotal(key, 0);
 }
 
 function loadEspeciais() {
@@ -821,7 +895,8 @@ function loadEspecialCategory(categoria, containerId) {
     
     container.innerHTML = produtos.especiais[categoria].map((item, index) => {
         const key = `${categoria}-${index}`;
-        const quantidade = quantities[key] || 1;
+        // Alterado o valor inicial para 0
+        const quantidade = quantities[key] || 0;
         const precoTotal = (item.preco * quantidade).toFixed(2);
 
 
@@ -836,13 +911,13 @@ function loadEspecialCategory(categoria, containerId) {
                 <div class="quantity-controls">
                     <span>Quantidade:</span>
                     <div class="quantity-input">
-                        <button class="quantity-btn" onclick="updateQuantity('${key}', -1, 1)" ${quantidade <= 1 ? 'disabled' : ''}>
+                        <button class="quantity-btn" onclick="updateQuantity('${key}', -1, 0)" ${quantidade <= 0 ? 'disabled' : ''}>
                             <i class="fas fa-minus"></i>
                         </button>
-                        <input type="number" class="quantity-value" value="${quantidade}" min="1" 
-                               data-key="${key}" onblur="updateQuantityInput('${key}', this.value, 1, event)"
-                               onkeyup="updateQuantityInput('${key}', this.value, 1, event)" onkeydown="allowOnlyNumbers(event)">
-                        <button class="quantity-btn" onclick="updateQuantity('${key}', 1, 1)">
+                        <input type="number" class="quantity-value" value="${quantidade}" min="0" 
+                               data-key="${key}" onblur="updateQuantityInput('${key}', this.value, 0, event)"
+                               onkeyup="updateQuantityInput('${key}', this.value, 0, event)" onkeydown="allowOnlyNumbers(event)">
+                        <button class="quantity-btn" onclick="updateQuantity('${key}', 1, 0)">
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
@@ -865,14 +940,18 @@ function loadEspecialCategory(categoria, containerId) {
 function addDoceToCart(categoria, index) {
     const doce = produtos.doces[categoria][index];
     const key = `${categoria}-${index}`;
-    const quantidade = quantities[key] || doce.minimo;
+    // Alterado o valor inicial para 0
+    const quantidade = quantities[key] || 0;
 
-    if (quantidade < 25) {
-        showAlert(`${quantidade} é menor que o mínimo. Será adicionado 25 unidades.`, "Quantidade Mínima");
-        quantities[key] = 25;
+    // **NOVA VALIDAÇÃO:** Se a quantidade for menor ou igual a zero, informa alerta
+    if (quantidade <= 0) {
+        showAlert('A quantidade deve ser maior que zero.', "Quantidade Inválida");
+        // Recarregar para garantir que o input se mantenha 0 ou o valor que o usuário digitou
         loadDoceCategory(categoria, `doces-${categoria}-lista`);
         return;
     }
+
+    // Removida a validação de quantidade mínima
 
     carrinho.push({
         id: Date.now(),
@@ -885,24 +964,28 @@ function addDoceToCart(categoria, index) {
     updateCartCount();
     showAlert(`${quantidade} unidades de ${doce.nome} adicionadas ao carrinho!`, "Item Adicionado");
     
-    quantities[key] = doce.minimo;
+    // Resetar quantidade para 0
+    quantities[key] = 0;
     loadDoceCategory(categoria, `doces-${categoria}-lista`);
 }
 
 function addSalgadoToCart(index) {
     const salgado = produtos.salgados[index];
     const key = `salgado-${index}`;
-    const quantidade = quantities[key] || 25;
+    // Alterado o valor inicial para 0
+    const quantidade = quantities[key] || 0;
     const saborNome = quantities[`${key}-sabor`] || salgado.sabores[0].nome;
     const saborObj = salgado.sabores.find(s => s.nome === saborNome);
     const precoUnitario = saborObj ? saborObj.preco : salgado.sabores[0].preco;
 
-    if (quantidade < 25) {
-        showAlert(`${quantidade} é menor que o mínimo. Será adicionado 25 unidades.`, "Quantidade Mínima");
-        quantities[key] = 25;
+    // **NOVA VALIDAÇÃO:** Se a quantidade for menor ou igual a zero, informa alerta
+    if (quantidade <= 0) {
+        showAlert('A quantidade deve ser maior que zero.', "Quantidade Inválida");
         loadSalgadoCategory();
         return;
     }
+
+    // Removida a validação de quantidade mínima
 
     carrinho.push({
         id: Date.now(),
@@ -915,14 +998,25 @@ function addSalgadoToCart(index) {
     updateCartCount();
     showAlert(`${quantidade} unidades de ${salgado.nome} (${saborNome}) adicionadas ao carrinho!`, "Item Adicionado");
     
-    quantities[key] = 25;
+    // Resetar quantidade para 0
+    quantities[key] = 0;
     loadSalgadoCategory();
 }
 
 function addTortaSalgadaToCart(index) {
     const torta = produtos.tortasSalgadas[index];
     const key = `torta-salgada-${index}`;
-    const quantidade = quantities[key] || 1;
+    // Alterado o valor inicial para 0
+    const quantidade = quantities[key] || 0;
+
+    // **NOVA VALIDAÇÃO:** Se a quantidade for menor ou igual a zero, informa alerta
+    if (quantidade <= 0) {
+        showAlert('A quantidade deve ser maior que zero.', "Quantidade Inválida");
+        loadTortaSalgadaCategory();
+        return;
+    }
+    
+    // Removida a validação de quantidade mínima
 
     carrinho.push({
         id: Date.now(),
@@ -935,14 +1029,25 @@ function addTortaSalgadaToCart(index) {
     updateCartCount();
     showAlert(`${quantidade} unidade(s) de ${torta.nome} adicionada(s) ao carrinho!`, "Item Adicionado");
     
-    quantities[key] = 1;
+    // Resetar quantidade para 0
+    quantities[key] = 0;
     loadTortaSalgadaCategory();
 }
 
 function addEspecialToCart(categoria, index) {
     const itemEspecial = produtos.especiais[categoria][index];
     const key = `${categoria}-${index}`;
-    const quantidade = quantities[key] || 1;
+    // Alterado o valor inicial para 0
+    const quantidade = quantities[key] || 0;
+
+    // **NOVA VALIDAÇÃO:** Se a quantidade for menor ou igual a zero, informa alerta
+    if (quantidade <= 0) {
+        showAlert('A quantidade deve ser maior que zero.', "Quantidade Inválida");
+        loadEspecialCategory(categoria, `especiais-${categoria}-lista`);
+        return;
+    }
+
+    // Removida a validação de quantidade mínima
 
     carrinho.push({
         id: Date.now(),
@@ -955,7 +1060,8 @@ function addEspecialToCart(categoria, index) {
     updateCartCount();
     showAlert(`${quantidade} unidade(s) de ${itemEspecial.nome} adicionada(s) ao carrinho!`, "Item Adicionado");
     
-    quantities[key] = 1;
+    // Resetar quantidade para 0
+    quantities[key] = 0;
     loadEspecialCategory(categoria, `especiais-${categoria}-lista`);
 }
 
@@ -1200,7 +1306,7 @@ function enviarPedidoWhatsApp() {
     if (!validateForm()) return;
 
     const nome = sanitizeInput(document.getElementById("nome").value);
-    const telefone = sanitizeInput(document.getElementById("telefone").value);
+    //const telefone = sanitizeInput(document.getElementById("telefone").value);
     const endereco = sanitizeInput(document.getElementById("endereco").value);
     const pagamento = document.getElementById("pagamento").value;
     const dataEntrega = document.getElementById("data-entrega").value;
@@ -1273,7 +1379,7 @@ function formatarData(dataISO) {
 
 function validateForm() {
     const nome = document.getElementById("nome").value.trim();
-    const telefone = document.getElementById("telefone").value.trim();
+    //const telefone = document.getElementById("telefone").value.trim();
     const dataEntrega = document.getElementById("data-entrega").value;
     const pagamento = document.getElementById("pagamento").value;
     
@@ -1366,12 +1472,13 @@ function updateNavigation() {
     if (homeLink) homeLink.style.display = "block";
 }
 
-// ===== CONTROLES DE QUANTIDADE =====
-function updateQuantity(key, change, min = 1) {
-    let currentQuantity = quantities[key] || min;
+// ===== CONTROLES DE QUANTIDADE (APLICADO O NOVO MÍNIMO DE 0) =====
+function updateQuantity(key, change, min = 0) { // Alterado min default para 0
+    let currentQuantity = quantities[key] || 0; // Alterado inicial para 0
     currentQuantity += change;
     
-    if (currentQuantity < min) currentQuantity = min;
+    // Não permite quantidade menor que zero
+    if (currentQuantity < 0) currentQuantity = 0;
     
     quantities[key] = currentQuantity;
     
@@ -1383,50 +1490,65 @@ function updateQuantity(key, change, min = 1) {
         const plusButton = inputElement.parentElement.querySelector('.quantity-btn:last-child');
         
         if (minusButton) {
-            minusButton.disabled = currentQuantity <= min;
+            // Desabilita se for 0
+            minusButton.disabled = currentQuantity <= 0;
         }
         if (plusButton) {
             plusButton.disabled = false;
         }
     }
     
-    updateTotal(key, min);
+    // Passa 0 como novo min
+    updateTotal(key, 0); 
 }
 
 function initQuantityButtons() {
     document.querySelectorAll('.quantity-input input').forEach(input => {
         const key = input.getAttribute('data-key');
-        const min = parseInt(input.getAttribute('min')) || 1;
-        const currentValue = parseInt(input.value) || min;
+        // min deve ser 0 agora, mas usamos o valor do input para o check
+        const currentValue = parseInt(input.value) || 0; 
         
         const minusButton = input.parentElement.querySelector('.quantity-btn:first-child');
         if (minusButton) {
-            minusButton.disabled = currentValue <= min;
+            // Desabilita se for 0
+            minusButton.disabled = currentValue <= 0;
         }
     });
 }
 
-function updateQuantityInput(key, value, min, event) {
+function updateQuantityInput(key, value, min = 0, event) { // Alterado min default para 0
     if (event.key === 'Enter' || event.type === 'blur') {
-        let newQuantity = parseInt(value) || min;
-        if (newQuantity < min) newQuantity = min;
+        let newQuantity = parseInt(value) || 0; // Alterado inicial para 0
+        
+        // Não permite quantidade menor que zero
+        if (newQuantity < 0) newQuantity = 0;
+        
+        // **NOVA VALIDAÇÃO:** Se a quantidade for zero, informa alerta (mas ainda permite que fique 0)
+        if (newQuantity === 0) {
+            showAlert('A quantidade deve ser maior que zero.', "Quantidade Inválida");
+        }
+        
+        // Removidas todas as outras validações de mínimo
         
         quantities[key] = newQuantity;
         
         const inputElement = document.querySelector(`.quantity-input input[data-key="${key}"]`);
         if (inputElement) {
+            inputElement.value = newQuantity;
             const minusButton = inputElement.parentElement.querySelector('.quantity-btn:first-child');
             if (minusButton) {
-                minusButton.disabled = newQuantity <= min;
+                // Desabilita se for 0
+                minusButton.disabled = newQuantity <= 0;
             }
         }
         
-        updateTotal(key, min);
+        // Passa 0 como novo min
+        updateTotal(key, 0); 
     }
 }
 
-function updateTotal(key, min) {
-    const currentQuantity = quantities[key] || min;
+function updateTotal(key, min = 0) { // Alterado min default para 0
+    const currentQuantity = quantities[key] || 0; // Alterado inicial para 0
     const card = document.querySelector(`input[data-key="${key}"]`)?.closest('.product-card');
     if (!card) return;
     
@@ -1564,7 +1686,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0);
     
     initQuantityButtons();
-
+	initBackToTop();
     document.addEventListener('click', (event) => {
         const nav = document.getElementById("main-nav");
         const hamburger = document.querySelector('.hamburger-menu');
@@ -1784,7 +1906,7 @@ function abrirOverlay(src, descricao) {
     // Adiciona ao body
     document.body.appendChild(overlay);
 
-    // Fecha ao clicar fora da imagem ou no X
+    // Fech ao clicar fora da imagem ou no X
     overlay.addEventListener('click', (e) => {
         if (e.target === overlay || e.target.classList.contains('overlay-close')) {
             overlay.remove();
@@ -1797,5 +1919,29 @@ function abrirOverlay(src, descricao) {
             overlay.remove();
             document.removeEventListener('keydown', escFechar);
         }
+    });
+}
+
+// =====  BOTÃO VOLTAR AO TOPO (Init) =====
+function initBackToTop() {
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    if (!backToTopBtn) return;
+    
+    // 1. Mostrar/Ocultar botão no scroll
+    window.addEventListener('scroll', debounce(function() {
+        // Mostra o botão após rolar 300px
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    }, 100)); // Usando debounce para performance
+
+    // 2. Comportamento de clique (scroll fluido)
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Rolagem suave e rápida
+        });
     });
 }

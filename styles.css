@@ -568,8 +568,37 @@ html {
 .cart-total .price {
     color: #E8B7C5;
 }
+/* Modals */
 
-/* Modal */
+.modal-content-address {
+    max-width: 95%;
+    width: 600px; /* Largura máxima para o modal de endereço */
+    padding: 0; /* Remove padding padrão para o iframe */
+    height: 90vh; /* Altura para o modal de endereço */
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body-address {
+    flex-grow: 1;
+    padding: 0;
+}
+
+#address-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* Responsividade para o modal de endereço */
+@media (max-width: 768px) {
+    .modal-content-address {
+        width: 95%;
+        height: 95vh;
+        margin: 2.5vh auto;
+    }
+}
 .modal {
     display: none;
     position: fixed;
@@ -609,7 +638,12 @@ html {
     font-size: 2rem;
     font-weight: bold;
     cursor: pointer;
-    color: var(--text-light);
+    color: #E8B7C5;
+/* PROPRIEDADES DE POSICIONAMENTO PARA ALINHAMENTO A DIREITA/TOPO: */
+    position: absolute; /* 1. Remove o elemento do fluxo normal */
+    top: 10px;          /* 2. Distância do topo */
+    right: 15px;        /* 3. Distância da direita */
+    z-index: 10;        /* Opcional: Garante que fique acima de outros elementos */
 }
 
 .close:hover {
@@ -991,7 +1025,7 @@ html {
 }
 
 .logo {
-    width: 160px; /* square crop on mobile */
+  /*  width: 160px;*/ /* square crop on mobile */
     height: 160px;
     object-fit: cover;
     display: block;
@@ -1138,9 +1172,9 @@ html {
     }
 
     .header-container {
-        padding: 2.5rem 1rem;
+        padding: 1rem 1rem;
         position: relative;
-        min-height: 70px;
+        min-height: 1rem 1rem;
     }
     
     .hamburger-menu {
@@ -1207,7 +1241,7 @@ html {
         top: 50%;
         transform: translateY(-50%);
         height: 86px; /* altura do container do logo compactado */
-        width: 86px;
+       /* width: 86px;*/
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1286,9 +1320,9 @@ html {
         display: block;
     }
     
-    .logo {
+   /* .logo {
         max-width: 250px;
-    }
+    }*/
     
     
     .overlay.active {
@@ -1302,8 +1336,8 @@ html {
 
     /* Mobile: ajustar logo mobile e reduzir espaçamentos entre sections */
     .mobile-logo img.mobile-logo-img {
-        width: auto; /* deixa a largura automática para preservar proporção */
-        height: 100%; /* cobre toda a altura do container */
+        width: 90%; /* deixa a largura automática para preservar proporção */
+        height: 90%; /* cobre toda a altura do container */
         object-fit: contain; /* preserva proporção sem esticar */
         display: block;
         margin: 0;
@@ -1311,8 +1345,8 @@ html {
     }
 
     .logo-container .logo {
-        width: 220px;
-        height: 220px;
+        /*width: 220px;*/
+        height: 180px;
         object-fit: cover;
         object-position: center;
         display: block;
@@ -1327,7 +1361,7 @@ html {
 
 @media (min-width: 769px) {
     .logo {
-        width: 300px;
+       /* width: 300px;*/
         height: 300px;
         object-fit: cover;
         object-position: center;
@@ -2749,4 +2783,74 @@ input[type="checkbox"] {
         display: block; /* Mostra o wrapper no mobile */
     }
 }
+/* ======================================= */
+/* NOVO: Botão Voltar ao Topo (#backToTopBtn) */
+/* ======================================= */
+#backToTopBtn {
+    position: fixed;
+    bottom: 20px; 
+    left: 50%; 
+    z-index: 1000;
+    
+    /* Tamanho e forma */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: none;
+    
+    /* Cores */
+    background-color: var(--rosa-suave); 
+    color: var(--branco-neutro); 
 
+    /* Estado inicial: Oculto */
+    opacity: 0;
+    visibility: hidden;
+    /* Translação inicial para fora da tela */
+    transform: translateX(-50%) translateY(100px); 
+    /* Transição para aparecer/desaparecer */
+    transition: opacity 0.3s ease-out, visibility 0.3s ease-out, transform 0.3s ease-out;
+	-webkit-tap-highlight-color: transparent;
+}
+
+/* Estado visível: Ativa a animação de salto */
+#backToTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+    /* O transform de `happy-jump` substitui o transform estático para controle */
+    
+    /* APLICAÇÃO DA ANIMAÇÃO DE SALTO */
+    animation: happy-jump 1.5s ease-in-out infinite;
+}
+
+/* Efeito de hover */
+#backToTopBtn:hover {
+    background-color: #E8B7C5; 
+    /* Removemos o scale aqui para não conflitar com a animação de salto */
+}
+
+/* Ajuste para Mobile */
+@media (max-width: 768px) {
+    .floating-actions {
+        right: 20px;
+        bottom: 90px;
+    }
+}
+/* ======================================= */
+/* NOVO: Animação de Salto Feliz */
+/* ======================================= */
+@keyframes happy-jump {
+    0%, 100% {
+        /* Estado inicial/final: Centrado, tamanho normal, posição ligeiramente elevada */
+        transform: translateX(-50%) translateY(-5px) scale(1);
+    }
+    50% {
+        /* Meio do salto: Aumenta em 5% e retorna à posição original (ou desce um pouco) */
+        transform: translateX(-50%) translateY(0) scale(1.05);
+    }
+}

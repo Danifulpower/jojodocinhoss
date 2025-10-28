@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /**
  * Verifica se é a primeira vez que o usuário vê o alerta de bolo
- */
+ 
 function shouldShowBoloAlert() {
     try {
         // Verifica no localStorage se já foi mostrado
@@ -392,7 +392,7 @@ function shouldShowBoloAlert() {
         return true;
     }
 }
-
+*/
 /**
  * Reseta a preferência do alerta de bolo (para testes)
  */
