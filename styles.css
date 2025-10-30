@@ -14,6 +14,23 @@ body {
     margin: 0 auto;
 }
 
+
+
+ul {
+    list-style: none; /* Remove os marcadores padrão do <ul> */
+    padding: 0;
+    margin: 0;
+}
+.docinho li {
+	padding-left:18px;
+	background: url(img/rosquinha.png) no-repeat left top / 14px 14px; 
+	background-position: 0 4px
+}
+
+
+
+
+
 /* Cores principais */
 :root {
     --primary-pink: #ff69b4;
