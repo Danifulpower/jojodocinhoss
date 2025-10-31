@@ -508,10 +508,12 @@ function loadDoceCategory(categoria, containerId) {
         const precoTotal = (doce.preco / 100 * quantidade).toFixed(2);
         
         return `
+            
             <div class="card product-card">
+                <div class="">
                 <img class="img-div-doces" src="${doce.imagem}" alt="${doce.nome}">
                 <h3 class="product-title">${doce.nome}</h3>
-                <p class="product-description">Mínimo: ${doce.minimo} unidades</p>
+				<p class="product-description">Mínimo: ${doce.minimo} unidades</p>
                 <p class="product-price" data-preco-unitario="${doce.preco / 100}">R$ ${doce.preco.toFixed(2)} / cento</p>
                 
                 <div class="quantity-input">
@@ -533,6 +535,7 @@ function loadDoceCategory(categoria, containerId) {
                     <button class="btn" onclick="addDoceToCart('${categoria}', ${index})">
                         Adicionar ao Carrinho
                     </button>
+                </div>
                 </div>
             </div>
         `;

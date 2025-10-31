@@ -204,7 +204,7 @@ html {
     padding: 1.1rem;
     box-shadow: var(--card-shadow);
     transition: all 0.3s ease;
-    border: 5px solid transparent;
+    border: 5px solid transp;
     margin-bottom: 0.2rem;
 }
 
@@ -338,7 +338,16 @@ html {
 .product-card {
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+	
+	/*padding: 5%*/
+	
 }
+/*
+div.img-div-doces{
+	position: relative !important;
+	width: 90%;
+	padding: 5%;
+}*/
 
 .product-card:hover {
     transform: translateY(-5px);
@@ -346,6 +355,7 @@ html {
 }
 
 .product-title {
+	display: inline-block;
     font-size: 1.2rem;
     font-weight: bold;
     color: var(--text-dark);
@@ -353,6 +363,7 @@ html {
 }
 
 .product-price {
+	display: inline-block;
     font-size: 1.3rem;
     font-weight: bold;
     color: #E8B7C5;
@@ -360,6 +371,7 @@ html {
 }
 
 .product-description {
+	display: inline-block;
     color: var(--text-light);
     margin-bottom: 1rem;
     font-size: 0.9rem;
@@ -367,13 +379,20 @@ html {
 
 /* Quantity Controls */
 .quantity-controls {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1rem;
 }
 
+
+.bott_add{
+	display: inline-flex; 
+	align-items: center; 
+	margin-bottom: 1rem;
+}
 .quantity-input {
+
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -1051,20 +1070,26 @@ html {
 
 }
 
-/* Imagens */
-.img-div-doces {
-    width: 100%;
-    height: 250px;
-    overflow: hidden;
-    border-radius: 12px;
+.bordateste {
+	border: 1px solid red;
+	padding: 10px;
+	display: inline-block
 }
 
-.img-div-doces img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
+.imagem_teste_center {
+    width: 96%;
+	padding: 2%;
+	margin-left: 5px;
+}
+
+img.img-div-doces {
+margin-left: 5px;
+    width: 96%;
+	padding: 2%;
+    /*height: 100%;*/
+    /*object-fit: cover;*/
+    //*object-position: center;*/
+    /*display: block;*/
     transition: opacity 0.3s ease;
 }
 
