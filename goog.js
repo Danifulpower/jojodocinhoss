@@ -23,6 +23,10 @@ const PRODUCT_SHEETS = [
   { name: "tortas_salgadas" },
   { name: "especiais" },
   { name: "pronta_entrega" },
+  { name: "natal" },
+  { name: "pascoa" },
+  { name: "panetone" },
+  { name: "ovos" },
 ];
 
 // ===================================
@@ -209,6 +213,82 @@ function processProntaEntrega(values) {
     return arr;
 }
 
+// ===================================
+// FUNÇÕES DE PROCESSAMENTO DE DADOS PARA NOVAS ABAS
+// ===================================
+
+// Estrutura de Salgados: id_produto | nome_produto | preco | embalado | sabor | recheio | cobertura | imagem | tipo | obs
+function processSalgadosEspeciais(values) {
+    const arr = [];
+    values.forEach((row) => {
+        // Aba natal: produto_id | nome_produto | preco | embalado | sabor | recheio | cobertura | imagem | tipo | obs
+        // Aba pascoa: id_produto | tipo | sabor | recheio | cobertura
+        
+        // Usando a estrutura mais completa (natal) e adaptando para pascoa
+        // Mínimo de colunas para ter ID, Nome e Preço
+        if (row.length >= 3) { 
+            const [id, nome, precoStr, embalado, sabor, recheio, cobertura, imagem, tipo, obs] = row;
+            
+            // Valida se os campos essenciais não estão vazios
+            if (!id || !nome || !precoStr) return;
+            
+            const preco = parseFloat(String(precoStr).replace(",", "."));
+            
+            if (!isNaN(preco)) {
+                arr.push({
+                    id: id ? id.trim() : '',
+                    nome: nome ? nome.trim() : '',
+                    preco,
+                    embalado: embalado ? embalado.trim() : '',
+                    sabor: sabor ? sabor.trim() : '',
+                    recheio: recheio ? recheio.trim() : '',
+                    cobertura: cobertura ? cobertura.trim() : '',
+                    imagem: imagem ? imagem.trim() : "img/placeholder.jpg",
+                    tipo: tipo ? tipo.trim() : '',
+                    obs: obs ? obs.trim() : '',
+                });
+            }
+        }
+    });
+    return arr;
+}
+
+// Estrutura de Bolos: produto_id | nome_produto | preco | embalado | sabor | recheio | cobertura | imagem | tipo | obs
+function processBolosEspeciais(values) {
+    const arr = [];
+    values.forEach((row) => {
+        // Aba panetone: produto_id | nome_produto | preco | embalado | sabor | recheio | cobertura | imagem | tipo | obs
+        // Aba ovos: id_produto | tipo | sabor | recheio | cobertura | embalado | obs
+        
+        // Usando a estrutura mais completa (panetone) e adaptando para ovos
+        // Mínimo de colunas para ter ID, Nome e Preço
+        if (row.length >= 3) { 
+            const [id, nome, precoStr, embalado, sabor, recheio, cobertura, imagem, tipo, obs] = row;
+            
+            // Valida se os campos essenciais não estão vazios
+            if (!id || !nome || !precoStr) return;
+            
+            const preco = parseFloat(String(precoStr).replace(",", "."));
+            
+            if (!isNaN(preco)) {
+                arr.push({
+                    id: id ? id.trim() : '',
+                    nome: nome ? nome.trim() : '',
+                    preco,
+                    embalado: embalado ? embalado.trim() : '',
+                    sabor: sabor ? sabor.trim() : '',
+                    recheio: recheio ? recheio.trim() : '',
+                    cobertura: cobertura ? cobertura.trim() : '',
+                    imagem: imagem ? imagem.trim() : "img/placeholder.jpg",
+                    tipo: tipo ? tipo.trim() : '',
+                    obs: obs ? obs.trim() : '',
+                });
+            }
+        }
+    });
+    return arr;
+}
+
 function processSheetData(sheetName, values) {
     // A primeira linha (cabeçalho) é ignorada
     const dataRows = values.slice(0);
@@ -229,12 +309,18 @@ function processSheetData(sheetName, values) {
             return processTortasSalgadas(dataRows);
         case "especiais":
             return processEspeciais(dataRows);
-        case "pronta_entrega":
-            return processProntaEntrega(dataRows);
-        default:
-            return {};
-    }
-}
+	        case "pronta_entrega":
+	            return processProntaEntrega(dataRows);
+	        case "natal":
+	        case "pascoa":
+	            return processSalgadosEspeciais(dataRows); // Usa a lógica de salgados
+	        case "panetone":
+	        case "ovos":
+	            return processBolosEspeciais(dataRows); // Usa a lógica de bolos
+	        default:
+	            return {};
+	    }
+	}
 
 
 // ===================================
@@ -283,9 +369,15 @@ async function readAllSheetsData() {
     salgados: productData.salgados,
     tortas_salgadas: productData.tortas_salgadas,
     especiais: productData.especiais,
-    pronta_entrega: productData.pronta_entrega,
-  };
-}
+	    pronta_entrega: productData.pronta_entrega,
+	    
+	    // Novos produtos
+	    natal: productData.natal,
+	    pascoa: productData.pascoa,
+	    panetone: productData.panetone,
+	    ovos: productData.ovos,
+	  };
+	}
 
 
 // ----------------------------------------------------

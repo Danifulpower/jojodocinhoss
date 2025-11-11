@@ -28,7 +28,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="stylesheet" href="styles.css">
-
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -66,6 +65,7 @@
 				<a href="#bolos" class="nav-link">Bolos</a>
 				<a href="#salgados" class="nav-link">Salgados</a>
 				<a href="#especiais" class="nav-link">Especiais</a>
+				<a href="#kits" class="nav-link">kits</a>
 				<a href="#pronta-entrega" class="nav-link">Pronta Entrega</a>
 				<a href="#pedido" class="nav-link" style="display: none;" id="pedido-link" aria-hidden="true">Pedido</a>
 				<a href="#contato" class="nav-link">Contato</a>		
@@ -170,6 +170,14 @@
 		<h3>Especiais</h3>
         </li>
 
+        <li class="card category-item" role="button" tabindex="0" onclick="showSection('kits')" onkeydown="handleCategoryKey(event,'especiais')" aria-label="Kits e Cestas — Ver kits e cestas especiais">
+            <img src="img/kitis-ico.png" alt="especiais" class="category-icon icon" loading="lazy" aria-hidden="true">
+            <div>
+                <h3>Kits e Cestas</h3>
+                <p>Presentes e kits personalizados</p>
+            </div>
+        </li>        
+
         <li class="card category-item" role="button" tabindex="0" onclick="showSection('pronta-entrega')" onkeydown="handleCategoryKey(event,'pronta-entrega')" aria-label="Pronta Entrega — Ver produtos disponíveis">
             <img src="img/bis_f_ico.png" alt="pronta-entrega" class="category-icon icon" loading="lazy" aria-hidden="true">
             <div> <!-- Mantivemos uma div aqui para agrupar o título e o parágrafo -->
@@ -177,12 +185,12 @@
                 <p>Produtos disponíveis para retirada ou entrega imediata</p>
             </div>
         </li>
-
-        <li class="card category-item" role="button" tabindex="0" onclick="showSection('especiais')" onkeydown="handleCategoryKey(event,'especiais')" aria-label="Kits e Cestas — Ver kits e cestas especiais">
+	
+		<li class="card category-item" role="button" tabindex="0" onclick="showSection('nata')" onkeydown="handleCategoryKey(event,'especiais')" aria-label="Kits e Cestas — Ver kits e cestas especiais">
             <img src="img/kitis-ico.png" alt="especiais" class="category-icon icon" loading="lazy" aria-hidden="true">
             <div>
-                <h3>Kits e Cestas</h3>
-                <p>Presentes e kits personalizados</p>
+                <h3>Natal</h3>
+                <p>Chocotones e doces natalinos</p>
             </div>
         </li>
 
@@ -351,6 +359,24 @@
                 <h2>Bolos Caseiros</h2>
                 <div class="grid grid-3" id="especiais-bolos-caseiros-lista"></div>
             </div>
+            <div class="info-box payment-note">
+                <h3>📋 Informações Importantes</h3>
+                <ul class="docinho">
+                    <li>É necessário o pagamento à vista de 50% do valor para garantir o pedido</li>
+                    <li>Tortas e bolos caseiros são vendidos por unidade</li>
+                    <li>Kits e cestas são montados especialmente para cada pedido</li>
+                    <li>Para kits personalizados, entre em contato para customização</li>
+                    <li>Prazo de entrega: consultar disponibilidade</li>
+                    <li>Produtos devem ser mantidos refrigerados</li>
+                </ul>
+            </div>
+        </div>
+    </section>   
+<!-- Kits Section -->
+    <section id="kits" class="section">
+        <div class="container">
+            <h1 class="page-title">Kits e Cestas</h1>
+            <p class="page-subtitle">kits personalizados para ocasiões especiais.</p>
             <div class="category-section">
                 <h2>Kits e Cestas Especiais</h2>
                 <div class="grid grid-2" id="especiais-kits-lista"></div>
@@ -479,6 +505,34 @@
             </div>
         </div>
     </section>
+    <!-- Natal Section -->
+    <section id="natal" class="section">
+        <div class="container">
+            <h1 class="page-title"><i class="fa-solid fa-cupcake" aria-hidden="true" style="margin-right:0.5rem; color: #F7A7A1;"></i>Natal</h1>
+            <p class="page-subtitle">Natal hohoho :)</p>
+            <div class="category-section">
+                <h2>natal lista 1</h2>
+                <div class="grid grid-2" id="natal-grid"></div>
+            </div>
+            <div class="category-section">
+                <h2 class="">natal lista 2</h2>
+                <div class="grid grid-2" id=""></div>
+            </div>
+            <div class="category-section">
+                <h2>natal lista3</h2>
+                <div class="grid grid-2" id=""></div>
+            </div>
+            <div class="info-box payment-note">
+                <h3>📋 Informações Importantes</h3>
+                <ul class="docinho">
+                    <li>É necessário o pagamento à vista de 50% do valor para garantir o pedido</li>
+                    <li>Quantidade mínima: 25 unidades por sabor</li>
+                    <li>Todos os doces são feitos artesanalmente</li>
+                    <li>Prazo de entrega: consultar disponibilidade</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 	<!-- pronta entrega Section -->
 	<section id="pronta-entrega" class="section">
 	  <div class="container">
@@ -495,6 +549,9 @@
 	</section>
 		<!-- Contato Section -->
 	<section id="contato" class="section">
+		<div class="container">
+			<img src="img/jojoreal.png" alt="Jojo" class="img-div-doces" loading="lazy" aria-hidden="true">
+		</div>
 		<div class="container">
 			<h1 class="page-title">Sobre a Jojo Docinhos 🍰</h1>
 			<p>A Jojo Docinhos surgiu durante a pandemia, quando eu e minha mãe começamos a produzir docinhos e bolos para familiares e amigos. O que no início
@@ -662,6 +719,38 @@ function updateSaboresTitle() {
         }
     }
 }
+
+        // Função para controlar o loading das imagens
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('load', function() {
+                const loaderContainer = this.previousElementSibling;
+                if (loaderContainer && loaderContainer.classList.contains('loader-container')) {
+                    loaderContainer.classList.add('hidden');
+                    this.classList.add('loaded');
+                }
+            });
+
+            img.addEventListener('error', function() {
+                const loaderContainer = this.previousElementSibling;
+                if (loaderContainer && loaderContainer.classList.contains('loader-container')) {
+                    loaderContainer.innerHTML = '<p style="color: #ff6b9d; font-weight: bold;">Erro ao carregar</p>';
+                }
+            });
+
+            // Simular carregamento com delay (remover em produção)
+            img.addEventListener('load', function() {
+                // Imagem carregada com sucesso
+            });
+        });
+
+        // Timeout de segurança (opcional)
+        setTimeout(() => {
+            document.querySelectorAll('.loader-container:not(.hidden)').forEach(loader => {
+                loader.classList.add('hidden');
+                loader.nextElementSibling.classList.add('loaded');
+            });
+        }, 5000); // 5 segundos de timeout
+
 
 </script>
 

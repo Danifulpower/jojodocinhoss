@@ -77,9 +77,13 @@ let produtos = {
     },
     salgados: [],
     tortasSalgadas: [],
-    especiais: { tortas: [], bolosCaseiros: [], kits: [] },
-	prontaEntrega: [] 
-};
+	    especiais: { tortas: [], bolosCaseiros: [], kits: [] },
+		prontaEntrega: [],
+		natal: [],
+		pascoa: [],
+		panetone: [],
+		ovos: []
+	};
 
 // ===== FUNÇÃO PARA CARREGAR PRODUTOS DO GOOGLE SHEETS =====
 window.loadProducts = function(productData) {
@@ -124,10 +128,24 @@ window.loadProducts = function(productData) {
         }
     }
 
-    // Processar pronta entrega
-    if (productData.pronta_entrega) {
-        produtos.prontaEntrega  = productData.pronta_entrega;
-    }
+	    // Processar pronta entrega
+	    if (productData.pronta_entrega) {
+	        produtos.prontaEntrega  = productData.pronta_entrega;
+	    }
+	    
+	    // Processar novos produtos
+	    if (productData.natal) {
+	        produtos.natal = productData.natal;
+	    }
+	    if (productData.pascoa) {
+	        produtos.pascoa = productData.pascoa;
+	    }
+	    if (productData.panetone) {
+	        produtos.panetone = productData.panetone;
+	    }
+	    if (productData.ovos) {
+	        produtos.ovos = productData.ovos;
+	    }
     
     
     // Processar Especiais (agrupar por subcategoria)
@@ -174,10 +192,16 @@ window.loadProducts = function(productData) {
     if (currentSection) {
         const sectionId = currentSection.id;
         if (sectionId === 'doces') loadDoces();
-        if (sectionId === 'bolos') loadBolos();
-        if (sectionId === 'salgados') loadSalgados();
-        if (sectionId === 'especiais') loadEspeciais();
-        if (sectionId === 'pronta-entrega') loadProntaEntrega();
+	        if (sectionId === 'bolos') loadBolos();
+	        if (sectionId === 'salgados') loadSalgados();
+	        if (sectionId === 'especiais') loadEspeciais();
+	        if (sectionId === 'kits') loadkits();
+	        if (sectionId === 'pronta-entrega') loadProntaEntrega();
+	        // Novos produtos
+	        if (sectionId === 'natal') loadNatal();
+	        if (sectionId === 'pascoa') loadPascoa();
+	        if (sectionId === 'panetone') loadPanetone();
+	        if (sectionId === 'ovos') loadOvos();
     }
 };
 
@@ -262,9 +286,15 @@ function showSection(sectionId) {
                 break;
             case "salgados": loadSalgados(); break;
             case "especiais": loadEspeciais(); break;
-            case "pronta-entrega": loadProntaEntrega(); break;
-            case "pedido": showCartPedido(); break;
-        }
+	            case "kits": loadkits(); break;
+	            case "pronta-entrega": loadProntaEntrega(); break;
+	            // Novos produtos
+	            case "natal": loadNatal(); break;
+	            case "pascoa": loadPascoa(); break;
+	            case "panetone": loadPanetone(); break;
+	            case "ovos": loadOvos(); break;
+	            case "pedido": showCartPedido(); break;
+	        }
     }
 }
 
@@ -288,7 +318,7 @@ function loadProntaEntrega() {
 
         return `
             <div class="card product-card">
-                <img class="img-div-doces" src="${produto.imagem}" alt="${produto.nome}${OBS}">
+				<img class="img-div-doces" src="${produto.imagem}" alt="${produto.nome}${OBS}">
                 <h3 class="product-title">${produto.nome}</h3>
                 <p class="product-price">R$ ${produto.preco.toFixed(2)}</p>
                 <p class="product-description">Disponível: ${produto.disponivel} unidades</p>
@@ -512,8 +542,8 @@ function loadDoceCategory(categoria, containerId) {
             <div class="card product-card">
                 <div class="">
                 <img class="img-div-doces" src="${doce.imagem}" alt="${doce.nome}">
-                <h3 class="product-title">${doce.nome}</h3>
-				<p class="product-description">Mínimo: ${doce.minimo} unidades</p>
+                <h3 class="product-title">${doce.nome}</h3><br>
+				<!--<p class="product-description">Mínimo: ${doce.minimo} unidades</p>-->
                 <p class="product-price" data-preco-unitario="${doce.preco / 100}">R$ ${doce.preco.toFixed(2)} / cento</p>
                 
                 <div class="quantity-input">
@@ -888,11 +918,61 @@ function updateSalgadoSabor(key, sabor) {
 function loadEspeciais() {
     loadEspecialCategory('tortas', 'especiais-tortas-lista');
     loadEspecialCategory('bolosCaseiros', 'especiais-bolos-caseiros-lista');
-    loadEspecialCategory('kits', 'especiais-kits-lista');
-
+   
 }
 
 function loadEspecialCategory(categoria, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    
+    container.innerHTML = produtos.especiais[categoria].map((item, index) => {
+        const key = `${categoria}-${index}`;
+        // Alterado o valor inicial para 0
+        const quantidade = quantities[key] || 0;
+        const precoTotal = (item.preco * quantidade).toFixed(2);
+
+
+        return `
+            <div class="card product-card">
+                <img class="img-div-doces" src="${item.imagem}" alt="${item.nome}" >
+                <h3 class="product-title">${item.nome}</h3>
+                ${item.fatias ? `<p class="product-description">${item.fatias} fatias</p>` : ''}
+                ${item.itens ? `<p class="product-description">${item.itens.join(', ')}</p>` : ''}
+                <p class="product-price" data-preco-unitario="${item.preco}">R$ ${item.preco.toFixed(2)}</p>
+                
+                <div class="quantity-controls">
+                    <span>Quantidade:</span>
+                    <div class="quantity-input">
+                        <button class="quantity-btn" onclick="updateQuantity('${key}', -1, 0)" ${quantidade <= 0 ? 'disabled' : ''}>
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <input type="number" class="quantity-value" value="${quantidade}" min="0" 
+                               data-key="${key}" onblur="updateQuantityInput('${key}', this.value, 0, event)"
+                               onkeyup="updateQuantityInput('${key}', this.value, 0, event)" onkeydown="allowOnlyNumbers(event)">
+                        <button class="quantity-btn" onclick="updateQuantity('${key}', 1, 0)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="border-top: 1px solid #f0f0f0; padding-top: 1rem; margin-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <span class="total-price" style="font-weight: bold; font-size: 1.1rem;">Total: R$ ${precoTotal}</span>
+                    </div>
+                    <button class="btn" onclick="addEspecialToCart('${categoria}', ${index})">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function loadkits(){
+loadkitsCategory('kits', 'especiais-kits-lista');
+}
+
+function loadkitsCategory(categoria, containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
     
@@ -1067,6 +1147,9 @@ function addEspecialToCart(categoria, index) {
     quantities[key] = 0;
     loadEspecialCategory(categoria, `especiais-${categoria}-lista`);
 }
+
+
+
 
 function updateCartCount() {
     const count = carrinho.reduce((total, item) => total + item.quantidade, 0);
@@ -1947,4 +2030,156 @@ function initBackToTop() {
             behavior: 'smooth' // Rolagem suave e rápida
         });
     });
+}
+
+//======================================================
+//natal 05112025
+//======================================================
+
+function loadNatal() {
+    loadNatalCategory('tradicionais', 'doces-tradicionais-lista');
+    loadNatalCategory('especiais', 'doces-especiais-lista');
+    loadNatalCategory('gourmet', 'doces-gourmet-lista');
+
+}
+
+function loadNatalCategory() {
+    const container = document.getElementById("natal-grid");
+    if (!container) return;
+
+    if (produtos.natal.length === 0) {
+        container.innerHTML = '<p class="empty-message">Nenhum produto de Natal disponível no momento.</p>';
+        return;
+    }
+
+    container.innerHTML = produtos.natal.map((produto, index) => {
+        const key = `natal-${index}`;
+        const quantidade = quantities[key] || 0;
+        const precoTotal = (produto.preco * quantidade).toFixed(2);
+
+        return `
+            <div class="card product-card">
+                <img src="${produto.imagem}" alt="${produto.nome}" class="product-image">
+                <div class="card-content">
+                    <h3 class="product-title">${produto.nome}</h3>
+                    <p class="product-price">R$ ${produto.preco.toFixed(2)}</p>
+                    <p class="product-details">Sabor: ${produto.sabor}</p>
+                    <p class="product-details">Recheio: ${produto.recheio}</p>
+                    <p class="product-details">Cobertura: ${produto.cobertura}</p>
+                    <div class="quantity-selector">
+                        <button onclick="changeQuantity('${key}', -1, ${produto.preco})">-</button>
+                        <span id="quantity-${key}">${quantidade}</span>
+                        <button onclick="changeQuantity('${key}', 1, ${produto.preco})">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('${produto.nome}', quantities['${key}'], ${produto.preco})">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function loadPascoa() {
+    const container = document.getElementById("pascoa-grid");
+    if (!container) return;
+
+    if (produtos.pascoa.length === 0) {
+        container.innerHTML = '<p class="empty-message">Nenhum produto de Páscoa disponível no momento.</p>';
+        return;
+    }
+
+    container.innerHTML = produtos.pascoa.map((produto, index) => {
+        const key = `pascoa-${index}`;
+        const quantidade = quantities[key] || 0;
+        const precoTotal = (produto.preco * quantidade).toFixed(2);
+
+        return `
+            <div class="card product-card">
+                <img src="${produto.imagem}" alt="${produto.nome}" class="product-image">
+                <div class="card-content">
+                    <h3 class="product-title">${produto.nome}</h3>
+                    <p class="product-price">R$ ${produto.preco.toFixed(2)}</p>
+                    <p class="product-details">Sabor: ${produto.sabor}</p>
+                    <p class="product-details">Recheio: ${produto.recheio}</p>
+                    <p class="product-details">Cobertura: ${produto.cobertura}</p>
+                    <div class="quantity-selector">
+                        <button onclick="changeQuantity('${key}', -1, ${produto.preco})">-</button>
+                        <span id="quantity-${key}">${quantidade}</span>
+                        <button onclick="changeQuantity('${key}', 1, ${produto.preco})">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('${produto.nome}', quantities['${key}'], ${produto.preco})">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Lógica de Bolos para Panetone e Ovos
+function loadPanetone() {
+    const container = document.getElementById("panetone-grid");
+    if (!container) return;
+
+    if (produtos.panetone.length === 0) {
+        container.innerHTML = '<p class="empty-message">Nenhum panetone disponível no momento.</p>';
+        return;
+    }
+
+    container.innerHTML = produtos.panetone.map((produto, index) => {
+        const key = `panetone-${index}`;
+        const quantidade = quantities[key] || 0;
+        const precoTotal = (produto.preco * quantidade).toFixed(2);
+
+        return `
+            <div class="card product-card">
+                <img src="${produto.imagem}" alt="${produto.nome}" class="product-image">
+                <div class="card-content">
+                    <h3 class="product-title">${produto.nome}</h3>
+                    <p class="product-price">R$ ${produto.preco.toFixed(2)}</p>
+                    <p class="product-details">Sabor: ${produto.sabor}</p>
+                    <p class="product-details">Recheio: ${produto.recheio}</p>
+                    <p class="product-details">Cobertura: ${produto.cobertura}</p>
+                    <div class="quantity-selector">
+                        <button onclick="changeQuantity('${key}', -1, ${produto.preco})">-</button>
+                        <span id="quantity-${key}">${quantidade}</span>
+                        <button onclick="changeQuantity('${key}', 1, ${produto.preco})">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('${produto.nome}', quantities['${key}'], ${produto.preco})">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function loadOvos() {
+    const container = document.getElementById("ovos-grid");
+    if (!container) return;
+
+    if (produtos.ovos.length === 0) {
+        container.innerHTML = '<p class="empty-message">Nenhum ovo de Páscoa disponível no momento.</p>';
+        return;
+    }
+
+    container.innerHTML = produtos.ovos.map((produto, index) => {
+        const key = `ovos-${index}`;
+        const quantidade = quantities[key] || 0;
+        const precoTotal = (produto.preco * quantidade).toFixed(2);
+
+        return `
+            <div class="card product-card">
+                <img src="${produto.imagem}" alt="${produto.nome}" class="product-image">
+                <div class="card-content">
+                    <h3 class="product-title">${produto.nome}</h3>
+                    <p class="product-price">R$ ${produto.preco.toFixed(2)}</p>
+                    <p class="product-details">Sabor: ${produto.sabor}</p>
+                    <p class="product-details">Recheio: ${produto.recheio}</p>
+                    <p class="product-details">Cobertura: ${produto.cobertura}</p>
+                    <div class="quantity-selector">
+                        <button onclick="changeQuantity('${key}', -1, ${produto.preco})">-</button>
+                        <span id="quantity-${key}">${quantidade}</span>
+                        <button onclick="changeQuantity('${key}', 1, ${produto.preco})">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('${produto.nome}', quantities['${key}'], ${produto.preco})">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        `;
+    }).join('');
 }
