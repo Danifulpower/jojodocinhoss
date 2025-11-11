@@ -15,6 +15,40 @@ body {
 }
 
 
+  .sobre-jojo {
+    max-width: 100%;
+    margin: 60px auto;
+    border-right: 2rem;
+    border-left: 2rem;
+    padding: 40px;
+    background: #fff8f8;
+    border-radius: 25px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    color: #5a3e36;
+    line-height: 2;
+  }
+
+  .sobre-jojo .page-title {
+    font-size: 2.4rem;
+    color: #d75a7e;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+  }
+
+  .sobre-jojo p {
+    font-size: 1.15rem;
+    margin-bottom: 25px;
+  }
+
+  .sobre-jojo .page-subtitle {
+    font-weight: 600;
+    color: #c24c6e;
+    margin-top: 40px;
+    font-size: 1.2rem;
+  }
+
 
 ul {
     list-style: none; /* Remove os marcadores padrão do <ul> */
@@ -1053,11 +1087,20 @@ div.img-div-doces{
     transition: opacity 0.3s ease;
 }
 
+.arredonda_img {
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 4px solid #ffd6e0;
+}
+
 /* Logo responsivo */
 .logo-container {
     display: flex;
     justify-content: center;
     padding: 0rem;
+	margin-bottom: 1rem;
+	
 }
 
 .logo {
