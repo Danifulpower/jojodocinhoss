@@ -249,11 +249,11 @@ let boloConfig = {
 // ===== NAVEGAÇÃO =====
 function showSection(sectionId) {
     closeMobileMenu();
-    hideAddressModal(); // Garante que o modal de endereço feche ao trocar de seção
+    hideAddressModal();
     
     if (sectionId === "pedido" && carrinho.length === 0) {
         sectionId = "home";
-        showAlert("Seu carrinho está vazio! Adicione itens antes de finalizar.", "Carrinho Vazio");
+        showError("Seu carrinho está vazio! Adicione itens antes de finalizar.", "Carrinho Vazio");
     }
     
     document.querySelectorAll(".section").forEach(section => {
@@ -278,9 +278,8 @@ function showSection(sectionId) {
             case "bolos": 
                 loadBolos(); 
                 // Mostra o alerta de bolo após um pequeno delay
-                setTimeout(() => {
-                   // if (shouldShowBoloAlert()) {
-                        showBoloAlert();
+		 setTimeout(async () => {
+				await showBoloAlert();
                    // }
                 }, 500);
                 break;
@@ -297,7 +296,44 @@ function showSection(sectionId) {
 	        }
     }
 }
-
+async function showBoloAlert() {
+    return new Promise((resolve) => {
+        const overlay = document.getElementById('customAlertOverlay');
+        const titleEl = document.getElementById('alertTitle');
+        const messageEl = document.getElementById('alertMessage');
+        const confirmBtn = document.getElementById('alertConfirmBtn');
+        const icon = overlay.querySelector('.alert-icon');
+        
+        // Configurar como informação
+        titleEl.textContent = "Informações Importantes - Bolos";
+        messageEl.innerHTML = `
+            <ul style="text-align: left; padding-left: 1rem; margin: 0;">
+                <li>É necessário o pagamento à vista de 50% do valor para garantir o pedido</li>
+                <li>Encomendas de bolo com no mínimo dois dias de antecedência</li>
+                <li>Para bolos com topo, mínimo cinco dias</li>
+                <li>Topo é pago a parte conforme orçamento</li>
+                <li>Escolha até 2 sabores para seu bolo</li>
+                <li>Caso seja 1 sabor marcar opção "Apenas 1 sabor"</li>
+            </ul>
+        `;
+        
+        icon.className = 'alert-icon info';
+        icon.innerHTML = '<i class="fas fa-info-circle"></i>';
+        confirmBtn.textContent = 'Entendi';
+        
+        // Remover event listeners anteriores
+        const newConfirmBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+        
+        // Configurar novo listener
+        newConfirmBtn.onclick = function() {
+            hideCustomAlert();
+            resolve(true);
+        };
+        
+        showCustomAlert();
+    });
+}
 // ===== FUNÇÕES DE CARREGAMENTO =====
 
 function loadProntaEntrega() {
@@ -422,19 +458,18 @@ function updateTotalProntaEntrega(key) {
     }
 }
 
-function addProntaEntregaToCart(index) {
+async function addProntaEntregaToCart(index) {
     const produto = produtos.prontaEntrega[index];
     const key = `pronta-entrega-${index}`;
     const quantidade = quantities[key] || 0;
 
-    // **NOVA VALIDAÇÃO:** Alerta se a quantidade for zero ou menor
     if (quantidade <= 0) {
-        showAlert('A quantidade deve ser maior que zero.', "Quantidade Inválida");
+        await showError('A quantidade deve ser maior que zero.', "Quantidade Inválida");
         return;
     }
 
     if (quantidade > produto.disponivel) {
-        showAlert(`Não há itens suficientes. Disponível: ${produto.disponivel}`, "Estoque Insuficiente");
+        await showError(`Não há itens suficientes. Disponível: ${produto.disponivel}`, "Estoque Insuficiente");
         return;
     }
 
@@ -459,25 +494,25 @@ function addProntaEntregaToCart(index) {
 
     if (typeof window.updateProntaEntregaPedido === 'function') {
         window.updateProntaEntregaPedido(produto.rowIndex, novoPedido)
-            .then(() => {
+            .then(async () => {
                 console.log('Estoque atualizado na planilha');
-                showToast(`${quantidade} unidade(s) de ${produto.nome} adicionada(s) ao carrinho!`);
+                await showSuccess(`${quantidade} unidade(s) de ${produto.nome} adicionada(s) ao carrinho!`);
             })
-            .catch(err => {
+            .catch(async (err) => {
                 console.error('Erro ao atualizar estoque:', err);
                 produtos.prontaEntrega[index].pedido = produto.pedido;
                 produtos.prontaEntrega[index].disponivel = produto.disponivel;
-                showAlert('Erro ao atualizar estoque. Tente novamente.', "Erro");
+                await showError('Erro ao atualizar estoque. Tente novamente.', "Erro");
                 return;
             });
     } else {
-        showToast(`${quantidade} unidade(s) de ${produto.nome} adicionada(s) ao carrinho!`);
+    updateCartCount();
+    //    await showSuccess(`${quantidade} unidade(s) de ${produto.nome} adicionada(s) ao carrinho!`);
+    await showSuccess(`${quantidade} unidade(s) de ${produto.nome} adicionada(s) ao carrinho!`, "Item Adicionado");
     }
 
-    updateCartCount();
-    showAlert(`${quantidade} unidade(s) de ${produto.nome} adicionada(s) ao carrinho!`, "Item Adicionado");
     
-    quantities[key] = 0; // Resetar para 0
+    quantities[key] = 0;
     loadProntaEntrega();
     updateProntaEntregaCard(index);
 }
@@ -745,14 +780,14 @@ function updateBoloResumo() {
     }
 }
 
-function addBoloToCart() {
+async function addBoloToCart() {
     const requiredSabores = boloConfig.apenasUmSabor ? 1 : 2;
     
     if (!boloConfig.tamanho || boloConfig.sabores.length !== requiredSabores) {
         const message = boloConfig.apenasUmSabor 
             ? 'Por favor, selecione o tamanho e exatamente 1 sabor.' 
             : 'Por favor, selecione o tamanho e exatamente 2 sabores.';
-        showAlert(message, "Bolo Incompleto");
+        await showError(message, "Bolo Incompleto");
         return;
     }
     
@@ -771,7 +806,7 @@ function addBoloToCart() {
     carrinho.push(item);
     updateCartCount();
     
-    showAlert(`Bolo ${tamanho.nome} com sabores ${item.detalhes.split('|')[2].split(':')[1].trim()} adicionado ao carrinho!`, "Bolo Adicionado");
+    await showSuccess(`Bolo ${tamanho.nome} com sabores ${item.detalhes.split('|')[2].split(':')[1].trim()} adicionado ao carrinho!`, "Bolo Adicionado");
     
     // Resetar configuração do bolo
     boloConfig = { 
@@ -1020,21 +1055,16 @@ function loadkitsCategory(categoria, containerId) {
 }
 
 // ===== FUNÇÕES DO CARRINHO =====
-function addDoceToCart(categoria, index) {
+async function addDoceToCart(categoria, index) {
     const doce = produtos.doces[categoria][index];
     const key = `${categoria}-${index}`;
-    // Alterado o valor inicial para 0
     const quantidade = quantities[key] || 0;
 
-    // **NOVA VALIDAÇÃO:** Se a quantidade for menor ou igual a zero, informa alerta
     if (quantidade <= 0) {
-        showAlert('A quantidade deve ser maior que zero.', "Quantidade Inválida");
-        // Recarregar para garantir que o input se mantenha 0 ou o valor que o usuário digitou
+        await showError('A quantidade deve ser maior que zero.', "Quantidade Inválida");
         loadDoceCategory(categoria, `doces-${categoria}-lista`);
         return;
     }
-
-    // Removida a validação de quantidade mínima
 
     carrinho.push({
         id: Date.now(),
@@ -1045,30 +1075,26 @@ function addDoceToCart(categoria, index) {
     });
 
     updateCartCount();
-    showAlert(`${quantidade} unidades de ${doce.nome} adicionadas ao carrinho!`, "Item Adicionado");
+    await showSuccess(`${quantidade} unidades de ${doce.nome} adicionadas ao carrinho!`, "Item Adicionado");
     
-    // Resetar quantidade para 0
     quantities[key] = 0;
     loadDoceCategory(categoria, `doces-${categoria}-lista`);
 }
 
-function addSalgadoToCart(index) {
+
+async function addSalgadoToCart(index) {
     const salgado = produtos.salgados[index];
     const key = `salgado-${index}`;
-    // Alterado o valor inicial para 0
     const quantidade = quantities[key] || 0;
     const saborNome = quantities[`${key}-sabor`] || salgado.sabores[0].nome;
     const saborObj = salgado.sabores.find(s => s.nome === saborNome);
     const precoUnitario = saborObj ? saborObj.preco : salgado.sabores[0].preco;
 
-    // **NOVA VALIDAÇÃO:** Se a quantidade for menor ou igual a zero, informa alerta
     if (quantidade <= 0) {
-        showAlert('A quantidade deve ser maior que zero.', "Quantidade Inválida");
+        await showError('A quantidade deve ser maior que zero.', "Quantidade Inválida");
         loadSalgadoCategory();
         return;
     }
-
-    // Removida a validação de quantidade mínima
 
     carrinho.push({
         id: Date.now(),
@@ -1079,27 +1105,22 @@ function addSalgadoToCart(index) {
     });
 
     updateCartCount();
-    showAlert(`${quantidade} unidades de ${salgado.nome} (${saborNome}) adicionadas ao carrinho!`, "Item Adicionado");
+    await showSuccess(`${quantidade} unidades de ${salgado.nome} (${saborNome}) adicionadas ao carrinho!`, "Item Adicionado");
     
-    // Resetar quantidade para 0
     quantities[key] = 0;
     loadSalgadoCategory();
 }
 
-function addTortaSalgadaToCart(index) {
+async function addTortaSalgadaToCart(index) {
     const torta = produtos.tortasSalgadas[index];
     const key = `torta-salgada-${index}`;
-    // Alterado o valor inicial para 0
     const quantidade = quantities[key] || 0;
 
-    // **NOVA VALIDAÇÃO:** Se a quantidade for menor ou igual a zero, informa alerta
     if (quantidade <= 0) {
-        showAlert('A quantidade deve ser maior que zero.', "Quantidade Inválida");
+        await showError('A quantidade deve ser maior que zero.', "Quantidade Inválida");
         loadTortaSalgadaCategory();
         return;
     }
-    
-    // Removida a validação de quantidade mínima
 
     carrinho.push({
         id: Date.now(),
@@ -1110,27 +1131,22 @@ function addTortaSalgadaToCart(index) {
     });
 
     updateCartCount();
-    showAlert(`${quantidade} unidade(s) de ${torta.nome} adicionada(s) ao carrinho!`, "Item Adicionado");
+    await showSuccess(`${quantidade} unidade(s) de ${torta.nome} adicionada(s) ao carrinho!`, "Item Adicionado");
     
-    // Resetar quantidade para 0
     quantities[key] = 0;
     loadTortaSalgadaCategory();
 }
 
-function addEspecialToCart(categoria, index) {
+async function addEspecialToCart(categoria, index) {
     const itemEspecial = produtos.especiais[categoria][index];
     const key = `${categoria}-${index}`;
-    // Alterado o valor inicial para 0
     const quantidade = quantities[key] || 0;
 
-    // **NOVA VALIDAÇÃO:** Se a quantidade for menor ou igual a zero, informa alerta
     if (quantidade <= 0) {
-        showAlert('A quantidade deve ser maior que zero.', "Quantidade Inválida");
+        await showError('A quantidade deve ser maior que zero.', "Quantidade Inválida");
         loadEspecialCategory(categoria, `especiais-${categoria}-lista`);
         return;
     }
-
-    // Removida a validação de quantidade mínima
 
     carrinho.push({
         id: Date.now(),
@@ -1141,9 +1157,8 @@ function addEspecialToCart(categoria, index) {
     });
 
     updateCartCount();
-    showAlert(`${quantidade} unidade(s) de ${itemEspecial.nome} adicionada(s) ao carrinho!`, "Item Adicionado");
+    await showSuccess(`${quantidade} unidade(s) de ${itemEspecial.nome} adicionada(s) ao carrinho!`, "Item Adicionado");
     
-    // Resetar quantidade para 0
     quantities[key] = 0;
     loadEspecialCategory(categoria, `especiais-${categoria}-lista`);
 }
@@ -1278,41 +1293,37 @@ function showCart() {
     cartSummary.appendChild(finalizarBtn);
 }
 
-function removeFromCart(index) {
-    showConfirmation(
+async function removeFromCart(index) {
+    const confirmed = await showConfirmation(
         "Tem certeza que deseja remover este item do carrinho?",
-        function() {
-            carrinho.splice(index, 1);
-            updateCartCount();
-            showCart();
-            showCartPedido();
-            showToast("Item removido do carrinho!");
-        },
-        function() {
-            // Ação de cancelamento (opcional)
-        },
         "Remover Item"
     );
+    
+    if (confirmed) {
+        carrinho.splice(index, 1);
+        updateCartCount();
+        showCart();
+        showCartPedido();
+        await showSuccess("Item removido do carrinho!");
+    }
 }
 
-function clearCart() {
-    showConfirmation(
+async function clearCart() {
+    const confirmed = await showConfirmation(
         'Tem certeza que deseja limpar todo o carrinho? Esta ação não pode ser desfeita.',
-        function() {
-            carrinho = [];
-            quantities = {};
-            updateCartCount();
-            showCart();
-            togglePedidoSection();
-            toggleCart();
-            showSection('home');
-            showToast('Carrinho limpo com sucesso!');
-        },
-        function() {
-            // Ação de cancelamento
-        },
         "Limpar Carrinho"
     );
+    
+    if (confirmed) {
+        carrinho = [];
+        quantities = {};
+        updateCartCount();
+        showCart();
+        togglePedidoSection();
+        toggleCart();
+        showSection('home');
+        await showSuccess('Carrinho limpo com sucesso!');
+    }
 }
 
 //Retirada
@@ -1370,7 +1381,7 @@ function atualizarTaxaCartao() {
 
 function finalizarPedido() {
     if (carrinho.length === 0) {
-        showAlert("Seu carrinho está vazio! Adicione itens antes de finalizar.", "Carrinho Vazio");
+        showError("Seu carrinho está vazio! Adicione itens antes de finalizar.", "Carrinho Vazio");
         return;
     }
     
@@ -1383,22 +1394,21 @@ function finalizarPedidoFromCart() {
     showSection('pedido');
 }
 
-function enviarPedidoWhatsApp() {
+async function enviarPedidoWhatsApp() {
     if (carrinho.length === 0) {
-        showToast("Seu carrinho está vazio!", 'error');
+        await showError("Seu carrinho está vazio!", 'error');
         return;
     }
 
     if (!validateForm()) return;
 
     const nome = sanitizeInput(document.getElementById("nome").value);
-    //const telefone = sanitizeInput(document.getElementById("telefone").value);
     const endereco = sanitizeInput(document.getElementById("endereco").value);
     const pagamento = document.getElementById("pagamento").value;
     const dataEntrega = document.getElementById("data-entrega").value;
 
     if (!nome || !pagamento || !dataEntrega) {
-        showAlert("Por favor, preencha todos os campos obrigatórios.", "Campos Obrigatórios");
+        await showError("Por favor, preencha todos os campos obrigatórios.", "Campos Obrigatórios");
         return;
     }
 
@@ -1406,51 +1416,50 @@ function enviarPedidoWhatsApp() {
     const { total, sinal, taxa } = calcularTotais();
     const dataSelecionada = new Date(dataEntrega);
     const agora = new Date();
-	const hasProntaEntrega = carrinho.some(item => item.categoria === 'Pronta Entrega');
+    const hasProntaEntrega = carrinho.some(item => item.categoria === 'Pronta Entrega');
 
     if (!hasProntaEntrega && dataSelecionada <= agora) {
-        showToast('Por favor, selecione uma data e hora futuras', 'error');
+        await showError('Por favor, selecione uma data e hora futuras', 'error');
         return;
     }
 
-    showConfirmation(
+    const confirmed = await showConfirmation(
         "Deseja enviar este pedido para o WhatsApp?",
-        function() {
-            let mensagem = `Olá, gostaria de fazer um pedido:\n\n`;
-            mensagem += `*Nome:* ${nome}\n`;
-            if (endereco && endereco.trim() !== "") {
-			  mensagem += `*Endereço de Entrega:* ${endereco}\n`;
-			} else {
-			  mensagem += `*Retirada no local*\n`;
-			}
-            mensagem += `*Forma de Pagamento:* ${pagamento}\n`;
-            mensagem += `*Data e Horário de Entrega:* ${dataFormatada}\n\n`;
-            
-            if (taxa > 0) mensagem += `*Taxa de cartão (5%):* R$ ${taxa.toFixed(2)}\n`;
-            
-            mensagem += `*Itens do Pedido:*\n`;
-            carrinho.forEach(item => {
-                mensagem += `- ${item.nome} ${item.detalhes ? `(${item.detalhes})` : ''} (Qtd: ${item.quantidade}) - R$ ${(item.preco * item.quantidade).toFixed(2)}\n`;
-            });
-
-            mensagem += `\n*Total:* R$ ${total.toFixed(2)}\n`;
-            mensagem += `*Sinal (50%):* R$ ${sinal.toFixed(2)}\n`;
-
-            const numeroWhatsApp = "5551993088251";
-            const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
-            window.open(linkWhatsApp, '_blank');
-            
-            // Limpar carrinho após envio
-            carrinho = [];
-            quantities = {};
-            updateCartCount();
-            showCartPedido();
-        },
-        function() {
-            // Ação de cancelamento
-        },
         "Enviar Pedido"
     );
+
+    if (confirmed) {
+        let mensagem = `Olá, gostaria de fazer um pedido:\n\n`;
+        mensagem += `*Nome:* ${nome}\n`;
+        if (endereco && endereco.trim() !== "") {
+            mensagem += `*Endereço de Entrega:* ${endereco}\n`;
+        } else {
+            mensagem += `*Retirada no local*\n`;
+        }
+        mensagem += `*Forma de Pagamento:* ${pagamento}\n`;
+        mensagem += `*Data e Horário de Entrega:* ${dataFormatada}\n\n`;
+        
+        if (taxa > 0) mensagem += `*Taxa de cartão (5%):* R$ ${taxa.toFixed(2)}\n`;
+        
+        mensagem += `*Itens do Pedido:*\n`;
+        carrinho.forEach(item => {
+            mensagem += `- ${item.nome} ${item.detalhes ? `(${item.detalhes})` : ''} (Qtd: ${item.quantidade}) - R$ ${(item.preco * item.quantidade).toFixed(2)}\n`;
+        });
+
+        mensagem += `\n*Total:* R$ ${total.toFixed(2)}\n`;
+        mensagem += `*Sinal (50%):* R$ ${sinal.toFixed(2)}\n`;
+
+        const numeroWhatsApp = "5551993088251";
+        const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+        window.open(linkWhatsApp, '_blank');
+        
+        // Limpar carrinho após envio
+        carrinho = [];
+        quantities = {};
+        updateCartCount();
+        showCartPedido();
+        await showSuccess("Pedido enviado com sucesso!");
+    }
 }
 
 function formatarData(dataISO) {
@@ -1463,33 +1472,32 @@ function formatarData(dataISO) {
     return `${dia}/${mes}/${ano} às ${horas}:${minutos}`;
 }
 
-function validateForm() {
+async function validateForm() {
     const nome = document.getElementById("nome").value.trim();
-    //const telefone = document.getElementById("telefone").value.trim();
     const dataEntrega = document.getElementById("data-entrega").value;
     const pagamento = document.getElementById("pagamento").value;
     
     if (!nome) {
-        showToast('Por favor, informe seu nome', 'error');
+        await showError('Por favor, informe seu nome');
         return false;
     }
     
     if (!dataEntrega) {
-        showToast('Por favor, selecione a data de entrega', 'error');
+        await showError('Por favor, selecione a data de entrega');
         return false;
     }
     
     const dataSelecionada = new Date(dataEntrega);
     const agora = new Date();
-	const hasProntaEntrega = carrinho.some(item => item.categoria === 'Pronta Entrega');
+    const hasProntaEntrega = carrinho.some(item => item.categoria === 'Pronta Entrega');
     
     if (!hasProntaEntrega && dataSelecionada <= agora) {
-        showToast('Por favor, selecione uma data e hora futuras', 'error');
+        await showError('Por favor, selecione uma data e hora futuras');
         return false;
     }
     
     if (!pagamento) {
-        showToast('Por favor, selecione a forma de pagamento', 'error');
+        await showError('Por favor, selecione a forma de pagamento');
         return false;
     }
     
@@ -1602,19 +1610,15 @@ function initQuantityButtons() {
     });
 }
 
-function updateQuantityInput(key, value, min = 0, event) { // Alterado min default para 0
+async function updateQuantityInput(key, value, min = 0, event) {
     if (event.key === 'Enter' || event.type === 'blur') {
-        let newQuantity = parseInt(value) || 0; // Alterado inicial para 0
+        let newQuantity = parseInt(value) || 0;
         
-        // Não permite quantidade menor que zero
         if (newQuantity < 0) newQuantity = 0;
         
-        // **NOVA VALIDAÇÃO:** Se a quantidade for zero, informa alerta (mas ainda permite que fique 0)
         if (newQuantity === 0) {
-            showAlert('A quantidade deve ser maior que zero.', "Quantidade Inválida");
+            await showInfo('A quantidade deve ser maior que zero.', "Quantidade Inválida");
         }
-        
-        // Removidas todas as outras validações de mínimo
         
         quantities[key] = newQuantity;
         
@@ -1623,13 +1627,11 @@ function updateQuantityInput(key, value, min = 0, event) { // Alterado min defau
             inputElement.value = newQuantity;
             const minusButton = inputElement.parentElement.querySelector('.quantity-btn:first-child');
             if (minusButton) {
-                // Desabilita se for 0
                 minusButton.disabled = newQuantity <= 0;
             }
         }
         
-        // Passa 0 como novo min
-        updateTotal(key, 0); 
+        updateTotal(key, 0);
     }
 }
 
@@ -2183,3 +2185,166 @@ function loadOvos() {
         `;
     }).join('');
 }
+/*********************************************************/
+/***********************ALERTAS**************************/
+/*********************************************************/
+
+// ===== SISTEMA DE ALERTAS PERSONALIZADOS =====
+
+// Alertas de Informação (Info)
+function showInfo(message, title = "Informação") {
+    return new Promise((resolve) => {
+        const overlay = document.getElementById('customAlertOverlay');
+        const titleEl = document.getElementById('alertTitle');
+        const messageEl = document.getElementById('alertMessage');
+        const confirmBtn = document.getElementById('alertConfirmBtn');
+        const icon = overlay.querySelector('.alert-icon');
+        
+        // Configurar como info
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        icon.className = 'alert-icon info';
+        icon.innerHTML = '<i class="fas fa-info-circle"></i>';
+        confirmBtn.textContent = 'OK';
+        
+        // Remover event listeners anteriores
+        const newConfirmBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+        
+        // Configurar novo listener
+        newConfirmBtn.onclick = function() {
+            hideCustomAlert();
+            resolve(true);
+        };
+        
+        showCustomAlert();
+    });
+}
+
+// Alertas de Erro (Error)
+function showError(message, title = "Erro") {
+    return new Promise((resolve) => {
+        const overlay = document.getElementById('customAlertOverlay');
+        const titleEl = document.getElementById('alertTitle');
+        const messageEl = document.getElementById('alertMessage');
+        const confirmBtn = document.getElementById('alertConfirmBtn');
+        const icon = overlay.querySelector('.alert-icon');
+        
+        // Configurar como erro
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        icon.className = 'alert-icon error';
+        icon.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+        confirmBtn.textContent = 'OK';
+        
+        // Remover event listeners anteriores
+        const newConfirmBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+        
+        // Configurar novo listener
+        newConfirmBtn.onclick = function() {
+            hideCustomAlert();
+            resolve(true);
+        };
+        
+        showCustomAlert();
+    });
+}
+
+// Alertas de Sucesso (Success)
+function showSuccess(message, title = "Sucesso") {
+    return new Promise((resolve) => {
+        const overlay = document.getElementById('customAlertOverlay');
+        const titleEl = document.getElementById('alertTitle');
+        const messageEl = document.getElementById('alertMessage');
+        const confirmBtn = document.getElementById('alertConfirmBtn');
+        const icon = overlay.querySelector('.alert-icon');
+        
+        // Configurar como sucesso
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        icon.className = 'alert-icon success';
+        icon.innerHTML = '<i class="fas fa-check-circle"></i>';
+        confirmBtn.textContent = 'OK';
+        
+        // Remover event listeners anteriores
+        const newConfirmBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+        
+        // Configurar novo listener
+        newConfirmBtn.onclick = function() {
+            hideCustomAlert();
+            resolve(true);
+        };
+        
+        showCustomAlert();
+    });
+}
+
+// Alertas de Confirmação (Confirmation)
+function showConfirmation(message, title = "Confirmação") {
+    return new Promise((resolve) => {
+        const overlay = document.getElementById('customConfirmationOverlay');
+        const titleEl = document.getElementById('confirmationTitle');
+        const messageEl = document.getElementById('confirmationMessage');
+        const confirmBtn = document.getElementById('confirmationConfirmBtn');
+        const cancelBtn = document.getElementById('confirmationCancelBtn');
+        
+        // Configurar confirmação
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        
+        // Remover event listeners anteriores
+        const newConfirmBtn = confirmBtn.cloneNode(true);
+        const newCancelBtn = cancelBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+        cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+        
+        // Configurar novos listeners
+        newConfirmBtn.onclick = function() {
+            hideCustomConfirmation();
+            resolve(true);
+        };
+        
+        newCancelBtn.onclick = function() {
+            hideCustomConfirmation();
+            resolve(false);
+        };
+        
+        showCustomConfirmation();
+    });
+}
+
+// Funções auxiliares para mostrar/ocultar alertas
+function showCustomAlert() {
+    const overlay = document.getElementById('customAlertOverlay');
+    overlay.classList.remove('hidden');
+}
+
+function hideCustomAlert() {
+    const overlay = document.getElementById('customAlertOverlay');
+    overlay.classList.add('hidden');
+}
+
+function showCustomConfirmation() {
+    const overlay = document.getElementById('customConfirmationOverlay');
+    overlay.classList.remove('hidden');
+}
+
+function hideCustomConfirmation() {
+    const overlay = document.getElementById('customConfirmationOverlay');
+    overlay.classList.add('hidden');
+}
+
+// Fechar alertas clicando fora (opcional)
+document.addEventListener('click', function(event) {
+    const alertOverlay = document.getElementById('customAlertOverlay');
+    const confirmOverlay = document.getElementById('customConfirmationOverlay');
+    
+    if (event.target === alertOverlay) {
+        hideCustomAlert();
+    }
+    if (event.target === confirmOverlay) {
+        hideCustomConfirmation();
+    }
+});

@@ -44,7 +44,7 @@
     <!-- Header -->
 	<header class="header" role="banner">
 		<div class="container header-container">
-            <!-- Logo para mobile (imagem) --><a href="index.html">
+            <!-- Logo para mobile (imagem) -->
             <!--<div class="mobile-logo" aria-label="Logo Jojo Docinhos">
                  <img src="img/logogrande.png" alt="Jojo Docinhos" class="mobile-logo-img" loading="lazy">
             </div></a>-->
@@ -66,6 +66,7 @@
 				<a href="#salgados" class="nav-link">Salgados</a>
 				<a href="#especiais" class="nav-link">Especiais</a>
 				<a href="#kits" class="nav-link">kits</a>
+				<a href="#natal" class="nav-link">Natal</a>
 				<a href="#pronta-entrega" class="nav-link">Pronta Entrega</a>
 				<a href="#pedido" class="nav-link" style="display: none;" id="pedido-link" aria-hidden="true">Pedido</a>
 				<a href="#contato" class="nav-link">Contato</a>		
@@ -81,10 +82,7 @@
     <div class="floating-buttons-wrapper" aria-hidden="false">
         <div class="toggle-floating-buttons" onclick="toggleFloatingButtons()" id="toggleFloatingButtons" role="button" aria-label="Recolher/expandir botões flutuantes" tabindex="0">
                 <i class="fas fa-chevron-up" id="toggleButtonsIcon" aria-hidden="true"></i>
-                <!-- Badge/contador que mostra quantos botões estão visíveis -->
-                <!--<span class="floating-count" id="floatingButtonsCount" aria-hidden="true">0</span>-->
             </div>
-
         <!-- Stacked floating actions -->
         <div class="floating-actions" aria-label="Ações rápidas">
             <!-- WhatsApp Floating Button -->
@@ -132,85 +130,84 @@
     <!-- Home Section -->
 	<section id="home" class="section active">
         <div class="logo-container">
-            <!-- Imagem centralizada do destaque (substituída conforme pedido) -->
             <img class="logo" src="img/logogrande.png" alt="Bolo Demo - Jojo Docinhos" loading="lazy">
         </div>
 		<div class="categories">
             <div class="container">
                 <h3 class="section-title">Doces artesanais feito com amor.</h2>
-                <!-- CÓDIGO HTML ATUALIZADO -->
-<div class="category-list">
-    <ul class="categories-vertical" role="list" aria-label="Categorias">
-        <li class="card category-item" role="button" tabindex="0" onclick="showSection('doces')" onkeydown="handleCategoryKey(event,'doces')" aria-label="Docinhos — Ver doces">
-            <i class="category-icon tremer" aria-hidden="true">
-			<!--<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"><path fill="#bbddf5" d="M5 21.875s1.589 5.727 2 8.482c.464 3.111 3.571 5.571 11 5.571s10.536-2.461 11-5.571c.411-2.755 2-8.482 2-8.482z"/><path fill="#662113" d="M5.094 21.969c.25 1.219.694 1.994 1.344 1.594s1.65-.193 1.344.625c-.281.75.969 1.094 1.5.656c.509-.419 1.555-.881 1.656.062c.094.875 1.168 1.11 1.656.469c.5-.656 1.875-.394 2.125.406s1.594.688 1.969.125c.355-.533.713-.885 1.312-.885V25c.6 0 .957.373 1.312.906c.375.562 1.719.675 1.969-.125s1.625-1.062 2.125-.406c.489.641 1.562.406 1.656-.469c.101-.943 1.147-.482 1.656-.062c.531.438 1.781.094 1.5-.656c-.307-.818.694-1.025 1.344-.625s1.094-.375 1.344-1.594z"/><path fill="#c1694f" d="M33 18.969c0-4.919-6.731-8.906-15.033-8.906c-8.303 0-15.033 3.987-15.033 8.906c0 3.969 9 6.031 15.033 6.031S33 23 33 18.969"/><path fill="#88c9f9" d="M18 35.5a.5.5 0 0 1-.5-.5v-8.646a.5.5 0 0 1 1 0V35a.5.5 0 0 1-.5.5m-6.699-1.268a.5.5 0 0 1-.496-.436l-1.031-7.982a.5.5 0 0 1 .432-.561a.497.497 0 0 1 .56.432l1.031 7.982a.502.502 0 0 1-.496.565m3.179.976a.5.5 0 0 1-.498-.459l-.708-8.521a.5.5 0 1 1 .997-.082l.708 8.521a.5.5 0 0 1-.457.539zm-5.959-3.041a.375.375 0 0 1-.367-.301l-1.5-7.438a.374.374 0 0 1 .293-.441c.198-.048.4.09.442.293l1.5 7.438a.374.374 0 0 1-.368.449m16.1 1.952a.5.5 0 0 1-.496-.571l1.13-7.869a.507.507 0 0 1 .566-.424a.5.5 0 0 1 .424.566l-1.13 7.869a.5.5 0 0 1-.494.429m-3.042 1.089l-.042-.002a.5.5 0 0 1-.457-.539l.708-8.521c.022-.276.292-.474.539-.457a.5.5 0 0 1 .457.539l-.708 8.521a.5.5 0 0 1-.497.459m5.983-3a.374.374 0 0 1-.368-.445l1.438-7.479a.374.374 0 1 1 .736.14l-1.438 7.479a.374.374 0 0 1-.368.305"/><path fill="#ffe8b6" d="M16.912-.011s1.087 1.144 2.175 1.167c2.268.049 4.355 1.315 4.355 3.506c0 0 5.261 0 5.443 4.674c0 0 2.655.045 3.263 4.672c.454 3.456-3.038 8.227-14.148 8.178c-9.795-.043-14.806-3.524-14.148-8.176c.634-4.48 4.354-4.673 4.354-4.673s-.636-5.843 6.529-5.842c0 0 .726-2.337 2.177-3.506"/><path fill="#ffcc4d" d="M17.91 10.504c2.936-1.108 5.623-3.115 5.533-5.841c0-.858-.327-1.568-.852-2.125c.643 2.808-3.651 6-8.399 6.506c-5.941.633-5.261-2.872-5.261-2.872l-.007.007c-.883 1.536-.717 3.159-.717 3.159c.905 2.383 5.576 2.724 9.703 1.166"/><path fill="#ffcc4d" d="M28.885 9.337c-.006-.143-.03-.268-.045-.402c-.116-.677-.453-1.506-.774-2.138q-.285-.397-.63-.702c1.109 4.426-5.563 9.749-11.93 10.982c-8.299 1.606-11.654-3.065-11.654-3.065c-.342 2.415.858 4.509 3.449 5.976c10.227 4.169 21.673-6.095 21.584-10.651"/><path fill="#dd2e44" d="m8.689 14.201l-1.181 1.614a1.003 1.003 0 0 1-1.398.216a1.003 1.003 0 0 1-.216-1.398l1.181-1.614a1.003 1.003 0 0 1 1.398-.216c.444.325.541.954.216 1.398"/><path fill="#55acee" d="m14.935 8.187l-1.956-.419a1 1 0 0 1-.768-1.187c.115-.538.65-.884 1.187-.768l1.956.419c.538.115.884.65.768 1.187a1 1 0 0 1-1.187.768"/><path fill="#77b255" d="m16.431 14.173l1.313 1.509c.361.415.317 1.05-.098 1.411a1.003 1.003 0 0 1-1.411-.098l-1.313-1.509a1.003 1.003 0 0 1 .098-1.411a1.003 1.003 0 0 1 1.411.098"/><path fill="#f4900c" d="m24.372 11.499l-1.871.707a1.003 1.003 0 0 1-1.289-.582a1.003 1.003 0 0 1 .582-1.289l1.871-.707a1.003 1.003 0 0 1 1.289.582a1.003 1.003 0 0 1-.582 1.289"/><path fill="#aa8dd8" d="m30.366 14.051l-1 1.732c-.275.476-.89.641-1.366.366a1.003 1.003 0 0 1-.366-1.366l1-1.732c.275-.476.89-.641 1.366-.366s.641.889.366 1.366"/></svg>-->
-			<img src="img/brigadeiro_ico.png" alt="Delivery" class="category-icon icon" loading="lazy" aria-hidden="true">
-			</i>
-            <h3>Docinhos</h3>
-        </li>
+			<div class="category-list">
+				<ul class="categories-vertical" role="list" aria-label="Categorias">
+					<li class="card category-item" role="button" tabindex="0" onclick="showSection('doces')" onkeydown="handleCategoryKey(event,'doces')" aria-label="Docinhos — Ver doces">
+						<i class="category-icon tremer" aria-hidden="true">
+						<a href="index.html">
+						<img src="img/brigadeiro_ico.png" alt="Delivery" class="category-icon icon" loading="lazy" aria-hidden="true">
+						</a>
+						</i>
+						<h3>Docinhos</h3>
+					</li>
 
-        <li class="card category-item" role="button" tabindex="0" onclick="showSection('bolos')" onkeydown="handleCategoryKey(event,'bolos')" aria-label="Bolos — Ver bolos">
-            <i class="category-icon tremer" aria-hidden="true">
-			<img src="img/bolo_anv_ico.png" alt="pronta-entrega" class="category-icon icon" loading="lazy" aria-hidden="true">
-			</i>
-            <h3>Bolos</h3>
-        </li>
+					<li class="card category-item" role="button" tabindex="0" onclick="showSection('bolos')" onkeydown="handleCategoryKey(event,'bolos')" aria-label="Bolos — Ver bolos">
+						<i class="category-icon tremer" aria-hidden="true">
+						<img src="img/bolo_anv_ico.png" alt="pronta-entrega" class="category-icon icon" loading="lazy" aria-hidden="true">
+						</i>
+						<h3>Bolos</h3>
+					</li>
 
-        <li class="card category-item pastel-container" role="button" tabindex="0" onclick="showSection('salgados')" onkeydown="handleCategoryKey(event,'salgados')" aria-label="Salgados — Ver salgados">
-            <i class="category-icon pastel" aria-hidden="true">
-			<img src="img/pastel_icon.png" alt="Delivery" class="category-icon icon" loading="lazy" aria-hidden="true">
-			</i>
-            <h3>Salgados</h3>
-        </li>
+					<li class="card category-item pastel-container" role="button" tabindex="0" onclick="showSection('salgados')" onkeydown="handleCategoryKey(event,'salgados')" aria-label="Salgados — Ver salgados">
+						<i class="category-icon pastel" aria-hidden="true">
+						<img src="img/pastel_icon.png" alt="Delivery" class="category-icon icon" loading="lazy" aria-hidden="true">
+						</i>
+						<h3>Salgados</h3>
+					</li>
 
-        <li class="card category-item tremer-container" role="button" tabindex="0" onclick="showSection('especiais')" onkeydown="handleCategoryKey(event,'especiais')" aria-label="Especiais — Ver especiais">
-            <i class="category-icon tremer" aria-hidden="true">
-				<img src="img/especial.png" alt="Especial" class="category-icon icon" loading="lazy" aria-hidden="true">
-			</i>
-		<h3>Especiais</h3>
-        </li>
+					<li class="card category-item tremer-container" role="button" tabindex="0" onclick="showSection('especiais')" onkeydown="handleCategoryKey(event,'especiais')" aria-label="Especiais — Ver especiais">
+						<i class="category-icon tremer" aria-hidden="true">
+							<img src="img/especial.png" alt="Especial" class="category-icon icon" loading="lazy" aria-hidden="true">
+						</i>
+					<h3>Especiais</h3>
+					</li>
 
-        <li class="card category-item" role="button" tabindex="0" onclick="showSection('kits')" onkeydown="handleCategoryKey(event,'especiais')" aria-label="Kits e Cestas — Ver kits e cestas especiais">
-            <img src="img/kitis-ico.png" alt="especiais" class="category-icon icon" loading="lazy" aria-hidden="true">
-            <div>
-                <h3>Kits e Cestas</h3>
-                <p>Presentes e kits personalizados</p>
-            </div>
-        </li>        
+					<li class="card category-item" role="button" tabindex="0" onclick="showSection('kits')" onkeydown="handleCategoryKey(event,'especiais')" aria-label="Kits e Cestas — Ver kits e cestas especiais">
+						<img src="img/kitis-ico.png" alt="especiais" class="category-icon icon" loading="lazy" aria-hidden="true">
+						<div>
+							<h3>Kits e Cestas</h3>
+							<p>Presentes e kits personalizados</p>
+						</div>
+					</li>        
 
-        <li class="card category-item" role="button" tabindex="0" onclick="showSection('pronta-entrega')" onkeydown="handleCategoryKey(event,'pronta-entrega')" aria-label="Pronta Entrega — Ver produtos disponíveis">
-            <img src="img/bis_f_ico.png" alt="pronta-entrega" class="category-icon icon" loading="lazy" aria-hidden="true">
-            <div> <!-- Mantivemos uma div aqui para agrupar o título e o parágrafo -->
-                <h3>Pronta Entrega</h3>
-                <p>Produtos disponíveis para retirada ou entrega imediata</p>
-            </div>
-        </li>
-	
-		<li class="card category-item" role="button" tabindex="0" onclick="showSection('nata')" onkeydown="handleCategoryKey(event,'especiais')" aria-label="Kits e Cestas — Ver kits e cestas especiais">
-            <img src="img/kitis-ico.png" alt="especiais" class="category-icon icon" loading="lazy" aria-hidden="true">
-            <div>
-                <h3>Natal</h3>
-                <p>Chocotones e doces natalinos</p>
-            </div>
-        </li>
+					<li class="card category-item" role="button" tabindex="0" onclick="showSection('pronta-entrega')" onkeydown="handleCategoryKey(event,'pronta-entrega')" aria-label="Pronta Entrega — Ver produtos disponíveis">
+						<img src="img/bis_f_ico.png" alt="pronta-entrega" class="category-icon icon" loading="lazy" aria-hidden="true">
+						<div> <!-- Mantivemos uma div aqui para agrupar o título e o parágrafo -->
+							<h3>Pronta Entrega</h3>
+							<p>Produtos disponíveis para retirada ou entrega imediata</p>
+						</div>
+					</li>
+				
+					<li class="card category-item" role="button" tabindex="0" onclick="showSection('nata')" onkeydown="handleCategoryKey(event,'especiais')" aria-label="Kits e Cestas — Ver kits e cestas especiais">
+						<div class="category-icon icon" loading="lazy" aria-hidden="true">🎅</div>
+						<div>
+							<h3>Natal</h3>
+							<p>Chocotones e doces natalinos</p>
+						</div>
+					</li>
 
-        <li class="card category-item" role="button" tabindex="0" onclick="showSection('pedido')" onkeydown="handleCategoryKey(event,'pedido')" aria-label="Finalizar Pedido — Ir para finalização do pedido">
-           <img src="img/reicip-ico.png" alt="Finalizar Pedido" class="category-icon icon" loading="lazy" aria-hidden="true">
-            <div>
-                <h3>Finalizar Pedido</h3>
-                <p>Confira itens e finalize sua encomenda</p>
-            </div>
-        </li>
+					<li class="card category-item" role="button" tabindex="0" onclick="showSection('pedido')" onkeydown="handleCategoryKey(event,'pedido')" aria-label="Finalizar Pedido — Ir para finalização do pedido">
+					   <img src="img/reicip-ico.png" alt="Finalizar Pedido" class="category-icon icon" loading="lazy" aria-hidden="true">
+						<div>
+							<h3>Finalizar Pedido</h3>
+							<p>Confira itens e finalize sua encomenda</p>
+						</div>
+					</li>
 
-        <li class="card category-item" role="button" tabindex="0" onclick="showSection('contato')" onkeydown="handleCategoryKey(event,'contato')" aria-label="Contato — Informações de contato">
-            <img src="img/cel_ico.png" alt="Contato" class="category-icon icon" loading="lazy" aria-hidden="true">
-            <div>
-                <h3>Contato</h3>
-                <p>Fale conosco via WhatsApp ou Instagram</p>
-            </div>
-        </li>
-    </ul>
-</div>
+					<li class="card category-item" role="button" tabindex="0" onclick="showSection('contato')" onkeydown="handleCategoryKey(event,'contato')" aria-label="Contato — Informações de contato">
+						<img src="img/cel_ico.png" alt="Contato" class="category-icon icon" loading="lazy" aria-hidden="true">
+						<div>
+							<h3>Contato</h3>
+							<p>Fale conosco via WhatsApp ou Instagram</p>
+						</div>
+					</li>
+				</ul>
+			</div>
 
             </div>
         </div>
@@ -506,33 +503,23 @@
         </div>
     </section>
     <!-- Natal Section -->
-    <section id="natal" class="section">
-        <div class="container">
-            <h1 class="page-title"><i class="fa-solid fa-cupcake" aria-hidden="true" style="margin-right:0.5rem; color: #F7A7A1;"></i>Natal</h1>
-            <p class="page-subtitle">Natal hohoho :)</p>
-            <div class="category-section">
-                <h2>natal lista 1</h2>
-                <div class="grid grid-2" id="natal-grid"></div>
-            </div>
-            <div class="category-section">
-                <h2 class="">natal lista 2</h2>
-                <div class="grid grid-2" id=""></div>
-            </div>
-            <div class="category-section">
-                <h2>natal lista3</h2>
-                <div class="grid grid-2" id=""></div>
-            </div>
-            <div class="info-box payment-note">
-                <h3>📋 Informações Importantes</h3>
-                <ul class="docinho">
-                    <li>É necessário o pagamento à vista de 50% do valor para garantir o pedido</li>
-                    <li>Quantidade mínima: 25 unidades por sabor</li>
-                    <li>Todos os doces são feitos artesanalmente</li>
-                    <li>Prazo de entrega: consultar disponibilidade</li>
-                </ul>
-            </div>
-        </div>
-    </section>
+			<section id="natal" class="section">
+			  <div class="container natal-container">
+				<h1 class="natal-title">🎅✨ Cardápio de Natal em Preparação! ✨🎁</h1>
+				<p class="natal-message">
+				  Logo novas delícias estarão disponíveis em nosso site! 🍰<br>
+				  Aguardem nossas novidades natalinas cheias de sabor e amor ❤️
+				</p>
+			  </div>
+
+			  <!-- Botão flutuante para download do PDF -->
+			  <a href="LINK_DO_SEU_PDF_AQUI.pdf" 
+				 class="float-btn-natal" 
+				 download
+				 title="Baixar Cardápio de Natal">
+				<i class="fas fa-file-download"></i>
+			  </a>
+			</section>
 	<!-- pronta entrega Section -->
 	<section id="pronta-entrega" class="section">
 	  <div class="container">
@@ -550,7 +537,7 @@
 		<!-- Contato Section -->
 	<section id="contato" class="section">
 		<div class="container logo-container">
-			<img src="img/jojobarraquinha.jpeg" alt="Jojo" class="arredonda_img" loading="lazy" aria-hidden="true">
+			<img src="img/jojobarraquinha.jpeg" alt="Jojo" class="arredonda_img logo" loading="lazy" aria-hidden="true">
 		</div>
 		<div class="container sobre-jojo">
 			  <h1 class="page-title">Sobre a Jojo Docinhos 🍰</h1>
@@ -804,7 +791,7 @@ function updateSaboresTitle() {
             </div>
         </div>
     </div>
-<!--informação para tela de bolos -->
+<!--informação para tela de bolos 
 	<div id="customAlertBolo" class="custom-alert hidden">
 		<div class="alert-content">
 			<div class="alert-icon warning">
@@ -825,7 +812,7 @@ function updateSaboresTitle() {
 				<button class="alert-btn confirm" id="boloAlertConfirmBtn">OK</button>
 			</div>
 		</div>
-	</div>
+	</div>-->
 <!-- Lightbox Modal -->
 <div class="overlay-img-gr" id="overlay-img-gr-id">
   <span class="fechar" id="btnFechar-img-gr">&times;</span>
@@ -838,7 +825,5 @@ function updateSaboresTitle() {
 </button>
 
 <script src="scripts.js"></script>
-</body>
-</html>
 </body>
 </html>
