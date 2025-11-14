@@ -124,7 +124,8 @@ function processEspeciais(values) {
                 arr.push({
                     nome: `${nome.trim()} (${subcat.trim()})`,
                     preco,
-                    fatias: fatias ? fatias.trim() : '',
+                    fatias,
+                    //fatias: fatias ? fatias.trim() : '',
                     imagem: imagem ? imagem.trim() : "img/placeholder.jpg",
                 });
             }

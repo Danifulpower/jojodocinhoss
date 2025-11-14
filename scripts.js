@@ -164,7 +164,7 @@ window.loadProducts = function(productData) {
                 const produto = {
                     nome: nome,
                     preco: item.preco,
-                    fatias: item.fatias || '',
+                    fatias: item.fatias,
                     imagem: item.imagem
                 };
                 
@@ -281,7 +281,7 @@ function showSection(sectionId) {
 		 setTimeout(async () => {
 				await showBoloAlert();
                    // }
-                }, 500);
+                }, 200);
                 break;
             case "salgados": loadSalgados(); break;
             case "especiais": loadEspeciais(); break;

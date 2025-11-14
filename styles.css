@@ -13,6 +13,23 @@ body {
     color: #333;
     margin: 0 auto;
 }
+.link_a {
+    display: block;        /* vira bloco */
+    text-align: center;    /* centraliza o texto */
+    margin: 20px auto;     /* centraliza o bloco */
+    width: fit-content;     /* faz o tamanho ajustar ao texto */
+    color: #e89ac5;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.link_a:hover {
+    color: #f7c4e3;
+}
+
+.link_a:active {
+    color: #d7269a;
+}
 
 
   .sobre-jojo {
@@ -1845,6 +1862,29 @@ margin-left: 5px;
         margin: 5px 0;
     }
 }
+
+/* Estilo específico para listas nos alertas */
+.alert-message ul {
+    text-align: left;
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+}
+
+.alert-message li {
+    margin-bottom: 0.7rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--text-light);
+}
+
+.alert-message li:before {
+    content: "•";
+    color: #E8B7C5;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
 /*=====================================================================
 	Configuração dos botões flutuantes			
   =====================================================================*/
@@ -3136,11 +3176,11 @@ input[type="checkbox"] {
   line-height: 1.8;
 }
 
-/* Botão flutuante de download */
+/* Botão flutuante de download
 .float-btn-natal {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
+  position: relative;
+  bottom: 2.5rem;
+  right: 4.5rem;
   background: linear-gradient(135deg, #c21807 0%, #e57373 100%);
   color: white;
   border-radius: 50%;
@@ -3152,17 +3192,17 @@ input[type="checkbox"] {
   font-size: 1.6rem;
   box-shadow: 0 4px 15px rgba(0,0,0,0.25);
   transition: all 0.3s ease;
-  z-index: 1000;
+ /* z-index: 1000;
   cursor: pointer;
-}
-
+} */
+/*
 .float-btn-natal:hover {
   transform: scale(1.1);
   background: linear-gradient(135deg, #b71c1c 0%, #f44336 100%);
   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
-/* Responsivo */
+
 @media (max-width: 768px) {
   .natal-title {
     font-size: 1.9rem;
@@ -3174,10 +3214,10 @@ input[type="checkbox"] {
     padding: 2rem 1.5rem;
   }
   .float-btn-natal {
-    bottom: 1rem;
-    right: 1rem;
+    bottom: 2rem;
+    left: 2rem;
     width: 3.2rem;
     height: 3.2rem;
     font-size: 1.4rem;
   }
-}
+}*/
