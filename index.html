@@ -502,22 +502,59 @@
             </div>
         </div>
     </section>
-    <!-- Natal Section -->
-			<section id="natal" class="section">
-			  <div class="container natal-container">
-				<h1 class="natal-title">🤶🏼✨ Cardápio de Natal em Preparação! ✨🎁</h1>
-				<p class="natal-message">
-				  Logo novas delícias estarão disponíveis em nosso site! 🍰<br>
-				  Aguardem nossas novidades natalinas cheias de sabor e amor ❤️
-				</p>
-			  </div>
-				<h2 style="text-align: center;">
-				  <a href="https://drive.google.com/file/d/1PdOqRlNOGnnviMZG6JZjJmDUmQ1gU86G/view?usp=sharing" 
-					 class="float-btn-natal link_a">
-					Baixe nosso catálogo de Natal aqui.
-				  </a>
-				</h2>
-			</section>
+<!-- Natal Section -->
+<section id="natal" class="section">
+    <div class="container">
+        <h1 class="page-title">🎄 Produtos de Natal</h1>
+        <p class="page-subtitle">Delícias especiais para celebrar o Natal com muito sabor!</p>
+        
+        <div class="grid grid-3" id="natal-grid"></div>
+        <!-- panetone -->
+        <h1 class="page-title">🍞 Panetones Artesanais</h1>
+        <p class="page-subtitle">Escolha o tipo, sabor, peso e embalagem do seu panetone artesanal.</p>
+        
+        <div class="panetone-configurator">
+            <div class="card">
+                <h3>1. Escolha o Tipo</h3>
+                <div class="radio-group" id="panetone-tipos"></div>
+            </div>
+            
+            <div class="card">
+                <h3>2. Escolha o Sabor</h3>
+                <div class="radio-group" id="panetone-sabores"></div>
+            </div>
+            
+            <div class="card">
+                <h3>3. Escolha o Peso</h3>
+                <div class="radio-group" id="panetone-pesos"></div>
+            </div>
+            
+            <div class="card">
+                <h3>4. Escolha a Embalagem</h3>
+                <div class="radio-group" id="panetone-embalagens"></div>
+            </div>
+            
+            <div class="card">
+                <h3>Resumo do Pedido</h3>
+                <div id="panetone-resumo"></div>
+                <button class="btn btn-primary btn-full-mobile" id="add-panetone-btn" onclick="addPanetoneToCart()" disabled>
+                    Adicionar ao Carrinho
+                </button>
+            </div>
+        </div>
+        
+        <div class="info-box payment-note">
+            <h3>📋 Informações Importantes</h3>
+            <ul class="docinho">
+                <li>É necessário o pagamento à vista de 50% do valor para garantir o pedido</li>
+                <li>Panetones artesanais feitos com ingredientes selecionados</li>
+                <li>Encomendas com no mínimo 5 dias de antecedência</li>
+                <li>Produtos devem ser armazenados em local fresco e arejado</li>
+                <li>Sabores disponíveis variam conforme o tipo selecionado</li>
+            </ul>
+        </div>
+    </div>
+</section>
 	<!-- pronta entrega Section -->
 	<section id="pronta-entrega" class="section">
 	  <div class="container">

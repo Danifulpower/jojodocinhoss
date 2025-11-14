@@ -77,13 +77,89 @@ let produtos = {
     },
     salgados: [],
     tortasSalgadas: [],
-	    especiais: { tortas: [], bolosCaseiros: [], kits: [] },
-		prontaEntrega: [],
-		natal: [],
-		pascoa: [],
-		panetone: [],
-		ovos: []
-	};
+    especiais: { tortas: [], bolosCaseiros: [], kits: [] },
+    prontaEntrega: [],
+    natal: [],
+    pascoa: [],
+    panetone: {
+        tipos: [
+            { id: 'tradicional', nome: 'Tradicional' },
+            { id: 'especial', nome: 'Especial' },
+            { id: 'premium', nome: 'Premium' }
+        ],
+        pesos: [
+            { id: '100', nome: '100g' },
+            { id: '500', nome: '500g' }
+        ],
+        embalagens: [
+            { id: '1', nome: 'Saquinho' },
+            { id: '2', nome: 'Acetato' }
+        ],
+        sabores: {
+            tradicional: ['Brigadeiro', 'Branquinho', 'Casadinho'],
+            especial: ['Prestígio', 'Ouro Branco', 'Stikadinho'],
+            premium: ['Ninho c/ Nutella', 'Ferrero', 'Kinder Bueno']
+        },
+        precos: [
+            // Tradicional - 100g
+            { tipo: 'tradicional', sabor: 'Brigadeiro', peso: '100', embalagem: '1', preco: 15.00 },
+            { tipo: 'tradicional', sabor: 'Brigadeiro', peso: '100', embalagem: '2', preco: 18.00 },
+            { tipo: 'tradicional', sabor: 'Branquinho', peso: '100', embalagem: '1', preco: 15.00 },
+            { tipo: 'tradicional', sabor: 'Branquinho', peso: '100', embalagem: '2', preco: 18.00 },
+            { tipo: 'tradicional', sabor: 'Casadinho', peso: '100', embalagem: '1', preco: 15.00 },
+            { tipo: 'tradicional', sabor: 'Casadinho', peso: '100', embalagem: '2', preco: 18.00 },
+            
+            // Tradicional - 500g
+            { tipo: 'tradicional', sabor: 'Brigadeiro', peso: '500', embalagem: '1', preco: 50.00 },
+            { tipo: 'tradicional', sabor: 'Brigadeiro', peso: '500', embalagem: '2', preco: 60.00 },
+            { tipo: 'tradicional', sabor: 'Branquinho', peso: '500', embalagem: '1', preco: 50.00 },
+            { tipo: 'tradicional', sabor: 'Branquinho', peso: '500', embalagem: '2', preco: 60.00 },
+            { tipo: 'tradicional', sabor: 'Casadinho', peso: '500', embalagem: '1', preco: 50.00 },
+            { tipo: 'tradicional', sabor: 'Casadinho', peso: '500', embalagem: '2', preco: 60.00 },
+            
+            // Especial - 100g
+            { tipo: 'especial', sabor: 'Prestígio', peso: '100', embalagem: '1', preco: 18.00 },
+            { tipo: 'especial', sabor: 'Prestígio', peso: '100', embalagem: '2', preco: 20.00 },
+            { tipo: 'especial', sabor: 'Ouro Branco', peso: '100', embalagem: '1', preco: 18.00 },
+            { tipo: 'especial', sabor: 'Ouro Branco', peso: '100', embalagem: '2', preco: 20.00 },
+            { tipo: 'especial', sabor: 'Stikadinho', peso: '100', embalagem: '1', preco: 18.00 },
+            { tipo: 'especial', sabor: 'Stikadinho', peso: '100', embalagem: '2', preco: 20.00 },
+            
+            // Especial - 500g
+            { tipo: 'especial', sabor: 'Prestígio', peso: '500', embalagem: '1', preco: 55.00 },
+            { tipo: 'especial', sabor: 'Prestígio', peso: '500', embalagem: '2', preco: 65.00 },
+            { tipo: 'especial', sabor: 'Ouro Branco', peso: '500', embalagem: '1', preco: 55.00 },
+            { tipo: 'especial', sabor: 'Ouro Branco', peso: '500', embalagem: '2', preco: 65.00 },
+            { tipo: 'especial', sabor: 'Stikadinho', peso: '500', embalagem: '1', preco: 55.00 },
+            { tipo: 'especial', sabor: 'Stikadinho', peso: '500', embalagem: '2', preco: 65.00 },
+            
+            // Premium - 100g
+            { tipo: 'premium', sabor: 'Ninho c/ Nutella', peso: '100', embalagem: '1', preco: 20.00 },
+            { tipo: 'premium', sabor: 'Ninho c/ Nutella', peso: '100', embalagem: '2', preco: 22.00 },
+            { tipo: 'premium', sabor: 'Ferrero', peso: '100', embalagem: '1', preco: 20.00 },
+            { tipo: 'premium', sabor: 'Ferrero', peso: '100', embalagem: '2', preco: 22.00 },
+            { tipo: 'premium', sabor: 'Kinder Bueno', peso: '100', embalagem: '1', preco: 20.00 },
+            { tipo: 'premium', sabor: 'Kinder Bueno', peso: '100', embalagem: '2', preco: 22.00 },
+            
+            // Premium - 500g
+            { tipo: 'premium', sabor: 'Ninho c/ Nutella', peso: '500', embalagem: '1', preco: 60.00 },
+            { tipo: 'premium', sabor: 'Ninho c/ Nutella', peso: '500', embalagem: '2', preco: 70.00 },
+            { tipo: 'premium', sabor: 'Ferrero', peso: '500', embalagem: '1', preco: 60.00 },
+            { tipo: 'premium', sabor: 'Ferrero', peso: '500', embalagem: '2', preco: 70.00 },
+            { tipo: 'premium', sabor: 'Kinder Bueno', peso: '500', embalagem: '1', preco: 60.00 },
+            { tipo: 'premium', sabor: 'Kinder Bueno', peso: '500', embalagem: '2', preco: 70.00 }
+        ]
+    },
+    ovos: []
+};
+
+// ===== CONFIGURAÇÃO DO PANETONE =====
+let panetoneConfig = {
+    tipo: 'tradicional', // Default: Tradicional
+    sabor: '',
+    peso: '',
+    embalagem: ''
+};
 
 // ===== FUNÇÃO PARA CARREGAR PRODUTOS DO GOOGLE SHEETS =====
 window.loadProducts = function(productData) {
@@ -2037,15 +2113,9 @@ function initBackToTop() {
 //======================================================
 //natal 05112025
 //======================================================
+// ===== FUNÇÕES PARA PRODUTOS DE NATAL =====
 
 function loadNatal() {
-    loadNatalCategory('tradicionais', 'doces-tradicionais-lista');
-    loadNatalCategory('especiais', 'doces-especiais-lista');
-    loadNatalCategory('gourmet', 'doces-gourmet-lista');
-
-}
-
-function loadNatalCategory() {
     const container = document.getElementById("natal-grid");
     if (!container) return;
 
@@ -2061,129 +2131,362 @@ function loadNatalCategory() {
 
         return `
             <div class="card product-card">
-                <img src="${produto.imagem}" alt="${produto.nome}" class="product-image">
-                <div class="card-content">
-                    <h3 class="product-title">${produto.nome}</h3>
-                    <p class="product-price">R$ ${produto.preco.toFixed(2)}</p>
-                    <p class="product-details">Sabor: ${produto.sabor}</p>
-                    <p class="product-details">Recheio: ${produto.recheio}</p>
-                    <p class="product-details">Cobertura: ${produto.cobertura}</p>
-                    <div class="quantity-selector">
-                        <button onclick="changeQuantity('${key}', -1, ${produto.preco})">-</button>
-                        <span id="quantity-${key}">${quantidade}</span>
-                        <button onclick="changeQuantity('${key}', 1, ${produto.preco})">+</button>
+                <img class="img-div-doces" src="${produto.imagem}" alt="${produto.nome}">
+                <h3 class="product-title">${produto.nome}</h3>
+                <p class="product-price">R$ ${produto.preco.toFixed(2)}</p>
+                ${produto.obs ? `<p class="product-description">${produto.obs}</p>` : ''}
+                
+                <div class="quantity-controls">
+                    <span>Quantidade:</span>
+                    <div class="quantity-input">
+                        <button class="quantity-btn" onclick="updateQuantityNatal('${key}', -1)" ${quantidade <= 0 ? 'disabled' : ''}>
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <input type="number" class="quantity-value" value="${quantidade}" min="0" 
+                               data-key="${key}" onblur="updateQuantityInputNatal('${key}', this.value, event)"
+                               onkeyup="updateQuantityInputNatal('${key}', this.value, event)" onkeydown="allowOnlyNumbers(event)">
+                        <button class="quantity-btn" onclick="updateQuantityNatal('${key}', 1)">
+                            <i class="fas fa-plus"></i>
+                        </button>
                     </div>
-                    <button class="add-to-cart-btn" onclick="addToCart('${produto.nome}', quantities['${key}'], ${produto.preco})">Adicionar ao Carrinho</button>
+                </div>
+                
+                <div style="border-top: 1px solid #f0f0f0; padding-top: 1rem; margin-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <span class="total-price" style="font-weight: bold; font-size: 1.1rem;">Total: R$ ${precoTotal}</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="addNatalToCart(${index})" ${quantidade > 0 ? '' : 'disabled'}>
+                        Adicionar ao Carrinho
+                    </button>
                 </div>
             </div>
         `;
     }).join('');
 }
 
-function loadPascoa() {
-    const container = document.getElementById("pascoa-grid");
-    if (!container) return;
+function updateQuantityNatal(key, change) {
+    let currentQuantity = quantities[key] || 0;
+    currentQuantity += change;
+    
+    if (currentQuantity < 0) currentQuantity = 0;
+    
+    quantities[key] = currentQuantity;
+    
+    const inputElement = document.querySelector(`.quantity-input input[data-key="${key}"]`);
+    if (inputElement) {
+        inputElement.value = currentQuantity;
+        
+        const minusButton = inputElement.parentElement.querySelector('.quantity-btn:first-child');
+        if (minusButton) minusButton.disabled = currentQuantity <= 0;
+    }
+    
+    updateTotalNatal(key);
+}
 
-    if (produtos.pascoa.length === 0) {
-        container.innerHTML = '<p class="empty-message">Nenhum produto de Páscoa disponível no momento.</p>';
+function updateQuantityInputNatal(key, value, event) {
+    if (event.key === 'Enter' || event.type === 'blur') {
+        let newQuantity = parseInt(value) || 0;
+        
+        if (newQuantity < 0) newQuantity = 0;
+        
+        quantities[key] = newQuantity;
+        
+        const inputElement = document.querySelector(`.quantity-input input[data-key="${key}"]`);
+        if (inputElement) {
+            inputElement.value = newQuantity;
+            const minusButton = inputElement.parentElement.querySelector('.quantity-btn:first-child');
+            if (minusButton) minusButton.disabled = newQuantity <= 0;
+        }
+        
+        updateTotalNatal(key);
+    }
+}
+
+function updateTotalNatal(key) {
+    const index = parseInt(key.split('-')[1]);
+    const produto = produtos.natal[index];
+    const currentQuantity = quantities[key] || 0;
+    const total = (produto.preco * currentQuantity).toFixed(2);
+
+    const card = document.querySelector(`input[data-key="${key}"]`)?.closest('.product-card');
+    if (card) {
+        const totalElement = card.querySelector('.total-price');
+        if (totalElement) {
+            totalElement.textContent = `Total: R$ ${total}`;
+        }
+        
+        const button = card.querySelector('button[onclick*="addNatalToCart"]');
+        if (button) {
+            button.disabled = currentQuantity <= 0;
+            button.textContent = currentQuantity > 0 ? 'Adicionar ao Carrinho' : 'Selecione a quantidade';
+        }
+    }
+}
+
+async function addNatalToCart(index) {
+    const produto = produtos.natal[index];
+    const key = `natal-${index}`;
+    const quantidade = quantities[key] || 0;
+
+    if (quantidade <= 0) {
+        await showError('A quantidade deve ser maior que zero.', "Quantidade Inválida");
         return;
     }
 
-    container.innerHTML = produtos.pascoa.map((produto, index) => {
-        const key = `pascoa-${index}`;
-        const quantidade = quantities[key] || 0;
-        const precoTotal = (produto.preco * quantidade).toFixed(2);
+    const item = {
+        id: Date.now(),
+        nome: produto.nome,
+        preco: produto.preco,
+        quantidade: quantidade,
+        categoria: 'Natal'
+    };
 
-        return `
-            <div class="card product-card">
-                <img src="${produto.imagem}" alt="${produto.nome}" class="product-image">
-                <div class="card-content">
-                    <h3 class="product-title">${produto.nome}</h3>
-                    <p class="product-price">R$ ${produto.preco.toFixed(2)}</p>
-                    <p class="product-details">Sabor: ${produto.sabor}</p>
-                    <p class="product-details">Recheio: ${produto.recheio}</p>
-                    <p class="product-details">Cobertura: ${produto.cobertura}</p>
-                    <div class="quantity-selector">
-                        <button onclick="changeQuantity('${key}', -1, ${produto.preco})">-</button>
-                        <span id="quantity-${key}">${quantidade}</span>
-                        <button onclick="changeQuantity('${key}', 1, ${produto.preco})">+</button>
-                    </div>
-                    <button class="add-to-cart-btn" onclick="addToCart('${produto.nome}', quantities['${key}'], ${produto.preco})">Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        `;
-    }).join('');
+    carrinho.push(item);
+    updateCartCount();
+    
+    await showSuccess(`${quantidade} unidade(s) de ${produto.nome} adicionada(s) ao carrinho!`, "Item Adicionado");
+    
+    quantities[key] = 0;
+    loadNatal();
 }
 
-// Lógica de Bolos para Panetone e Ovos
+// ===== FUNÇÕES PARA PANETONE =====
+
+
 function loadPanetone() {
-    const container = document.getElementById("panetone-grid");
-    if (!container) return;
-
-    if (produtos.panetone.length === 0) {
-        container.innerHTML = '<p class="empty-message">Nenhum panetone disponível no momento.</p>';
-        return;
-    }
-
-    container.innerHTML = produtos.panetone.map((produto, index) => {
-        const key = `panetone-${index}`;
-        const quantidade = quantities[key] || 0;
-        const precoTotal = (produto.preco * quantidade).toFixed(2);
-
-        return `
-            <div class="card product-card">
-                <img src="${produto.imagem}" alt="${produto.nome}" class="product-image">
-                <div class="card-content">
-                    <h3 class="product-title">${produto.nome}</h3>
-                    <p class="product-price">R$ ${produto.preco.toFixed(2)}</p>
-                    <p class="product-details">Sabor: ${produto.sabor}</p>
-                    <p class="product-details">Recheio: ${produto.recheio}</p>
-                    <p class="product-details">Cobertura: ${produto.cobertura}</p>
-                    <div class="quantity-selector">
-                        <button onclick="changeQuantity('${key}', -1, ${produto.preco})">-</button>
-                        <span id="quantity-${key}">${quantidade}</span>
-                        <button onclick="changeQuantity('${key}', 1, ${produto.preco})">+</button>
-                    </div>
-                    <button class="add-to-cart-btn" onclick="addToCart('${produto.nome}', quantities['${key}'], ${produto.preco})">Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        `;
-    }).join('');
+    loadPanetoneTipos();
+    loadPanetoneSabores();
+    loadPanetonePesos();
+    loadPanetoneEmbalagens();
+    updatePanetoneResumo();
 }
 
-function loadOvos() {
-    const container = document.getElementById("ovos-grid");
+function loadPanetoneTipos() {
+    const container = document.getElementById('panetone-tipos');
     if (!container) return;
+    
+    container.innerHTML = produtos.panetone.tipos.map(tipo => `
+        <label class="radio-option">
+            <input type="radio" name="panetone-tipo" value="${tipo.id}" 
+                   ${panetoneConfig.tipo === tipo.id ? 'checked' : ''} 
+                   onchange="updatePanetoneTipo('${tipo.id}')">
+            <span>${tipo.nome}</span>
+        </label>
+    `).join('');
+}
 
-    if (produtos.ovos.length === 0) {
-        container.innerHTML = '<p class="empty-message">Nenhum ovo de Páscoa disponível no momento.</p>';
+function loadPanetoneSabores() {
+    const container = document.getElementById('panetone-sabores');
+    if (!container) return;
+    
+    const sabores = produtos.panetone.sabores[panetoneConfig.tipo] || [];
+    
+    container.innerHTML = sabores.map(sabor => `
+        <label class="radio-option">
+            <input type="radio" name="panetone-sabor" value="${sabor}" 
+                   ${panetoneConfig.sabor === sabor ? 'checked' : ''} 
+                   onchange="updatePanetoneSabor('${sabor}')">
+            <span>${sabor}</span>
+        </label>
+    `).join('');
+}
+
+function loadPanetonePesos() {
+    const container = document.getElementById('panetone-pesos');
+    if (!container) return;
+    
+    container.innerHTML = produtos.panetone.pesos.map(peso => `
+        <label class="radio-option">
+            <input type="radio" name="panetone-peso" value="${peso.id}" 
+                   ${panetoneConfig.peso === peso.id ? 'checked' : ''} 
+                   onchange="updatePanetonePeso('${peso.id}')">
+            <span>${peso.nome}</span>
+        </label>
+    `).join('');
+}
+
+
+
+function loadPanetoneEmbalagens() {
+    const container = document.getElementById('panetone-embalagens');
+    if (!container) return;
+    
+    container.innerHTML = produtos.panetone.embalagens.map(emb => `
+        <label class="radio-option">
+            <input type="radio" name="panetone-embalagem" value="${emb.id}" 
+                   ${panetoneConfig.embalagem === emb.id ? 'checked' : ''} 
+                   onchange="updatePanetoneEmbalagem('${emb.id}')">
+            <span>${emb.nome}</span>
+        </label>
+    `).join('');
+}
+
+function updatePanetoneTipo(tipo) {
+    panetoneConfig.tipo = tipo;
+    panetoneConfig.sabor = ''; // Reset sabor ao mudar tipo
+    loadPanetoneSabores();
+    updatePanetoneResumo();
+}
+
+function updatePanetoneSabor(sabor) {
+    panetoneConfig.sabor = sabor;
+    updatePanetoneResumo();
+}
+
+function updatePanetonePeso(peso) {
+    panetoneConfig.peso = peso;
+    updatePanetoneResumo();
+}
+
+function updatePanetoneEmbalagem(embalagem) {
+    panetoneConfig.embalagem = embalagem;
+    updatePanetoneResumo();
+}
+
+function getPrecoPanetone() {
+    if (!panetoneConfig.tipo || !panetoneConfig.sabor || !panetoneConfig.peso || !panetoneConfig.embalagem) {
+        return null;
+    }
+    
+    const precoObj = produtos.panetone.precos.find(p => 
+        p.tipo === panetoneConfig.tipo &&
+        p.sabor === panetoneConfig.sabor &&
+        p.peso === panetoneConfig.peso &&
+        p.embalagem === panetoneConfig.embalagem
+    );
+    
+    return precoObj ? precoObj.preco : null;
+}
+function updatePanetoneResumo() {
+    const resumoContainer = document.getElementById('panetone-resumo');
+    const addBtn = document.getElementById('add-panetone-btn');
+    
+    if (!resumoContainer) return;
+    
+    const preco = getPrecoPanetone();
+    
+    if (!panetoneConfig.tipo || !panetoneConfig.sabor || !panetoneConfig.peso || !panetoneConfig.embalagem || preco === null) {
+        resumoContainer.innerHTML = '<p style="color: #999;">Selecione o tipo, sabor, peso e embalagem do panetone</p>';
+        
+        if (addBtn) addBtn.disabled = true;
         return;
     }
+    
+    const tipoNome = produtos.panetone.tipos.find(t => t.id === panetoneConfig.tipo)?.nome || panetoneConfig.tipo;
+    const pesoNome = produtos.panetone.pesos.find(p => p.id === panetoneConfig.peso)?.nome || panetoneConfig.peso;
+    const embalagemNome = produtos.panetone.embalagens.find(e => e.id === panetoneConfig.embalagem)?.nome || panetoneConfig.embalagem;
+    
+    resumoContainer.innerHTML = `
+        <p><strong>Tipo:</strong> ${tipoNome}</p>
+        <p><strong>Sabor:</strong> ${panetoneConfig.sabor}</p>
+        <p><strong>Peso:</strong> ${pesoNome}</p>
+        <p><strong>Embalagem:</strong> ${embalagemNome}</p>
+        <p style="color: var(--primary-pink); font-size: 1.2rem; font-weight: bold; margin-top: 1rem;">
+            Total: R$ ${preco.toFixed(2)}
+        </p>
+    `;
+    
+    if (addBtn) {
+        addBtn.disabled = false;
+    }
+}
 
-    container.innerHTML = produtos.ovos.map((produto, index) => {
-        const key = `ovos-${index}`;
-        const quantidade = quantities[key] || 0;
-        const precoTotal = (produto.preco * quantidade).toFixed(2);
+async function addPanetoneToCart() {
+    const preco = getPrecoPanetone();
+    
+    if (!panetoneConfig.tipo || !panetoneConfig.sabor || !panetoneConfig.peso || !panetoneConfig.embalagem || preco === null) {
+        await showError('Por favor, selecione o tipo, sabor, peso e embalagem do panetone.', "Panetone Incompleto");
+        return;
+    }
+    
+    const tipoNome = produtos.panetone.tipos.find(t => t.id === panetoneConfig.tipo)?.nome || panetoneConfig.tipo;
+    const pesoNome = produtos.panetone.pesos.find(p => p.id === panetoneConfig.peso)?.nome || panetoneConfig.peso;
+    const embalagemNome = produtos.panetone.embalagens.find(e => e.id === panetoneConfig.embalagem)?.nome || panetoneConfig.embalagem;
+    
+    const item = {
+        id: Date.now(),
+        nome: `Panetone ${tipoNome} - ${panetoneConfig.sabor}`,
+        preco: preco,
+        quantidade: 1,
+        categoria: 'Panetone',
+        detalhes: `Peso: ${pesoNome} | Embalagem: ${embalagemNome}`
+    };
+    
+    carrinho.push(item);
+    updateCartCount();
+    
+    await showSuccess(`Panetone ${tipoNome} ${panetoneConfig.sabor} adicionado ao carrinho!`, "Panetone Adicionado");
+    
+    // Resetar configuração do panetone (mantém o tipo padrão)
+    panetoneConfig = { 
+        tipo: 'tradicional', // Mantém o padrão
+        sabor: '',
+        peso: '',
+        embalagem: ''
+    };
+    
+    // Resetar UI
+    document.querySelectorAll('input[name="panetone-tipo"]').forEach(input => {
+        if (input.value === 'tradicional') input.checked = true;
+        else input.checked = false;
+    });
+    document.querySelectorAll('input[name="panetone-sabor"]').forEach(input => input.checked = false);
+    document.querySelectorAll('input[name="panetone-peso"]').forEach(input => input.checked = false);
+    document.querySelectorAll('input[name="panetone-embalagem"]').forEach(input => input.checked = false);
+    
+    loadPanetoneSabores();
+    loadPanetonePesos();
+    loadPanetoneEmbalagens();
+    updatePanetoneResumo();
+    
+    const addBtn = document.getElementById('add-panetone-btn');
+    if (addBtn) addBtn.disabled = true;
+}
 
-        return `
-            <div class="card product-card">
-                <img src="${produto.imagem}" alt="${produto.nome}" class="product-image">
-                <div class="card-content">
-                    <h3 class="product-title">${produto.nome}</h3>
-                    <p class="product-price">R$ ${produto.preco.toFixed(2)}</p>
-                    <p class="product-details">Sabor: ${produto.sabor}</p>
-                    <p class="product-details">Recheio: ${produto.recheio}</p>
-                    <p class="product-details">Cobertura: ${produto.cobertura}</p>
-                    <div class="quantity-selector">
-                        <button onclick="changeQuantity('${key}', -1, ${produto.preco})">-</button>
-                        <span id="quantity-${key}">${quantidade}</span>
-                        <button onclick="changeQuantity('${key}', 1, ${produto.preco})">+</button>
-                    </div>
-                    <button class="add-to-cart-btn" onclick="addToCart('${produto.nome}', quantities['${key}'], ${produto.preco})">Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        `;
-    }).join('');
+// Atualizar a função showSection para incluir as novas seções
+function showSection(sectionId) {
+    closeMobileMenu();
+    hideAddressModal();
+    
+    if (sectionId === "pedido" && carrinho.length === 0) {
+        sectionId = "home";
+        showError("Seu carrinho está vazio! Adicione itens antes de finalizar.", "Carrinho Vazio");
+    }
+    
+    document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
+    });
+    
+    const sectionElement = document.getElementById(sectionId);
+    if (sectionElement) {
+        sectionElement.classList.add("active");
+        
+        document.querySelectorAll(".nav-link").forEach(link => {
+            link.classList.remove("active");
+        });
+        
+        const activeLink = document.querySelector(`[href="#${sectionId}"]`);
+        if (activeLink) activeLink.classList.add("active");
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        switch(sectionId) {
+            case "doces": loadDoces(); break;
+            case "bolos": 
+                loadBolos(); 
+                setTimeout(async () => {
+                    await showBoloAlert();
+                }, 500);
+                break;
+            case "salgados": loadSalgados(); break;
+            case "especiais": loadEspeciais(); break;
+            case "kits": loadkits(); break;
+            case "pronta-entrega": loadProntaEntrega(); break;
+            case "natal": loadNatal(); break;
+            case "panetone": loadPanetone(); break;
+            case "pedido": showCartPedido(); break;
+        }
+    }
 }
 /*********************************************************/
 /***********************ALERTAS**************************/

@@ -25,7 +25,7 @@ const PRODUCT_SHEETS = [
   { name: "pronta_entrega" },
   { name: "natal" },
   { name: "pascoa" },
-  { name: "panetone" },
+  //{ name: "panetone" },
   { name: "ovos" },
 ];
 
@@ -291,7 +291,6 @@ function processBolosEspeciais(values) {
 }
 
 function processSheetData(sheetName, values) {
-    // A primeira linha (cabeçalho) é ignorada
     const dataRows = values.slice(0);
     
     switch (sheetName) {
@@ -300,7 +299,6 @@ function processSheetData(sheetName, values) {
         case "salgados":
             return processSalgados(dataRows);
         case "bolos":
-            // Recheios tradicionais e premium, que estão na mesma aba
             const recheios = processRecheios(dataRows);
             return {
                 recheiosTradicionais: recheios.tradicional || [],
@@ -310,18 +308,16 @@ function processSheetData(sheetName, values) {
             return processTortasSalgadas(dataRows);
         case "especiais":
             return processEspeciais(dataRows);
-	        case "pronta_entrega":
-	            return processProntaEntrega(dataRows);
-	        case "natal":
-	        case "pascoa":
-	            return processSalgadosEspeciais(dataRows); // Usa a lógica de salgados
-	        case "panetone":
-	        case "ovos":
-	            return processBolosEspeciais(dataRows); // Usa a lógica de bolos
-	        default:
-	            return {};
-	    }
-	}
+        case "pronta_entrega":
+            return processProntaEntrega(dataRows);
+        case "natal":
+            return processNatal(dataRows);
+        //case "panetone":
+        //    return processPanetone(dataRows);
+        default:
+            return {};
+    }
+}
 
 
 // ===================================
@@ -379,7 +375,55 @@ async function readAllSheetsData() {
 	    ovos: productData.ovos,
 	  };
 	}
+function processNatal(values) {
+    const arr = [];
+    values.forEach((row) => {
+        if (row.length >= 4) {
+            const [produto_id, nome, precoStr, imagem, obs] = row;
+            
+            if (!nome || !precoStr) return;
+            
+            const preco = parseFloat(String(precoStr).replace(",", "."));
+            
+            if (!isNaN(preco)) {
+                arr.push({
+                    id: produto_id ? produto_id.trim() : '',
+                    nome: nome.trim(),
+                    preco,
+                    imagem: imagem ? imagem.trim() : "img/placeholder.jpg",
+                    obs: obs ? obs.trim() : ''
+                });
+            }
+        }
+    });
+    return arr;
+}
 
+function processPanetone(values) {
+    const arr = [];
+    values.forEach((row) => {
+        if (row.length >= 6) {
+            const [id_preco, peso, id_embalagem, precoStr, tipo_produto, nome_produto, OBS] = row;
+            
+            if (!nome_produto || !precoStr || !tipo_produto) return;
+            
+            const preco = parseFloat(String(precoStr).replace(",", "."));
+            
+            if (!isNaN(preco)) {
+                arr.push({
+                    id: id_preco ? id_preco.trim() : '',
+                    peso: peso ? peso.trim() : '',
+                    embalagem: id_embalagem ? id_embalagem.trim() : '',
+                    preco,
+                    tipo: tipo_produto.trim(),
+                    nome: nome_produto.trim(),
+                    obs: OBS ? OBS.trim() : ''
+                });
+            }
+        }
+    });
+    return arr;
+}
 
 // ----------------------------------------------------
 // Execução e integração com scripts.js
