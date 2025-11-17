@@ -28,6 +28,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="chocotone-styles.css">
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -505,44 +506,35 @@
 <!-- Natal Section -->
 <section id="natal" class="section">
     <div class="container">
-        <h1 class="page-title">🎄 Produtos de Natal</h1>
-        <p class="page-subtitle">Delícias especiais para celebrar o Natal com muito sabor!</p>
-        
+        <h1 class="page-title">🤶🏼 Produtos de Natal</h1>
+        <p class="page-subtitle">Delícias especiais para celebrar o Natal com muito sabor!</p>   
+           <div class="container">
         <div class="grid grid-3" id="natal-grid"></div>
-        <!-- panetone -->
-        <h1 class="page-title">🍞 Panetones Artesanais</h1>
-        <p class="page-subtitle">Escolha o tipo, sabor, peso e embalagem do seu panetone artesanal.</p>
-        
-        <div class="panetone-configurator">
-            <div class="card">
-                <h3>1. Escolha o Tipo</h3>
-                <div class="radio-group" id="panetone-tipos"></div>
-            </div>
-            
-            <div class="card">
-                <h3>2. Escolha o Sabor</h3>
-                <div class="radio-group" id="panetone-sabores"></div>
-            </div>
-            
-            <div class="card">
-                <h3>3. Escolha o Peso</h3>
-                <div class="radio-group" id="panetone-pesos"></div>
-            </div>
-            
-            <div class="card">
-                <h3>4. Escolha a Embalagem</h3>
-                <div class="radio-group" id="panetone-embalagens"></div>
-            </div>
-            
-            <div class="card">
-                <h3>Resumo do Pedido</h3>
-                <div id="panetone-resumo"></div>
-                <button class="btn btn-primary btn-full-mobile" id="add-panetone-btn" onclick="addPanetoneToCart()" disabled>
-                    Adicionar ao Carrinho
+      
+        <!-- CHOCOTONES -->
+        <h1 class="page-title">						<iaria-hidden="true">
+						<img src="img/chocotone100g.png" alt="Delivery" class="category-icon icon" loading="lazy" aria-hidden="true">
+						</i> Chocotones Recheados</h1>        
+        <div class="" style="margin-top: 2rem;">
+            <!-- Tabs de Categorias -->
+            <div class="card grid grid-4">
+                <button class="choco-tab active" data-category="todos" onclick="showChocotoneCategory('todos')">
+                    Todos
+                </button>
+                <button class="choco-tab" data-category="tradicional" onclick="showChocotoneCategory('tradicional')">
+                    Tradicional
+                </button>
+                <button class="choco-tab" data-category="especial" onclick="showChocotoneCategory('especial')">
+                    Especial
+                </button>
+                <button class="choco-tab" data-category="premium" onclick="showChocotoneCategory('premium')">
+                    Premium
                 </button>
             </div>
-        </div>
-        
+            
+            <!-- Grid de Produtos Chocotone -->
+            <div class="card grid grid-3" id="chocotone-grid" style="margin-top: 2rem;"></div>
+        </div>     
         <div class="info-box payment-note">
             <h3>📋 Informações Importantes</h3>
             <ul class="docinho">
@@ -854,7 +846,8 @@ function updateSaboresTitle() {
 <button id="backToTopBtn" class="float-btn-mobile" title="Voltar ao Topo">
     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12l7-7l7 7m-7 7V5"/></svg>
 </button>
-
+<script src="chocotone-data.js"></script>
+<script src="chocotone-functions.js"></script>
 <script src="scripts.js"></script>
 </body>
 </html>

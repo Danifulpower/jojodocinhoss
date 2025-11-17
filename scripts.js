@@ -81,85 +81,9 @@ let produtos = {
     prontaEntrega: [],
     natal: [],
     pascoa: [],
-    panetone: {
-        tipos: [
-            { id: 'tradicional', nome: 'Tradicional' },
-            { id: 'especial', nome: 'Especial' },
-            { id: 'premium', nome: 'Premium' }
-        ],
-        pesos: [
-            { id: '100', nome: '100g' },
-            { id: '500', nome: '500g' }
-        ],
-        embalagens: [
-            { id: '1', nome: 'Saquinho' },
-            { id: '2', nome: 'Acetato' }
-        ],
-        sabores: {
-            tradicional: ['Brigadeiro', 'Branquinho', 'Casadinho'],
-            especial: ['Prestígio', 'Ouro Branco', 'Stikadinho'],
-            premium: ['Ninho c/ Nutella', 'Ferrero', 'Kinder Bueno']
-        },
-        precos: [
-            // Tradicional - 100g
-            { tipo: 'tradicional', sabor: 'Brigadeiro', peso: '100', embalagem: '1', preco: 15.00 },
-            { tipo: 'tradicional', sabor: 'Brigadeiro', peso: '100', embalagem: '2', preco: 18.00 },
-            { tipo: 'tradicional', sabor: 'Branquinho', peso: '100', embalagem: '1', preco: 15.00 },
-            { tipo: 'tradicional', sabor: 'Branquinho', peso: '100', embalagem: '2', preco: 18.00 },
-            { tipo: 'tradicional', sabor: 'Casadinho', peso: '100', embalagem: '1', preco: 15.00 },
-            { tipo: 'tradicional', sabor: 'Casadinho', peso: '100', embalagem: '2', preco: 18.00 },
-            
-            // Tradicional - 500g
-            { tipo: 'tradicional', sabor: 'Brigadeiro', peso: '500', embalagem: '1', preco: 50.00 },
-            { tipo: 'tradicional', sabor: 'Brigadeiro', peso: '500', embalagem: '2', preco: 60.00 },
-            { tipo: 'tradicional', sabor: 'Branquinho', peso: '500', embalagem: '1', preco: 50.00 },
-            { tipo: 'tradicional', sabor: 'Branquinho', peso: '500', embalagem: '2', preco: 60.00 },
-            { tipo: 'tradicional', sabor: 'Casadinho', peso: '500', embalagem: '1', preco: 50.00 },
-            { tipo: 'tradicional', sabor: 'Casadinho', peso: '500', embalagem: '2', preco: 60.00 },
-            
-            // Especial - 100g
-            { tipo: 'especial', sabor: 'Prestígio', peso: '100', embalagem: '1', preco: 18.00 },
-            { tipo: 'especial', sabor: 'Prestígio', peso: '100', embalagem: '2', preco: 20.00 },
-            { tipo: 'especial', sabor: 'Ouro Branco', peso: '100', embalagem: '1', preco: 18.00 },
-            { tipo: 'especial', sabor: 'Ouro Branco', peso: '100', embalagem: '2', preco: 20.00 },
-            { tipo: 'especial', sabor: 'Stikadinho', peso: '100', embalagem: '1', preco: 18.00 },
-            { tipo: 'especial', sabor: 'Stikadinho', peso: '100', embalagem: '2', preco: 20.00 },
-            
-            // Especial - 500g
-            { tipo: 'especial', sabor: 'Prestígio', peso: '500', embalagem: '1', preco: 55.00 },
-            { tipo: 'especial', sabor: 'Prestígio', peso: '500', embalagem: '2', preco: 65.00 },
-            { tipo: 'especial', sabor: 'Ouro Branco', peso: '500', embalagem: '1', preco: 55.00 },
-            { tipo: 'especial', sabor: 'Ouro Branco', peso: '500', embalagem: '2', preco: 65.00 },
-            { tipo: 'especial', sabor: 'Stikadinho', peso: '500', embalagem: '1', preco: 55.00 },
-            { tipo: 'especial', sabor: 'Stikadinho', peso: '500', embalagem: '2', preco: 65.00 },
-            
-            // Premium - 100g
-            { tipo: 'premium', sabor: 'Ninho c/ Nutella', peso: '100', embalagem: '1', preco: 20.00 },
-            { tipo: 'premium', sabor: 'Ninho c/ Nutella', peso: '100', embalagem: '2', preco: 22.00 },
-            { tipo: 'premium', sabor: 'Ferrero', peso: '100', embalagem: '1', preco: 20.00 },
-            { tipo: 'premium', sabor: 'Ferrero', peso: '100', embalagem: '2', preco: 22.00 },
-            { tipo: 'premium', sabor: 'Kinder Bueno', peso: '100', embalagem: '1', preco: 20.00 },
-            { tipo: 'premium', sabor: 'Kinder Bueno', peso: '100', embalagem: '2', preco: 22.00 },
-            
-            // Premium - 500g
-            { tipo: 'premium', sabor: 'Ninho c/ Nutella', peso: '500', embalagem: '1', preco: 60.00 },
-            { tipo: 'premium', sabor: 'Ninho c/ Nutella', peso: '500', embalagem: '2', preco: 70.00 },
-            { tipo: 'premium', sabor: 'Ferrero', peso: '500', embalagem: '1', preco: 60.00 },
-            { tipo: 'premium', sabor: 'Ferrero', peso: '500', embalagem: '2', preco: 70.00 },
-            { tipo: 'premium', sabor: 'Kinder Bueno', peso: '500', embalagem: '1', preco: 60.00 },
-            { tipo: 'premium', sabor: 'Kinder Bueno', peso: '500', embalagem: '2', preco: 70.00 }
-        ]
-    },
     ovos: []
 };
 
-// ===== CONFIGURAÇÃO DO PANETONE =====
-let panetoneConfig = {
-    tipo: 'tradicional', // Default: Tradicional
-    sabor: '',
-    peso: '',
-    embalagem: ''
-};
 
 // ===== FUNÇÃO PARA CARREGAR PRODUTOS DO GOOGLE SHEETS =====
 window.loadProducts = function(productData) {
@@ -215,9 +139,6 @@ window.loadProducts = function(productData) {
 	    }
 	    if (productData.pascoa) {
 	        produtos.pascoa = productData.pascoa;
-	    }
-	    if (productData.panetone) {
-	        produtos.panetone = productData.panetone;
 	    }
 	    if (productData.ovos) {
 	        produtos.ovos = productData.ovos;
@@ -276,7 +197,6 @@ window.loadProducts = function(productData) {
 	        // Novos produtos
 	        if (sectionId === 'natal') loadNatal();
 	        if (sectionId === 'pascoa') loadPascoa();
-	        if (sectionId === 'panetone') loadPanetone();
 	        if (sectionId === 'ovos') loadOvos();
     }
 };
@@ -366,7 +286,6 @@ function showSection(sectionId) {
 	            // Novos produtos
 	            case "natal": loadNatal(); break;
 	            case "pascoa": loadPascoa(); break;
-	            case "panetone": loadPanetone(); break;
 	            case "ovos": loadOvos(); break;
 	            case "pedido": showCartPedido(); break;
 	        }
@@ -2250,199 +2169,6 @@ async function addNatalToCart(index) {
     loadNatal();
 }
 
-// ===== FUNÇÕES PARA PANETONE =====
-
-
-function loadPanetone() {
-    loadPanetoneTipos();
-    loadPanetoneSabores();
-    loadPanetonePesos();
-    loadPanetoneEmbalagens();
-    updatePanetoneResumo();
-}
-
-function loadPanetoneTipos() {
-    const container = document.getElementById('panetone-tipos');
-    if (!container) return;
-    
-    container.innerHTML = produtos.panetone.tipos.map(tipo => `
-        <label class="radio-option">
-            <input type="radio" name="panetone-tipo" value="${tipo.id}" 
-                   ${panetoneConfig.tipo === tipo.id ? 'checked' : ''} 
-                   onchange="updatePanetoneTipo('${tipo.id}')">
-            <span>${tipo.nome}</span>
-        </label>
-    `).join('');
-}
-
-function loadPanetoneSabores() {
-    const container = document.getElementById('panetone-sabores');
-    if (!container) return;
-    
-    const sabores = produtos.panetone.sabores[panetoneConfig.tipo] || [];
-    
-    container.innerHTML = sabores.map(sabor => `
-        <label class="radio-option">
-            <input type="radio" name="panetone-sabor" value="${sabor}" 
-                   ${panetoneConfig.sabor === sabor ? 'checked' : ''} 
-                   onchange="updatePanetoneSabor('${sabor}')">
-            <span>${sabor}</span>
-        </label>
-    `).join('');
-}
-
-function loadPanetonePesos() {
-    const container = document.getElementById('panetone-pesos');
-    if (!container) return;
-    
-    container.innerHTML = produtos.panetone.pesos.map(peso => `
-        <label class="radio-option">
-            <input type="radio" name="panetone-peso" value="${peso.id}" 
-                   ${panetoneConfig.peso === peso.id ? 'checked' : ''} 
-                   onchange="updatePanetonePeso('${peso.id}')">
-            <span>${peso.nome}</span>
-        </label>
-    `).join('');
-}
-
-
-
-function loadPanetoneEmbalagens() {
-    const container = document.getElementById('panetone-embalagens');
-    if (!container) return;
-    
-    container.innerHTML = produtos.panetone.embalagens.map(emb => `
-        <label class="radio-option">
-            <input type="radio" name="panetone-embalagem" value="${emb.id}" 
-                   ${panetoneConfig.embalagem === emb.id ? 'checked' : ''} 
-                   onchange="updatePanetoneEmbalagem('${emb.id}')">
-            <span>${emb.nome}</span>
-        </label>
-    `).join('');
-}
-
-function updatePanetoneTipo(tipo) {
-    panetoneConfig.tipo = tipo;
-    panetoneConfig.sabor = ''; // Reset sabor ao mudar tipo
-    loadPanetoneSabores();
-    updatePanetoneResumo();
-}
-
-function updatePanetoneSabor(sabor) {
-    panetoneConfig.sabor = sabor;
-    updatePanetoneResumo();
-}
-
-function updatePanetonePeso(peso) {
-    panetoneConfig.peso = peso;
-    updatePanetoneResumo();
-}
-
-function updatePanetoneEmbalagem(embalagem) {
-    panetoneConfig.embalagem = embalagem;
-    updatePanetoneResumo();
-}
-
-function getPrecoPanetone() {
-    if (!panetoneConfig.tipo || !panetoneConfig.sabor || !panetoneConfig.peso || !panetoneConfig.embalagem) {
-        return null;
-    }
-    
-    const precoObj = produtos.panetone.precos.find(p => 
-        p.tipo === panetoneConfig.tipo &&
-        p.sabor === panetoneConfig.sabor &&
-        p.peso === panetoneConfig.peso &&
-        p.embalagem === panetoneConfig.embalagem
-    );
-    
-    return precoObj ? precoObj.preco : null;
-}
-function updatePanetoneResumo() {
-    const resumoContainer = document.getElementById('panetone-resumo');
-    const addBtn = document.getElementById('add-panetone-btn');
-    
-    if (!resumoContainer) return;
-    
-    const preco = getPrecoPanetone();
-    
-    if (!panetoneConfig.tipo || !panetoneConfig.sabor || !panetoneConfig.peso || !panetoneConfig.embalagem || preco === null) {
-        resumoContainer.innerHTML = '<p style="color: #999;">Selecione o tipo, sabor, peso e embalagem do panetone</p>';
-        
-        if (addBtn) addBtn.disabled = true;
-        return;
-    }
-    
-    const tipoNome = produtos.panetone.tipos.find(t => t.id === panetoneConfig.tipo)?.nome || panetoneConfig.tipo;
-    const pesoNome = produtos.panetone.pesos.find(p => p.id === panetoneConfig.peso)?.nome || panetoneConfig.peso;
-    const embalagemNome = produtos.panetone.embalagens.find(e => e.id === panetoneConfig.embalagem)?.nome || panetoneConfig.embalagem;
-    
-    resumoContainer.innerHTML = `
-        <p><strong>Tipo:</strong> ${tipoNome}</p>
-        <p><strong>Sabor:</strong> ${panetoneConfig.sabor}</p>
-        <p><strong>Peso:</strong> ${pesoNome}</p>
-        <p><strong>Embalagem:</strong> ${embalagemNome}</p>
-        <p style="color: var(--primary-pink); font-size: 1.2rem; font-weight: bold; margin-top: 1rem;">
-            Total: R$ ${preco.toFixed(2)}
-        </p>
-    `;
-    
-    if (addBtn) {
-        addBtn.disabled = false;
-    }
-}
-
-async function addPanetoneToCart() {
-    const preco = getPrecoPanetone();
-    
-    if (!panetoneConfig.tipo || !panetoneConfig.sabor || !panetoneConfig.peso || !panetoneConfig.embalagem || preco === null) {
-        await showError('Por favor, selecione o tipo, sabor, peso e embalagem do panetone.', "Panetone Incompleto");
-        return;
-    }
-    
-    const tipoNome = produtos.panetone.tipos.find(t => t.id === panetoneConfig.tipo)?.nome || panetoneConfig.tipo;
-    const pesoNome = produtos.panetone.pesos.find(p => p.id === panetoneConfig.peso)?.nome || panetoneConfig.peso;
-    const embalagemNome = produtos.panetone.embalagens.find(e => e.id === panetoneConfig.embalagem)?.nome || panetoneConfig.embalagem;
-    
-    const item = {
-        id: Date.now(),
-        nome: `Panetone ${tipoNome} - ${panetoneConfig.sabor}`,
-        preco: preco,
-        quantidade: 1,
-        categoria: 'Panetone',
-        detalhes: `Peso: ${pesoNome} | Embalagem: ${embalagemNome}`
-    };
-    
-    carrinho.push(item);
-    updateCartCount();
-    
-    await showSuccess(`Panetone ${tipoNome} ${panetoneConfig.sabor} adicionado ao carrinho!`, "Panetone Adicionado");
-    
-    // Resetar configuração do panetone (mantém o tipo padrão)
-    panetoneConfig = { 
-        tipo: 'tradicional', // Mantém o padrão
-        sabor: '',
-        peso: '',
-        embalagem: ''
-    };
-    
-    // Resetar UI
-    document.querySelectorAll('input[name="panetone-tipo"]').forEach(input => {
-        if (input.value === 'tradicional') input.checked = true;
-        else input.checked = false;
-    });
-    document.querySelectorAll('input[name="panetone-sabor"]').forEach(input => input.checked = false);
-    document.querySelectorAll('input[name="panetone-peso"]').forEach(input => input.checked = false);
-    document.querySelectorAll('input[name="panetone-embalagem"]').forEach(input => input.checked = false);
-    
-    loadPanetoneSabores();
-    loadPanetonePesos();
-    loadPanetoneEmbalagens();
-    updatePanetoneResumo();
-    
-    const addBtn = document.getElementById('add-panetone-btn');
-    if (addBtn) addBtn.disabled = true;
-}
-
 // Atualizar a função showSection para incluir as novas seções
 function showSection(sectionId) {
     closeMobileMenu();
@@ -2483,7 +2209,6 @@ function showSection(sectionId) {
             case "kits": loadkits(); break;
             case "pronta-entrega": loadProntaEntrega(); break;
             case "natal": loadNatal(); break;
-            case "panetone": loadPanetone(); break;
             case "pedido": showCartPedido(); break;
         }
     }

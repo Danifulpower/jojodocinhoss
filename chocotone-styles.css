@@ -1,0 +1,116 @@
+/* Estilos para os Chocotones */
+
+.chocotone-container {
+    width: 100%;
+}
+
+.chocotone-tabs {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--bege-claro);
+    padding: 0.5rem;
+    border-radius: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.choco-tab {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: transparent;
+    color: var(--marrom-chocolate);
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.choco-tab:hover {
+    background: rgba(232, 183, 197, 0.3);
+}
+
+.choco-tab.active {
+    background: var(--rosa-suave);
+    color: white;
+    box-shadow: 0 2px 8px rgba(232, 183, 197, 0.4);
+}
+
+.chocotone-card {
+    padding: 1.5rem;
+}
+
+.chocotone-card .product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--bege-claro);
+}
+
+.chocotone-card .product-badge {
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.chocotone-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.chocotone-size-group {
+    background: var(--bege-claro);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.chocotone-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.btn-choco {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .chocotone-tabs {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+    
+    .choco-tab {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+    
+    .chocotone-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .btn-choco {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .chocotone-card .product-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+    
+    .chocotone-card .product-badge {
+        align-self: flex-start;
+    }
+}

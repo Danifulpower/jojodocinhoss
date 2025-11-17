@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍫 CHOCOTONE RECHEADO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #fef5ed 0%, #f5e6d3 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #8b4513;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            border: none;
+            background: white;
+            color: #8b4513;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            background: #f0e6d2;
+        }
+
+        .tab.active {
+            background: #8b4513;
+            color: white;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-header {
+            margin-bottom: 15px;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #8b4513;
+            margin-bottom: 5px;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .category-tradicional {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .category-especial {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .category-premium {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        .options {
+            margin-bottom: 15px;
+        }
+
+        .option-group {
+            margin-bottom: 10px;
+        }
+
+        .option-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .price-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #8b4513;
+            margin-bottom: 15px;
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 12px;
+            background: #8b4513;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .add-btn:hover {
+            background: #6d3710;
+        }
+
+        .cart {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 20px;
+        }
+
+        .cart-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #8b4513;
+            margin-bottom: 15px;
+        }
+
+        .cart-items {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 8px;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .cart-item-details {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quantity-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #8b4513;
+            background: white;
+            color: #8b4513;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .qty-btn:hover {
+            background: #f0e6d2;
+        }
+
+        .remove-btn {
+            padding: 6px 12px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .remove-btn:hover {
+            background: #c82333;
+        }
+
+        .cart-total {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .total-label {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .total-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #8b4513;
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: #999;
+            padding: 40px 20px;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cart {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍫 CHOCOTONE RECHEADO</h1>
+            <p class="subtitle">É necessário o pagamento à vista de 50% do valor para efetuar o pedido</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" onclick="filterProducts('todos')">Todos</button>
+            <button class="tab" onclick="filterProducts('tradicional')">Tradicional</button>
+            <button class="tab" onclick="filterProducts('especial')">Especial</button>
+            <button class="tab" onclick="filterProducts('premium')">Premium</button>
+        </div>
+
+        <div class="content-grid">
+            <div id="products-container" class="products-grid"></div>
+            
+            <div class="cart">
+                <h2 class="cart-title">🛒 Carrinho</h2>
+                <div id="cart-items" class="cart-items"></div>
+                <div class="cart-total">
+                    <div class="total-label">Total</div>
+                    <div class="total-amount" id="total-amount">R$ 0,00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados dos produtos
+        const products = [
+            // Tradicional
+            { id: 'brigadeiro', name: 'Brigadeiro', category: 'tradicional', prices: { '100g': { saquinho: 15.00, acetato: 19.00 }, '500g': { saquinho: 50.00, acetato: 70.00 } } },
+            { id: 'branquinho', name: 'Branquinho', category: 'tradicional', prices: { '100g': { saquinho: 15.00, acetato: 19.00 }, '500g': { saquinho: 50.00, acetato: 70.00 } } },
+            { id: 'casadinho', name: 'Casadinho', category: 'tradicional', prices: { '100g': { saquinho: 15.00, acetato: 19.00 }, '500g': { saquinho: 50.00, acetato: 70.00 } } },
+            // Especial
+            { id: 'prestigio', name: 'Prestígio', category: 'especial', prices: { '100g': { saquinho: 18.00, acetato: 20.00 }, '500g': { saquinho: 55.00, acetato: 65.00 } } },
+            { id: 'ouro-branco', name: 'Ouro Branco', category: 'especial', prices: { '100g': { saquinho: 18.00, acetato: 20.00 }, '500g': { saquinho: 55.00, acetato: 65.00 } } },
+            { id: 'stikadinho', name: 'Stikadinho', category: 'especial', prices: { '100g': { saquinho: 18.00, acetato: 20.00 }, '500g': { saquinho: 55.00, acetato: 65.00 } } },
+            // Premium
+            { id: 'ninho-nutella', name: 'Ninho com Nutella', category: 'premium', prices: { '100g': { saquinho: 20.00, acetato: 22.00 }, '500g': { saquinho: 60.00, acetato: 78.00 } } },
+            { id: 'ferrero', name: 'Ferrero', category: 'premium', prices: { '100g': { saquinho: 20.00, acetato: 22.00 }, '500g': { saquinho: 60.00, acetato: 78.00 } } },
+            { id: 'kinder-bueno', name: 'Kinder Bueno', category: 'premium', prices: { '100g': { saquinho: 20.00, acetato: 22.00 }, '500g': { saquinho: 60.00, acetato: 78.00 } } }
+        ];
+
+        let cart = [];
+        let currentFilter = 'todos';
+
+        // Renderizar produtos
+        function renderProducts() {
+            const container = document.getElementById('products-container');
+            const filtered = currentFilter === 'todos' 
+                ? products 
+                : products.filter(p => p.category === currentFilter);
+
+            container.innerHTML = filtered.map(product => `
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-name">${product.name}</div>
+                        <span class="category-badge category-${product.category}">${product.category}</span>
+                    </div>
+                    
+                    <div class="options">
+                        <div class="option-group">
+                            <label class="option-label">Tamanho:</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="${product.id}-size" value="100g" checked onchange="updatePrice('${product.id}')">
+                                    100g
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="${product.id}-size" value="500g" onchange="updatePrice('${product.id}')">
+                                    500g
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label class="option-label">Embalagem:</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="${product.id}-pack" value="saquinho" checked onchange="updatePrice('${product.id}')">
+                                    Saquinho
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="${product.id}-pack" value="acetato" onchange="updatePrice('${product.id}')">
+                                    Acetato
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="price-display" id="price-${product.id}">
+                        R$ ${product.prices['100g'].saquinho.toFixed(2).replace('.', ',')}
+                    </div>
+                    
+                    <button class="add-btn" onclick="addToCart('${product.id}')">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Atualizar preço exibido
+        function updatePrice(productId) {
+            const product = products.find(p => p.id === productId);
+            const size = document.querySelector(`input[name="${productId}-size"]:checked`).value;
+            const pack = document.querySelector(`input[name="${productId}-pack"]:checked`).value;
+            const price = product.prices[size][pack];
+            
+            document.getElementById(`price-${productId}`).textContent = 
+                `R$ ${price.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Adicionar ao carrinho
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const size = document.querySelector(`input[name="${productId}-size"]:checked`).value;
+            const pack = document.querySelector(`input[name="${productId}-pack"]:checked`).value;
+            const price = product.prices[size][pack];
+            
+            const existingIndex = cart.findIndex(item => 
+                item.productId === productId && item.size === size && item.packaging === pack
+            );
+            
+            if (existingIndex >= 0) {
+                cart[existingIndex].quantity++;
+            } else {
+                cart.push({
+                    productId,
+                    name: product.name,
+                    size,
+                    packaging: pack,
+                    price,
+                    quantity: 1
+                });
+            }
+            
+            renderCart();
+        }
+
+        // Renderizar carrinho
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="empty-cart">Carrinho vazio</div>';
+                document.getElementById('total-amount').textContent = 'R$ 0,00';
+                return;
+            }
+            
+            container.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <div class="cart-item-header">
+                        <div class="cart-item-name">${item.name}</div>
+                    </div>
+                    <div class="cart-item-details">
+                        ${item.size} • ${item.packaging === 'saquinho' ? 'Saquinho' : 'Acetato'} • R$ ${item.price.toFixed(2).replace('.', ',')}
+                    </div>
+                    <div class="cart-item-controls">
+                        <div class="quantity-controls">
+                            <button class="qty-btn" onclick="updateQuantity(${index}, -1)">−</button>
+                            <span>${item.quantity}</span>
+                            <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(${index})">Remover</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            updateTotal();
+        }
+
+        // Atualizar quantidade
+        function updateQuantity(index, change) {
+            cart[index].quantity += change;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            renderCart();
+        }
+
+        // Remover item
+        function removeItem(index) {
+            cart.splice(index, 1);
+            renderCart();
+        }
+
+        // Atualizar total
+        function updateTotal() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('total-amount').textContent = 
+                `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Filtrar produtos
+        function filterProducts(category) {
+            currentFilter = category;
+            
+            // Atualizar tabs ativas
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderProducts();
+        }
+
+        // Inicializar
+        renderProducts();
+        renderCart();
+    </script>
+</body>
+</html>
