@@ -1,1 +1,25 @@
+name: Deploy via FTP (Locaweb)
 
+on:
+  push:
+    branches: ["main"]         # branch que dispara o deploy
+    paths:
+      - "html-version/**"      # somente envia se algo dentro dessa pasta mudar
+  workflow_dispatch:           # permite rodar manualmente
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: FTP Deploy Locaweb
+        uses: locaweb/ftp-deploy@1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          user: ${{ secrets.USER }}
+          password: ${{ secrets.PASS }}
+          localDir: "html-version"
+          remoteDir: "public_html"
