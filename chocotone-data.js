@@ -6,7 +6,7 @@ const chocotonesData = [
     name: 'Brigadeiro',
     category: 'tradicional',
     prices: {
-      '100g': { saquinho: 15.00, acetato: 19.00 },
+      '100g': { saquinho: 15.00, acetato: 18.00 },
       '500g': { saquinho: 50.00, acetato: 70.00 }
     }
   },
@@ -15,7 +15,7 @@ const chocotonesData = [
     name: 'Branquinho',
     category: 'tradicional',
     prices: {
-      '100g': { saquinho: 15.00, acetato: 19.00 },
+      '100g': { saquinho: 15.00, acetato: 18.00 },
       '500g': { saquinho: 50.00, acetato: 70.00 }
     }
   },
@@ -24,7 +24,7 @@ const chocotonesData = [
     name: 'Casadinho',
     category: 'tradicional',
     prices: {
-      '100g': { saquinho: 15.00, acetato: 19.00 },
+      '100g': { saquinho: 15.00, acetato: 18.00 },
       '500g': { saquinho: 50.00, acetato: 70.00 }
     }
   },
